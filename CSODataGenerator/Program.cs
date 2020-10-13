@@ -1,5 +1,6 @@
 ﻿
 using CSARMetaPlan.Class;
+using CSClassLibForJavaOData;
 using log4net;
 using log4net.Config;
 using Microsoft.Extensions.Configuration;
@@ -75,15 +76,15 @@ namespace CSODataGenerator
         public void Run()
         {
 
-            new EFCapGenerator()
+            new RESTServiceStartupClassWithODataGenerator()
             {
                 TemplatePath = Config[APPSETTINGS_TEMPLATEPATH]
                 ,
-                TemplateSubPath = Config[APPSETTINGS_CAPTEMPLATESUBPATH]
+                TemplateSubPath = Config[APPSETTINGS_RESTSERVICESTARTUPWITHODATATEMPLATESUBPATH]
                 ,
-                OutputPath = Config[APPSETTINGS_CAPOUTPUTPATH]
+                OutputPath = Config[APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELOUTPUTPATH]
                 ,
-                ProjectName = Config[APPSETTINGS_PROJECTNAME]
+                NameSpace = Config[APPSETTINGS_NAMESPACE]
             }
                 .Generate(typeof(Vendor));
 

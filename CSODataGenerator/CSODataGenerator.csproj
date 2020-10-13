@@ -19,6 +19,9 @@
     <Reference Include="CSARMetaPlanFW">
       <HintPath>C:\library\LPCsharp\CSARMetaPlanFW.dll</HintPath>
     </Reference>
+    <Reference Include="CSClassLibForJavaOData">
+      <HintPath>..\..\CSClassLibForJavaOData\CSClassLibForJavaOData\bin\Debug\netcoreapp3.1\CSClassLibForJavaOData.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
