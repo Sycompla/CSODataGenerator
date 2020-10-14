@@ -39,28 +39,16 @@ namespace CSODataGenerator
         private const string APPSETTINGS_RESTSERVICEODATATEMPLATESUBPATH = "RESTSERVICEODATATEMPLATESUBPATH";
         private const string APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELTEMPLATESUBPATH = "RESTSERVICEPROGRAMWITHKESTRELTEMPLATESUBPATH";
         private const string APPSETTINGS_RESTSERVICESTARTUPWITHODATATEMPLATESUBPATH = "RESTSERVICESTARTUPWITHODATATEMPLATESUBPATH";
+        private const string APPSETTINGS_CONTROLLERTEMPLATESUBPATH = "CONTROLLERTEMPLATESUBPATH";
 
         private const string APPSETTINGS_PROJECTNAME = "PROJECTNAME";
         private const string APPSETTINGS_PORTNUMBER = "PORTNUMBER";
         private const string APPSETTINGS_IPADDRESS = "IPADDRESS";
         private const string APPSETTINGS_NAMESPACE = "NAMESPACE";
+        private const string APPSETTINGS_CONNECTIONSTRING = "CONNECTIONSTRING";
 
-        // JAVA //
-
-        private const string APPSETTINGS_JAVAODATASERVICESUBPATH = "JAVAODATASERVICESUBPATH";
-        private const string APPSETTINGS_CLASSNAME = "CLASSNAME";
-        private const string APPSETTINGS_PACKAGENAME = "PACKAGENAME";
-        private const string APPSETTINGS_PERSISTENCENAME = "PERSISTENCENAME";
-        private const string APPSETTINGS_JAVAODATASERVICEOUTPUTPATH = "JAVAODATASERVICEOUTPUTPATH";
-
-        private const string APPSETTINGS_IP = "IP";
-        private const string APPSETTINGS_PORT = "PORT";
-        private const string APPSETTINGS_USERNAME = "USERNAME";
-        private const string APPSETTINGS_PASSWORD = "PASSWORD";
-        private const string APPSETTINGS_DATABASENAME = "DATABASENAME";
-        private const string APPSETTINGS_JAVAPERSISTENCESUBPATH = "JAVAPERSISTENCESUBPATH";
-        private const string APPSETTINGS_JAVAPERSISTENCEOUTPUTPATH = "JAVAPERSISTENCEOUTPUTPATH";
-
+        private const string APPSETTINGS_CAPREFERENCES = "CAPREFERENCES";
+        private const string APPSETTINGS_OBJECTSERVICEREFERENCES = "OBJECTSERVICEREFERENCES";
 
         public IConfiguration Config { get; set; }
 
@@ -85,9 +73,31 @@ namespace CSODataGenerator
                     OutputPath = Config[APPSETTINGS_CAPOUTPUTPATH]
                     ,
                     ProjectName = Config[APPSETTINGS_PROJECTNAME]
+                    ,
+                    References = Config[APPSETTINGS_CAPREFERENCES]
                 }
                     .Generate(typeof(Vendor));
             }
+
+            if (argument.Equals("Controller"))
+            {
+                new ControllerGenerator()
+                {
+                    TemplatePath = Config[APPSETTINGS_TEMPLATEPATH]
+                    ,
+                    TemplateSubPath = Config[APPSETTINGS_CONTROLLERTEMPLATESUBPATH]
+                    ,
+                    OutputPath = Config[APPSETTINGS_CAPOUTPUTPATH]
+                    ,
+                    Namespace = Config[APPSETTINGS_NAMESPACE]
+                    ,
+                    References = Config[APPSETTINGS_CAPREFERENCES]
+                    ,
+                    ConnectionString = Config[APPSETTINGS_CONNECTIONSTRING]
+                }
+                    .Generate(typeof(Vendor));
+            }
+
 
             if (argument.Equals("ObjectService"))
             {
@@ -100,7 +110,8 @@ namespace CSODataGenerator
                     OutputPath = Config[APPSETTINGS_SERVICEOUTPUTPATH]
                     ,
                     ProjectName = Config[APPSETTINGS_PROJECTNAME]
-
+                    ,
+                    References = Config[APPSETTINGS_OBJECTSERVICEREFERENCES]
                 }
                     .Generate(typeof(Vendor));
             }

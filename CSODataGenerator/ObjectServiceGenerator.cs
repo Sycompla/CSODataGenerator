@@ -14,6 +14,7 @@ namespace CSODataGenerator
         public string TemplateSubPath { get; set; }
         public string OutputPath { get; set; }
         public string ProjectName { get; set; }
+        public string References { get; set; }
 
         public Type Type { get; set; }
 
@@ -24,6 +25,7 @@ namespace CSODataGenerator
         private const string ClassCodeMask = "#classCode#";
         private const string SuffixMask = "#suffix#";
         private const string ProjectNameMask = "#projectName#";
+        private const string ReferencesMask = "#references#";
 
         private const string ClassCodeAsVariableMask = "#classCodeAsVariable#";
 
@@ -57,6 +59,7 @@ namespace CSODataGenerator
         {
 
             return ReadIntoString("Head")
+                        .Replace(ReferencesMask, References)
                         .Replace(ClassCodeMask, Type.Name)
                         .Replace(SuffixMask, Suffix)
                         .Replace(ProjectNameMask, ProjectName)

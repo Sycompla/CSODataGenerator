@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CSODataGenerator
 {
-    class CapGenerator
+    class ControllerGenerator
     {
 
         #region members
@@ -13,19 +13,18 @@ namespace CSODataGenerator
         public string TemplatePath { get; set; }
         public string TemplateSubPath { get; set; }
         public string OutputPath { get; set; }
-        public string ProjectName { get; set; }
+        public string Namespace { get; set; }
         public string References { get; set; }
+        public string ConnectionString { get; set; }
 
         public Type Type { get; set; }
 
         private const string TemplateExtension = ".csT";
-
-        private const string Suffix = "Cap";
-
+        
         private const string ClassCodeMask = "#classCode#";
-        private const string SuffixMask = "#suffix#";
-        private const string ProjectNameMask = "#projectName#";
+        private const string NamespaceMask = "#namespace#";
         private const string ReferencesMask = "#references#";
+        private const string ConnectionStirngMask = "#connectionStirng#";
 
         private const string ClassCodeAsVariableMask = "#classCodeAsVariable#";
 
@@ -60,9 +59,7 @@ namespace CSODataGenerator
 
             return ReadIntoString("Head")
                         .Replace(ReferencesMask, References)
-                        .Replace(ClassCodeMask, Type.Name)
-                        .Replace(SuffixMask, Suffix)
-                        .Replace(ProjectNameMask, ProjectName)
+                        .Replace(NamespaceMask, Namespace)
                         ;
 
         }
@@ -71,8 +68,6 @@ namespace CSODataGenerator
         {
             return
                 ReadIntoString("Foot")
-                        .Replace(ClassCodeMask, Type.Name)
-                        .Replace(SuffixMask, Suffix)
                         ;
 
         }
@@ -82,14 +77,11 @@ namespace CSODataGenerator
             return
                 ReadIntoString("Methods")
                         .Replace(ClassCodeMask, Type.Name)
-                        .Replace(
-                                ClassCodeAsVariableMask
-                                , GetNameWithLowerFirstLetter(Type.Name)
-                            )
+                        .Replace(ConnectionStirngMask, ConnectionString)
                 ;
         }
 
-        public CapGenerator Generate()
+        public ControllerGenerator Generate()
         {
 
             string result = null;
@@ -100,13 +92,13 @@ namespace CSODataGenerator
 
             result += GetFoot();
 
-            WriteOut(result, Type.Name + Suffix, OutputPath);
+            WriteOut(result, "Controller", OutputPath);
 
             return this;
 
         } // Generate
 
-        public CapGenerator Generate(Type type)
+        public ControllerGenerator Generate(Type type)
         {
 
             Type = type;
