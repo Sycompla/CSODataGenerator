@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CSODataGenerator": {
+      "commandName": "Project",
+      "commandLineArgs": "ODataController"
+    }
+  }
+}

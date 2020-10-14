@@ -73,20 +73,91 @@ namespace CSODataGenerator
 
         } // Program
 
-        public void Run()
+        public void Run(string argument)
         {
-
-            new RESTServiceStartupClassWithODataGenerator()
-            {
-                TemplatePath = Config[APPSETTINGS_TEMPLATEPATH]
-                ,
-                TemplateSubPath = Config[APPSETTINGS_RESTSERVICESTARTUPWITHODATATEMPLATESUBPATH]
-                ,
-                OutputPath = Config[APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELOUTPUTPATH]
-                ,
-                NameSpace = Config[APPSETTINGS_NAMESPACE]
+            if (argument.Equals("Cap")) {
+                new CapGenerator()
+                {
+                    TemplatePath = Config[APPSETTINGS_TEMPLATEPATH]
+                    ,
+                    TemplateSubPath = Config[APPSETTINGS_CAPTEMPLATESUBPATH]
+                    ,
+                    OutputPath = Config[APPSETTINGS_CAPOUTPUTPATH]
+                    ,
+                    ProjectName = Config[APPSETTINGS_PROJECTNAME]
+                }
+                    .Generate(typeof(Vendor));
             }
-                .Generate(typeof(Vendor));
+
+            if (argument.Equals("ObjectService"))
+            {
+                new ObjectServiceGenerator()
+                {
+                    TemplatePath = Config[APPSETTINGS_TEMPLATEPATH]
+                    ,
+                    TemplateSubPath = Config[APPSETTINGS_SERVICETEMPLATESUBPATH]
+                    ,
+                    OutputPath = Config[APPSETTINGS_SERVICEOUTPUTPATH]
+                    ,
+                    ProjectName = Config[APPSETTINGS_PROJECTNAME]
+
+                }
+                    .Generate(typeof(Vendor));
+            }
+
+            if (argument.Equals("ODataController"))
+            {
+                new RESTServiceODataControllerGenerator()
+                { 
+                    TemplatePath = Config[APPSETTINGS_TEMPLATEPATH]
+                    ,
+                    TemplateSubPath = Config[APPSETTINGS_RESTSERVICEODATATEMPLATESUBPATH]
+                    ,
+                    OutputPath = Config[APPSETTINGS_RESTSERVICEODATAOUTPUTPATH]
+                    ,
+                    ProjectName = Config[APPSETTINGS_PROJECTNAME]
+
+                }
+                    .Generate(typeof(Vendor));
+
+            }
+
+            if (argument.Equals("Kestrel"))
+            {
+                new RESTServiceProgramClassWithKestrelGenerator()
+                {
+                    TemplatePath = Config[APPSETTINGS_TEMPLATEPATH]
+                    ,
+                    TemplateSubPath = Config[APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELTEMPLATESUBPATH]
+                    ,
+                    OutputPath = Config[APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELOUTPUTPATH]
+                    ,
+                    IPAddress = Config[APPSETTINGS_IPADDRESS]
+                    ,
+                    NameSpace = Config[APPSETTINGS_NAMESPACE]
+                    ,
+                    PortNumber = Config[APPSETTINGS_PORTNUMBER]
+
+                }
+                    .Generate(typeof(Vendor));
+
+            }
+            if (argument.Equals("Startup"))
+            {
+                new RESTServiceStartupClassWithODataGenerator()
+                {
+                    TemplatePath = Config[APPSETTINGS_TEMPLATEPATH]
+                    ,
+                    TemplateSubPath = Config[APPSETTINGS_RESTSERVICESTARTUPWITHODATATEMPLATESUBPATH]
+                    ,
+                    OutputPath = Config[APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELOUTPUTPATH]
+                    ,
+                    NameSpace = Config[APPSETTINGS_NAMESPACE]
+
+                }
+                    .Generate(typeof(Vendor));
+
+            }
 
 
         } // run
@@ -105,7 +176,7 @@ namespace CSODataGenerator
                             .AddJsonFile("appsettings.json", true, true)
                             .Build();
 
-                new Program(config).Run();
+                new Program(config).Run(args[0]);
 
             }
             catch (Exception exception)

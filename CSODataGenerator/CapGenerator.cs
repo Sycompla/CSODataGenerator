@@ -19,7 +19,7 @@ namespace CSODataGenerator
 
         private const string TemplateExtension = ".csT";
 
-        private const string Suffix = "EFCap";
+        private const string Suffix = "Cap";
 
         private const string ClassCodeMask = "#classCode#";
         private const string SuffixMask = "#suffix#";
