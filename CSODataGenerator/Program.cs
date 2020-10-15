@@ -79,9 +79,9 @@ namespace CSODataGenerator
                     .Generate(typeof(Vendor));
             }
 
-            if (argument.Equals("Controller"))
+            if (argument.Equals("Context"))
             {
-                new ControllerGenerator()
+                new ContextGenerator()
                 {
                     TemplatePath = Config[APPSETTINGS_TEMPLATEPATH]
                     ,
@@ -89,7 +89,7 @@ namespace CSODataGenerator
                     ,
                     OutputPath = Config[APPSETTINGS_CAPOUTPUTPATH]
                     ,
-                    Namespace = Config[APPSETTINGS_NAMESPACE]
+                    Namespace = Config[APPSETTINGS_PROJECTNAME]
                     ,
                     References = Config[APPSETTINGS_CAPREFERENCES]
                     ,

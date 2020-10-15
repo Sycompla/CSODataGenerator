@@ -2,7 +2,7 @@
   "profiles": {
     "CSODataGenerator": {
       "commandName": "Project",
-      "commandLineArgs": "ODataController"
+      "commandLineArgs": "Context"
     }
   }
 }

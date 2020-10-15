@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CSODataGenerator
 {
-    class ControllerGenerator
+    class ContextGenerator
     {
 
         #region members
@@ -24,7 +24,7 @@ namespace CSODataGenerator
         private const string ClassCodeMask = "#classCode#";
         private const string NamespaceMask = "#namespace#";
         private const string ReferencesMask = "#references#";
-        private const string ConnectionStirngMask = "#connectionStirng#";
+        private const string ConnectionStirngMask = "#connectionString#";
 
         private const string ClassCodeAsVariableMask = "#classCodeAsVariable#";
 
@@ -81,7 +81,7 @@ namespace CSODataGenerator
                 ;
         }
 
-        public ControllerGenerator Generate()
+        public ContextGenerator Generate()
         {
 
             string result = null;
@@ -98,7 +98,7 @@ namespace CSODataGenerator
 
         } // Generate
 
-        public ControllerGenerator Generate(Type type)
+        public ContextGenerator Generate(Type type)
         {
 
             Type = type;
