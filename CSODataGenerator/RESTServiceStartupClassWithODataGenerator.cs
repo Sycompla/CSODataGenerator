@@ -13,12 +13,15 @@ namespace CSODataGenerator
         public string TemplateSubPath { get; set; }
         public string OutputPath { get; set; }
         public string NameSpace { get; set; }
+        public string References { get; set; }
 
         public Type Type { get; set; }
 
         private const string TemplateExtension = ".csT";
 
         private const string nameSpace = "#namespace#";
+
+        private const string ReferencesMask = "#references#";
 
         private const string entity = "#entity#";
         private const string controllerName = "#controllerName#";
@@ -52,7 +55,8 @@ namespace CSODataGenerator
         {
 
             return ReadIntoString("Head")
-                        .Replace(nameSpace, NameSpace)
+                        .Replace(nameSpace, NameSpace + "ODataService")
+                        .Replace(ReferencesMask, References)
                         ;
 
         } //GetHead

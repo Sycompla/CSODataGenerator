@@ -56,7 +56,7 @@ namespace CSODataGenerator
     {
 
         return ReadIntoString("Head")
-                    .Replace(nameSpace, NameSpace)
+                    .Replace(nameSpace, NameSpace + "ODataService")
                     ;
 
     } //GetHead

@@ -59,7 +59,7 @@ namespace CSODataGenerator
 
             return ReadIntoString("Head")
                         .Replace(ReferencesMask, References)
-                        .Replace(NamespaceMask, Namespace)
+                        .Replace(NamespaceMask, Namespace + "Cap")
                         ;
 
         }

@@ -41,7 +41,6 @@ namespace CSODataGenerator
         private const string APPSETTINGS_RESTSERVICESTARTUPWITHODATATEMPLATESUBPATH = "RESTSERVICESTARTUPWITHODATATEMPLATESUBPATH";
         private const string APPSETTINGS_CONTROLLERTEMPLATESUBPATH = "CONTROLLERTEMPLATESUBPATH";
 
-        private const string APPSETTINGS_PROJECTNAME = "PROJECTNAME";
         private const string APPSETTINGS_PORTNUMBER = "PORTNUMBER";
         private const string APPSETTINGS_IPADDRESS = "IPADDRESS";
         private const string APPSETTINGS_NAMESPACE = "NAMESPACE";
@@ -49,6 +48,7 @@ namespace CSODataGenerator
 
         private const string APPSETTINGS_CAPREFERENCES = "CAPREFERENCES";
         private const string APPSETTINGS_OBJECTSERVICEREFERENCES = "OBJECTSERVICEREFERENCES";
+        private const string APPSETTINGS_ODATACONTROLLERREFERENCES = "ODATACONTROLLERREFERENCES";
 
         public IConfiguration Config { get; set; }
 
@@ -72,7 +72,7 @@ namespace CSODataGenerator
                     ,
                     OutputPath = Config[APPSETTINGS_CAPOUTPUTPATH]
                     ,
-                    ProjectName = Config[APPSETTINGS_PROJECTNAME]
+                    Namespace = Config[APPSETTINGS_NAMESPACE]
                     ,
                     References = Config[APPSETTINGS_CAPREFERENCES]
                 }
@@ -89,7 +89,7 @@ namespace CSODataGenerator
                     ,
                     OutputPath = Config[APPSETTINGS_CAPOUTPUTPATH]
                     ,
-                    Namespace = Config[APPSETTINGS_PROJECTNAME]
+                    Namespace = Config[APPSETTINGS_NAMESPACE]
                     ,
                     References = Config[APPSETTINGS_CAPREFERENCES]
                     ,
@@ -109,9 +109,9 @@ namespace CSODataGenerator
                     ,
                     OutputPath = Config[APPSETTINGS_SERVICEOUTPUTPATH]
                     ,
-                    ProjectName = Config[APPSETTINGS_PROJECTNAME]
-                    ,
                     References = Config[APPSETTINGS_OBJECTSERVICEREFERENCES]
+                    ,
+                    Namespace = Config[APPSETTINGS_NAMESPACE]
                 }
                     .Generate(typeof(Vendor));
             }
@@ -126,8 +126,9 @@ namespace CSODataGenerator
                     ,
                     OutputPath = Config[APPSETTINGS_RESTSERVICEODATAOUTPUTPATH]
                     ,
-                    ProjectName = Config[APPSETTINGS_PROJECTNAME]
-
+                    Namespace = Config[APPSETTINGS_NAMESPACE]
+                    ,
+                    References = Config[APPSETTINGS_ODATACONTROLLERREFERENCES]
                 }
                     .Generate(typeof(Vendor));
 
@@ -164,6 +165,8 @@ namespace CSODataGenerator
                     OutputPath = Config[APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELOUTPUTPATH]
                     ,
                     NameSpace = Config[APPSETTINGS_NAMESPACE]
+                    ,
+                    References = Config[APPSETTINGS_CAPREFERENCES]
 
                 }
                     .Generate(typeof(Vendor));

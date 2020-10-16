@@ -12,17 +12,19 @@ namespace CSODataGenerator
         public string TemplatePath { get; set; }
         public string TemplateSubPath { get; set; }
         public string OutputPath { get; set; }
-        public string ProjectName { get; set; }
+        public string Namespace { get; set; }
+        public string References { get; set; }
 
         public Type Type { get; set; }
 
         private const string TemplateExtension = ".csT";
 
-        private const string Suffix = "OdataController";
+        private const string Suffix = "Controller";
 
         private const string ClassCodeMask = "#classCode#";
         private const string SuffixMask = "#suffix#";
-        private const string ProjectNameMask = "#projectName#";
+        private const string NamespaceMask = "#namespace#";
+        private const string ReferencesMask = "#references#";
 
 
         #endregion members
@@ -57,7 +59,8 @@ namespace CSODataGenerator
             return ReadIntoString("Head")
                         .Replace(ClassCodeMask, Type.Name)
                         .Replace(SuffixMask, Suffix)
-                        .Replace(ProjectNameMask, ProjectName)
+                        .Replace(NamespaceMask, Namespace + "ODataService")
+                        .Replace(ReferencesMask, References)
                         ;
 
         }
