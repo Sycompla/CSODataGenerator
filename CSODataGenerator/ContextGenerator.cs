@@ -10,8 +10,6 @@ namespace CSODataGenerator
 
         #region members
 
-        public string TemplatePath { get; set; }
-        public string TemplateSubPath { get; set; }
         public string OutputPath { get; set; }
         public string Namespace { get; set; }
         public string References { get; set; }
@@ -33,7 +31,7 @@ namespace CSODataGenerator
         public string ReadIntoString(string fileName)
         {
 
-            string textFile = TemplatePath + TemplateSubPath + fileName + TemplateExtension;
+            string textFile = "EFContextTPC4CORE3\\" + fileName + TemplateExtension;
 
             return File.ReadAllText(textFile);
 

@@ -1,0 +1,11 @@
+
+using Modul.Final.Class;
+using System;
+using System.Collections.Generic;
+#references#
+
+namespace  #namespace#
+{
+ 
+    public class #classCode##suffix#
+    {

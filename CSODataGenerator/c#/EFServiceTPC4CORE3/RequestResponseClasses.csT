@@ -1,0 +1,84 @@
+        public class GetListResponse : Ac4yServiceResponse
+        {
+            public IEnumerable<#classCode#> #classCode#s { get; set; }
+        }
+
+        public class GetListRequest : Ac4yServiceRequest
+        {
+
+        }
+        
+        public class GetByIdRequest : Ac4yServiceRequest
+        {
+            public int Id { get; set; }
+        }
+
+        public class GetByIdResponse : Ac4yServiceResponse
+        {
+            public #classCode# #classCode# { get; set; }
+        }
+
+        public class GetByGuidRequest : Ac4yServiceRequest
+        {
+            public string Guid { get; set; }
+        }
+
+        public class GetByGuidResponse : Ac4yServiceResponse
+        {
+            public #classCode# #classCode# { get; set; }
+        }
+
+        public class IsExistByIdRequest : Ac4yServiceRequest
+        {
+            public int Id { get; set; }
+        }
+
+        public class IsExistByIdResponse : Ac4yServiceResponse {}
+
+        public class IsExistByGuidRequest : Ac4yServiceRequest
+        {
+            public string Guid { get; set; }
+        }
+
+        public class IsExistByGuidResponse : Ac4yServiceResponse {}
+
+        public class UpdateByIdRequest : Ac4yServiceRequest
+        {
+            public int Id { get; set; }
+            public #classCode# #classCode# { get; set; }
+        }
+
+        public class UpdateByIdResponse : Ac4yServiceResponse {}
+
+        public class UpdateByGuidRequest : Ac4yServiceRequest
+        {
+            public string Guid { get; set; }
+            public #classCode# #classCode# { get; set; }
+        }
+
+        public class UpdateByGuidResponse : Ac4yServiceResponse {}
+
+        public class InsertRequest : Ac4yServiceRequest
+        {
+            public #classCode# #classCode# { get; set; }
+        }
+
+        public class InsertResponse : Ac4yServiceResponse {}
+
+        public class SetByGuidRequest : Ac4yServiceRequest
+        {
+            public string Guid { get; set; }
+            public #classCode# #classCode# { get; set; }
+        }
+
+        public class SetByGuidResponse : Ac4yServiceResponse {}
+
+        public class DeleteByIdResponse : Ac4yServiceResponse
+        {
+
+        }
+
+        public class DeleteByIdRequest : Ac4yServiceRequest
+        {
+            public int Id { get; set; }
+        }

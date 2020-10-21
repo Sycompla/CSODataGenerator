@@ -1,0 +1,19 @@
+        public Context() : base()
+        {
+
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"#connectionString#");
+
+        }
+
+        public DbSet<#classCode#> #classCode#s { get; set; }
+        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<#classCode#>().ToTable("#classCode#s");
+
+        }

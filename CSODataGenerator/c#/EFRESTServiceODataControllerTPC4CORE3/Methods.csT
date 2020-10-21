@@ -1,0 +1,36 @@
+
+        [HttpGet]
+        [EnableQuery]
+        public IEnumerable<#classCode#> Get()
+        {
+
+            return new Context().#classCode#s;
+        }
+        
+        [HttpDelete]
+        [EnableQuery]
+        public IActionResult Delete([FromODataUri] int key)
+        {
+            return Ok(new #classCode#ObjectService().DeleteById(new DeleteByIdRequest() { Id = key }));
+        }
+
+        [HttpPatch]
+        [EnableQuery]
+        public IActionResult Patch([FromODataUri] int key, [FromBody] Delta<#classCode#> request)
+        {
+            UpdateByIdResponse response =
+                new #classCode#ObjectService().UpdateById(new UpdateByIdRequest()
+                {
+                    Id = key,
+                    #classCode# = request.GetInstance()
+                }); 
+
+            return Ok(response);
+        }
+        
+        [HttpPost]
+        [EnableQuery]
+        public InsertResponse Post([FromBody] #classCode# newObject)
+        {
+            return new #classCode#ObjectService().Insert(new InsertRequest() { #classCode# = newObject });
+        }

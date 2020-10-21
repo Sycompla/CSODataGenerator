@@ -11,8 +11,6 @@ namespace CSODataGenerator
 
         #region members
 
-    public string TemplatePath { get; set; }
-    public string TemplateSubPath { get; set; }
     public string OutputPath { get; set; }
     public string IPAddress { get; set; }
     public string PortNumber { get; set; }
@@ -31,7 +29,7 @@ namespace CSODataGenerator
     public string ReadIntoString(string fileName)
     {
 
-        string textFile = TemplatePath + TemplateSubPath + fileName + TemplateExtension;
+        string textFile = "RESTServiceKestrelCORE3\\" + fileName + TemplateExtension;
 
         return File.ReadAllText(textFile);
 

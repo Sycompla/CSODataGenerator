@@ -27,14 +27,7 @@ namespace CSODataGenerator
 
         private const string APPSETTINGS_TEMPLATEPATH = "TEMPLATEPATH";
         private const string APPSETTINGS_ROOTDIRECTORY = "ROOTDIRECTORY";
-
-        private const string APPSETTINGS_CAPTEMPLATESUBPATH = "CAPTEMPLATESUBPATH";
-        private const string APPSETTINGS_SERVICETEMPLATESUBPATH = "SERVICETEMPLATESUBPATH";
-        private const string APPSETTINGS_RESTSERVICEODATATEMPLATESUBPATH = "RESTSERVICEODATATEMPLATESUBPATH";
-        private const string APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELTEMPLATESUBPATH = "RESTSERVICEPROGRAMWITHKESTRELTEMPLATESUBPATH";
-        private const string APPSETTINGS_RESTSERVICESTARTUPWITHODATATEMPLATESUBPATH = "RESTSERVICESTARTUPWITHODATATEMPLATESUBPATH";
-        private const string APPSETTINGS_CONTROLLERTEMPLATESUBPATH = "CONTROLLERTEMPLATESUBPATH";
-
+        
         private const string APPSETTINGS_PORTNUMBER = "PORTNUMBER";
         private const string APPSETTINGS_IPADDRESS = "IPADDRESS";
         private const string APPSETTINGS_NAMESPACE = "NAMESPACE";
@@ -60,10 +53,6 @@ namespace CSODataGenerator
             if (argument.Equals("Cap")) {
                 new CapGenerator()
                 {
-                    TemplatePath = Config[APPSETTINGS_TEMPLATEPATH]
-                    ,
-                    TemplateSubPath = Config[APPSETTINGS_CAPTEMPLATESUBPATH]
-                    ,
                     OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_CAPOUTPUTPATH]
                     ,
                     Namespace = Config[APPSETTINGS_NAMESPACE]
@@ -77,10 +66,6 @@ namespace CSODataGenerator
             {
                 new ContextGenerator()
                 {
-                    TemplatePath = Config[APPSETTINGS_TEMPLATEPATH]
-                    ,
-                    TemplateSubPath = Config[APPSETTINGS_CONTROLLERTEMPLATESUBPATH]
-                    ,
                     OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_CAPOUTPUTPATH]
                     ,
                     Namespace = Config[APPSETTINGS_NAMESPACE]
@@ -97,10 +82,6 @@ namespace CSODataGenerator
             {
                 new ObjectServiceGenerator()
                 {
-                    TemplatePath = Config[APPSETTINGS_TEMPLATEPATH]
-                    ,
-                    TemplateSubPath = Config[APPSETTINGS_SERVICETEMPLATESUBPATH]
-                    ,
                     OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_SERVICEOUTPUTPATH]
                     ,
                     References = Config[APPSETTINGS_OBJECTSERVICEREFERENCES]
@@ -114,10 +95,6 @@ namespace CSODataGenerator
             {
                 new RESTServiceODataControllerGenerator()
                 { 
-                    TemplatePath = Config[APPSETTINGS_TEMPLATEPATH]
-                    ,
-                    TemplateSubPath = Config[APPSETTINGS_RESTSERVICEODATATEMPLATESUBPATH]
-                    ,
                     OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_RESTSERVICEODATAOUTPUTPATH]
                     ,
                     Namespace = Config[APPSETTINGS_NAMESPACE]
@@ -132,10 +109,6 @@ namespace CSODataGenerator
             {
                 new RESTServiceProgramClassWithKestrelGenerator()
                 {
-                    TemplatePath = Config[APPSETTINGS_TEMPLATEPATH]
-                    ,
-                    TemplateSubPath = Config[APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELTEMPLATESUBPATH]
-                    ,
                     OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELOUTPUTPATH]
                     ,
                     IPAddress = Config[APPSETTINGS_IPADDRESS]
@@ -152,10 +125,6 @@ namespace CSODataGenerator
             {
                 new RESTServiceStartupClassWithODataGenerator()
                 {
-                    TemplatePath = Config[APPSETTINGS_TEMPLATEPATH]
-                    ,
-                    TemplateSubPath = Config[APPSETTINGS_RESTSERVICESTARTUPWITHODATATEMPLATESUBPATH]
-                    ,
                     OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELOUTPUTPATH]
                     ,
                     NameSpace = Config[APPSETTINGS_NAMESPACE]

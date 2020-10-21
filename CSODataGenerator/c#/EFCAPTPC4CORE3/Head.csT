@@ -1,0 +1,11 @@
+
+using System.Linq;
+using Ac4yUtilityContainer;
+using System.Collections.Generic;
+#references#
+
+namespace  #namespace#
+{
+
+    public class #classCode##suffix#
+    {

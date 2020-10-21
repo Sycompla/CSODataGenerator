@@ -1,0 +1,10 @@
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using Ac4yUtilityContainer;
+#references#
+
+namespace  #namespace#
+{
+
+    public class Context : DbContext
+    {

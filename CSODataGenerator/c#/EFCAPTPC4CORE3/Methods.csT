@@ -1,0 +1,127 @@
+      public IEnumerable<#classCode#> GetList()
+      {
+          
+          return new Context().#classCode#s;
+
+      } // GetList   
+   
+      public #classCode# Insert(#classCode# #classCodeAsVariable#)
+      {
+
+          using (var context = new Context())
+          {                    
+              context.Database.EnsureCreated();
+
+              context.#classCode#s.Add(#classCodeAsVariable#);
+              context.SaveChanges();
+          }
+
+          return #classCodeAsVariable#;
+
+      } // Insert
+
+      public #classCode# GetById(int id)
+      {
+
+          return new Context().#classCode#s.Find(id);
+
+      } // GetById
+
+      public bool IsExistById(int id)
+      {
+        return GetById(id) != null;
+      }
+/*
+      public #classCode# GetByGuid(string guid)
+      {
+
+          return new Context().#classCode#s
+                    .Where(entity => entity.GUID == guid)
+                    .FirstOrDefault<#classCode#>();
+
+      } // GetByGuid
+
+      public bool IsExistByGuid(string guid)
+      {
+
+          return GetByGuid(guid) != null;
+
+      } // IsExistByGuid
+*/
+      public void UpdateById(int id, #classCode# #classCodeAsVariable#)
+      {
+
+            using (var context = new Context())
+            {
+
+                #classCode# actual = context.#classCode#s.Find(id);
+                Object2Object(#classCodeAsVariable#, actual);
+                actual.Id = id;
+                context.SaveChanges();
+
+            }
+
+      } // UpdateById
+/*
+      public void UpdateByGuid(string guid, #classCode# #classCodeAsVariable#)
+      {
+
+          using (var context = new Context())
+          {
+
+              #classCode# actual = context.#classCode#s.Where(entity => entity.GUID == guid).FirstOrDefault<#classCode#>();
+              int id = actual.Id;
+              Object2Object(#classCodeAsVariable#, actual);
+              actual.Id = id;
+              actual.GUID= guid;
+              context.SaveChanges();
+
+          }
+
+      } // UpdateByGuid
+      */
+    public List<#classCode#> GetListOf#classCode#()
+    {
+
+        using(var context = new Context())
+        {
+            return context.#classCode#s.ToList();
+        }
+
+    } // GetListOf#classCode#
+
+    public void Delete#classCode#(#classCode# #classCodeAsVariable#)
+    {
+
+        var context = new Context();
+
+        context.#classCode#s.Remove(#classCodeAsVariable#);
+        context.SaveChanges();
+
+    } // Delete#classCode#
+
+    public void DeleteById(int id)
+    {
+        
+        var context = new Context();
+
+        #classCode# actual = context.#classCode#s.Find(id);
+        context.#classCode#s.Remove(actual);
+        context.SaveChanges();
+
+    } // DeleteById
+    
+        public void Object2Object(object source, object target)
+        {
+
+            var properties = source.GetType().GetProperties();
+
+            foreach (var item in properties)
+            {
+                if (item.GetValue(source, null) != null)
+                {
+                    target.GetType().GetProperty(item.Name).SetValue(target, item.GetValue(source, null), null);
+                }
+            }
+
+        } // Object2Object
