@@ -29,7 +29,7 @@ namespace CSODataGenerator
     public string ReadIntoString(string fileName)
     {
 
-        string textFile = "RESTServiceKestrelCORE3\\" + fileName + TemplateExtension;
+        string textFile = "Templates\\RESTServiceKestrelCORE3\\" + fileName + TemplateExtension;
 
         return File.ReadAllText(textFile);
 
