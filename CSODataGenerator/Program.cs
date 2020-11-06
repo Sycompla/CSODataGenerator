@@ -1,4 +1,5 @@
 ﻿
+using Ac4yUtilityContainer;
 using CSARMetaPlan.Class;
 using CSClassLibForJavaOData;
 using log4net;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Configuration.FileExtensions;
 using Microsoft.Extensions.Configuration.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Reflection;
 
@@ -19,6 +21,7 @@ namespace CSODataGenerator
         #region members
 
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private Assembly _library { get; set; }
         
         private const string APPSETTINGS_CAPOUTPUTPATH = "CAPOUTPUTPATH";
         private const string APPSETTINGS_SERVICEOUTPUTPATH = "SERVICEOUTPUTPATH";
@@ -37,6 +40,15 @@ namespace CSODataGenerator
         private const string APPSETTINGS_OBJECTSERVICEREFERENCES = "OBJECTSERVICEREFERENCES";
         private const string APPSETTINGS_ODATACONTROLLERREFERENCES = "ODATACONTROLLERREFERENCES";
 
+        private const string APPSETTINGS_LIBRARYPATH = "LIBRARYPATH";
+        private const string APPSETTINGS_PLANOBJECTNAMESPACE = "PLANOBJECTNAMESPACE";
+        private const string APPSETTINGS_CLASSNAME = "CLASSNAME";
+
+        private const string APPSETTINGS_PARAMETERPATH = "PARAMETERPATH";
+        private const string APPSETTINGS_PARAMETERFILENAME = "PARAMETERFILENAME";
+
+        CSODataGeneratorParameter Parameter { get; set; }
+
         public IConfiguration Config { get; set; }
 
         #endregion members
@@ -50,6 +62,34 @@ namespace CSODataGenerator
 
         public void Run(string argument)
         {
+            _library = Assembly.LoadFile(
+                        Config[APPSETTINGS_LIBRARYPATH]
+                    );
+
+            Parameter =
+                (CSODataGeneratorParameter)
+                new Ac4yUtility().Xml2ObjectFromFile(
+                        Config[APPSETTINGS_PARAMETERPATH]
+                        + Config[APPSETTINGS_PARAMETERFILENAME]
+                        , typeof(CSODataGeneratorParameter)
+                    );
+
+            foreach(PlanObjectReference planObject in Parameter.PlanObjectReferenceList)
+            {
+                planObject.classType = _library.GetType(
+                                                    planObject.namespaceName
+                                                    + planObject.className
+                                                    );
+
+            }
+
+
+            Type classType =
+                        _library.GetType(
+                                Config[APPSETTINGS_PLANOBJECTNAMESPACE]
+                                + Config[APPSETTINGS_CLASSNAME]
+                            );
+
             if (argument.Equals("Cap")) {
                 new CapGenerator()
                 {
@@ -59,7 +99,7 @@ namespace CSODataGenerator
                     ,
                     References = Config[APPSETTINGS_CAPREFERENCES]
                 }
-                    .Generate(typeof(Vendor));
+                    .Generate(classType);
             }
 
             if (argument.Equals("Context"))
@@ -74,7 +114,7 @@ namespace CSODataGenerator
                     ,
                     ConnectionString = Config[APPSETTINGS_CONNECTIONSTRING]
                 }
-                    .Generate(typeof(Vendor));
+                    .Generate(classType);
             }
 
 
@@ -88,7 +128,7 @@ namespace CSODataGenerator
                     ,
                     Namespace = Config[APPSETTINGS_NAMESPACE]
                 }
-                    .Generate(typeof(Vendor));
+                    .Generate(classType);
             }
 
             if (argument.Equals("ODataController"))
@@ -101,7 +141,7 @@ namespace CSODataGenerator
                     ,
                     References = Config[APPSETTINGS_ODATACONTROLLERREFERENCES]
                 }
-                    .Generate(typeof(Vendor));
+                    .Generate(classType);
 
             }
 
@@ -118,7 +158,7 @@ namespace CSODataGenerator
                     PortNumber = Config[APPSETTINGS_PORTNUMBER]
 
                 }
-                    .Generate(typeof(Vendor));
+                    .Generate(classType);
 
             }
             if (argument.Equals("Startup"))
@@ -132,7 +172,7 @@ namespace CSODataGenerator
                     References = Config[APPSETTINGS_CAPREFERENCES]
 
                 }
-                    .Generate(typeof(Vendor));
+                    .Generate(classType);
 
             }
 

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,11 +16,14 @@
     <Reference Include="CSAc4yClassFW">
       <HintPath>C:\utility\EPAc4yUtility\CSMetaObjectFromXml2DbFW\1.20200701.1\CSAc4yClassFW.dll</HintPath>
     </Reference>
+    <Reference Include="CSAc4yUtilityFW">
+      <HintPath>C:\library\LPCsharp\CSAc4yUtilityFW.dll</HintPath>
+    </Reference>
     <Reference Include="CSARMetaPlanFW">
       <HintPath>C:\library\LPCsharp\CSARMetaPlanFW.dll</HintPath>
     </Reference>
     <Reference Include="CSClassLibForJavaOData">
-      <HintPath>..\..\CSClassLibForJavaOData\CSClassLibForJavaOData\bin\Debug\netcoreapp3.1\CSClassLibForJavaOData.dll</HintPath>
+      <HintPath>..\..\CSClassLibForJavaOData\CSClassLibForJavaOData\bin\Debug\netcoreapp3.0\CSClassLibForJavaOData.dll</HintPath>
     </Reference>
   </ItemGroup>
 
