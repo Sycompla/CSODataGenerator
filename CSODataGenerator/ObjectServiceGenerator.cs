@@ -11,7 +11,6 @@ namespace CSODataGenerator
         #region members
 
         public string OutputPath { get; set; }
-        public string References { get; set; }
         public string Namespace { get; set; }
 
         public Type Type { get; set; }
@@ -23,9 +22,10 @@ namespace CSODataGenerator
         private const string ClassCodeMask = "#classCode#";
         private const string SuffixMask = "#suffix#";
         private const string NamespaceMask = "#namespace#";
-        private const string ReferencesMask = "#references#";
 
         private const string ClassCodeAsVariableMask = "#classCodeAsVariable#";
+        private const string PlanObjectReferenceMask = "#planObjectReference#";
+        private const string CapReferenceMask = "#capReference#";
 
         #endregion members
 
@@ -57,7 +57,8 @@ namespace CSODataGenerator
         {
 
             return ReadIntoString("Head")
-                        .Replace(ReferencesMask, References)
+                        .Replace(PlanObjectReferenceMask, Type.Namespace)
+                        .Replace(CapReferenceMask, Namespace + "Cap")
                         .Replace(ClassCodeMask, Type.Name)
                         .Replace(SuffixMask, Suffix)
                         .Replace(NamespaceMask, Namespace + Suffix)

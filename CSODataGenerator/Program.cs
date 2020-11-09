@@ -84,22 +84,17 @@ namespace CSODataGenerator
             }
 
 
-            Type classType =
-                        _library.GetType(
-                                Config[APPSETTINGS_PLANOBJECTNAMESPACE]
-                                + Config[APPSETTINGS_CLASSNAME]
-                            );
-
             if (argument.Equals("Cap")) {
-                new CapGenerator()
+                foreach (PlanObjectReference planObject in Parameter.PlanObjectReferenceList)
                 {
-                    OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_CAPOUTPUTPATH]
-                    ,
-                    Namespace = Config[APPSETTINGS_NAMESPACE]
-                    ,
-                    References = Config[APPSETTINGS_CAPREFERENCES]
+                    new CapGenerator()
+                    {
+                        OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_CAPOUTPUTPATH]
+                        ,
+                        Namespace = Config[APPSETTINGS_NAMESPACE]
+                    }
+                        .Generate(planObject.classType);
                 }
-                    .Generate(classType);
             }
 
             if (argument.Equals("Context"))
@@ -110,38 +105,40 @@ namespace CSODataGenerator
                     ,
                     Namespace = Config[APPSETTINGS_NAMESPACE]
                     ,
-                    References = Config[APPSETTINGS_CAPREFERENCES]
-                    ,
                     ConnectionString = Config[APPSETTINGS_CONNECTIONSTRING]
+                    ,
+                    Parameter = Parameter
                 }
-                    .Generate(classType);
+                    .Generate(Parameter.PlanObjectReferenceList[0].classType);
             }
 
 
             if (argument.Equals("ObjectService"))
             {
-                new ObjectServiceGenerator()
+                foreach (PlanObjectReference planObject in Parameter.PlanObjectReferenceList)
                 {
-                    OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_SERVICEOUTPUTPATH]
+                    new ObjectServiceGenerator()
+                    {
+                        OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_SERVICEOUTPUTPATH]
                     ,
-                    References = Config[APPSETTINGS_OBJECTSERVICEREFERENCES]
-                    ,
-                    Namespace = Config[APPSETTINGS_NAMESPACE]
+                        Namespace = Config[APPSETTINGS_NAMESPACE]
+                    }
+                    .Generate(planObject.classType);
                 }
-                    .Generate(classType);
             }
 
             if (argument.Equals("ODataController"))
             {
-                new RESTServiceODataControllerGenerator()
-                { 
-                    OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_RESTSERVICEODATAOUTPUTPATH]
+                foreach (PlanObjectReference planObject in Parameter.PlanObjectReferenceList)
+                {
+                    new RESTServiceODataControllerGenerator()
+                    {
+                        OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_RESTSERVICEODATAOUTPUTPATH]
                     ,
-                    Namespace = Config[APPSETTINGS_NAMESPACE]
-                    ,
-                    References = Config[APPSETTINGS_ODATACONTROLLERREFERENCES]
+                        Namespace = Config[APPSETTINGS_NAMESPACE]
+                    }
+                    .Generate(planObject.classType);
                 }
-                    .Generate(classType);
 
             }
 
@@ -158,7 +155,7 @@ namespace CSODataGenerator
                     PortNumber = Config[APPSETTINGS_PORTNUMBER]
 
                 }
-                    .Generate(classType);
+                    .Generate(Parameter.PlanObjectReferenceList[0].classType);
 
             }
             if (argument.Equals("Startup"))
@@ -169,10 +166,10 @@ namespace CSODataGenerator
                     ,
                     NameSpace = Config[APPSETTINGS_NAMESPACE]
                     ,
-                    References = Config[APPSETTINGS_CAPREFERENCES]
+                    Parameter = Parameter
 
                 }
-                    .Generate(classType);
+                    .Generate();
 
             }
 

@@ -2,7 +2,8 @@
 using Modul.Final.Class;
 using System;
 using System.Collections.Generic;
-#references#
+using #planObjectReference#;
+using #capReference#;
 
 namespace  #namespace#
 {

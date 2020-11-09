@@ -47,7 +47,8 @@
             app.UseAuthorization();
             var builder = new ODataConventionModelBuilder(app.ApplicationServices);
 
-            builder.EntitySet<#entity#>("#entity#");
+            #entitySets#
+            
             
             app.Use((context, next) =>
             {

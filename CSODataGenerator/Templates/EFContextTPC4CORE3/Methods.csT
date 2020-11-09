@@ -9,11 +9,10 @@
 
         }
 
-        public DbSet<#classCode#> #classCode#s { get; set; }
-        
+        #dbSets#
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            modelBuilder.Entity<#classCode#>().ToTable("#classCode#s");
-
+            #entities#
         }

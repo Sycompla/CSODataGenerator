@@ -11,7 +11,7 @@ namespace CSODataGenerator
 
         public string OutputPath { get; set; }
         public string NameSpace { get; set; }
-        public string References { get; set; }
+        public CSODataGeneratorParameter Parameter { get; set; }
 
         public Type Type { get; set; }
 
@@ -19,10 +19,12 @@ namespace CSODataGenerator
 
         private const string nameSpace = "#namespace#";
 
-        private const string ReferencesMask = "#references#";
+        private const string PlanObjectReferenceMask = "#planObjectReference#";
 
         private const string entity = "#entity#";
-        private const string controllerName = "#controllerName#";
+        private const string EntitySetsMask = "#entitySets#";
+
+        private const string EntitySetsText = "builder.EntitySet<#entity#>(\"#entity#\");";
         #endregion members
 
         public string ReadIntoString(string fileName)
@@ -54,18 +56,23 @@ namespace CSODataGenerator
 
             return ReadIntoString("Head")
                         .Replace(nameSpace, NameSpace + "ODataService")
-                        .Replace(ReferencesMask, References)
+                        .Replace(PlanObjectReferenceMask, Parameter.PlanObjectReferenceList[0].classType.Namespace)
                         ;
 
         } //GetHead
 
         public string GetMethods()
         {
+            string entitySetsText = "";
+
+            foreach (PlanObjectReference planObject in Parameter.PlanObjectReferenceList)
+            {
+                entitySetsText = entitySetsText + EntitySetsText.Replace(entity, planObject.className) + "\n";
+            }
 
             return
                 ReadIntoString("Method")
-                        .Replace(entity, Type.Name)
-                        .Replace(controllerName, Type.Name + "EFRESTServiceOdata");
+                        .Replace(EntitySetsMask, entitySetsText);
         } //GetMethods
 
         public string GetFoot()

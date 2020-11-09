@@ -14,6 +14,7 @@ namespace CSODataGenerator
         public string Namespace { get; set; }
         public string References { get; set; }
         public string ConnectionString { get; set; }
+        public CSODataGeneratorParameter Parameter { get; set; }
 
         public Type Type { get; set; }
 
@@ -21,8 +22,14 @@ namespace CSODataGenerator
         
         private const string ClassCodeMask = "#classCode#";
         private const string NamespaceMask = "#namespace#";
-        private const string ReferencesMask = "#references#";
+        private const string PlanObjectReferenceMask = "#planObjectReference#";
         private const string ConnectionStirngMask = "#connectionString#";
+        private const string DbSetsMask = "#dbSets#";
+        private const string EntitiesMask = "#entities#";
+        private const string DatabaseMask = "#database#";
+
+        private const string DbSetsText = "public DbSet<#classCode#> #classCode#s { get; set; }";
+        private const string EntitiesText = "modelBuilder.Entity<#classCode#>().ToTable(\"#classCode#s\");";
 
         private const string ClassCodeAsVariableMask = "#classCodeAsVariable#";
 
@@ -56,7 +63,7 @@ namespace CSODataGenerator
         {
 
             return ReadIntoString("Head")
-                        .Replace(ReferencesMask, References)
+                        .Replace(PlanObjectReferenceMask, Type.Namespace)
                         .Replace(NamespaceMask, Namespace + "Cap")
                         ;
 
@@ -72,9 +79,23 @@ namespace CSODataGenerator
 
         public string GetMethods()
         {
+            string entitiesText = "";
+            string dbSetsText = "";
+
+            foreach(PlanObjectReference planObject in Parameter.PlanObjectReferenceList)
+            {
+                entitiesText = entitiesText + EntitiesText.Replace(ClassCodeMask, planObject.className) + "\n";
+            }
+
+            foreach (PlanObjectReference planObject in Parameter.PlanObjectReferenceList)
+            {
+                dbSetsText = dbSetsText + DbSetsText.Replace(ClassCodeMask, planObject.className) + "\n";
+            }
+
             return
                 ReadIntoString("Methods")
-                        .Replace(ClassCodeMask, Type.Name)
+                        .Replace(EntitiesMask, entitiesText)
+                        .Replace(DbSetsMask, dbSetsText)
                         .Replace(ConnectionStirngMask, ConnectionString)
                 ;
         }
@@ -90,7 +111,7 @@ namespace CSODataGenerator
 
             result += GetFoot();
 
-            WriteOut(result, "Controller", OutputPath);
+            WriteOut(result, "Context", OutputPath);
 
             return this;
 
