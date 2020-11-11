@@ -172,6 +172,20 @@ namespace CSODataGenerator
                     .Generate();
 
             }
+            if(argument.Equals("OpenApiDocument"))
+            {
+                new OpenApiGenerator()
+                {
+                    ODataUrl = "http://localhost:8080/odata"
+                    ,
+                    Version = "1.20201111.1"
+                    ,
+                    Parameter = Parameter
+                    ,
+                    OutputPath = Config[APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELOUTPUTPATH]
+                }
+                    .Generate();
+            }
 
 
         } // run
