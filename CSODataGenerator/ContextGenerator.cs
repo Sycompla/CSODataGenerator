@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Ac4yClassModule.Class;
+using Ac4yClassModule.Service;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -26,7 +28,11 @@ namespace CSODataGenerator
         private const string ConnectionStirngMask = "#connectionString#";
         private const string DbSetsMask = "#dbSets#";
         private const string EntitiesMask = "#entities#";
-        private const string DatabaseMask = "#database#";
+        private const string EntityMask = "#entity#";
+        private const string EntityOneMask = "#entityOne#";
+        private const string PropertyManyMask = "#propertyMany#";
+        private const string ReferencePropertyMask = "#referenceProperty#";
+        private const string ConnectionsMask = "#connections#";
 
         private const string DbSetsText = "public DbSet<#classCode#> #classCode#s { get; set; }";
         private const string EntitiesText = "modelBuilder.Entity<#classCode#>().ToTable(\"#classCode#s\");";
@@ -81,6 +87,42 @@ namespace CSODataGenerator
         {
             string entitiesText = "";
             string dbSetsText = "";
+            List<Ac4yClass> connectionClasses = new List<Ac4yClass>();
+            string editedConnectionsText = "";
+
+            foreach(PlanObjectReference planObject in Parameter.PlanObjectReferenceList)
+            {
+                Ac4yClass ac4yClass = new Ac4yClassHandler().GetAc4yClassFromType(planObject.classType);
+
+                foreach(Ac4yProperty property in ac4yClass.PropertyList)
+                {
+                    if(property.NavigationProperty == true)
+                    {
+                        connectionClasses.Add(ac4yClass);
+                        break;
+                    }
+                }
+            }
+
+            foreach(Ac4yClass ac4yClass in connectionClasses)
+            {
+                string connectionsText = ReadIntoString("Connections")
+                                            .Replace(EntityMask, ac4yClass.Name)
+                                            .Replace(PropertyManyMask, ac4yClass.Name + "s")
+                                            ;
+
+                foreach (Ac4yProperty property in ac4yClass.PropertyList)
+                {
+
+                    if (property.NavigationProperty == true)
+                    {
+                        connectionsText = connectionsText.Replace(EntityOneMask, property.Name)
+                                                            .Replace(ReferencePropertyMask, property.Name + "Id");
+                    }
+                }
+
+                editedConnectionsText = editedConnectionsText + connectionsText;
+            }
 
             foreach(PlanObjectReference planObject in Parameter.PlanObjectReferenceList)
             {
@@ -97,6 +139,7 @@ namespace CSODataGenerator
                         .Replace(EntitiesMask, entitiesText)
                         .Replace(DbSetsMask, dbSetsText)
                         .Replace(ConnectionStirngMask, ConnectionString)
+                        .Replace(ConnectionsMask, editedConnectionsText)
                 ;
         }
 

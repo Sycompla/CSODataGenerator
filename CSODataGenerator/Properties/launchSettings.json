@@ -2,7 +2,7 @@
   "profiles": {
     "CSODataGenerator": {
       "commandName": "Project",
-      "commandLineArgs": "OpenApiDocument"
+      "commandLineArgs": "Context"
     }
   }
 }
