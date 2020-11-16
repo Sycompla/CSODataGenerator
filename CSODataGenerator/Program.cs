@@ -182,7 +182,7 @@ namespace CSODataGenerator
                     ,
                     Parameter = Parameter
                     ,
-                    OutputPath = Config[APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELOUTPUTPATH]
+                    OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELOUTPUTPATH]
                 }
                     .Generate();
             }

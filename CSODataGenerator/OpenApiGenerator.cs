@@ -118,6 +118,23 @@ namespace CSODataGenerator
             return resultExample;
         }
 
+        public string GetConnectedPropertyNames(PlanObjectReference planObject)
+        {
+            string result = "";
+            Ac4yClass ac4yClass = new Ac4yClassHandler().GetAc4yClassFromType(planObject.classType);
+
+            foreach(Ac4yProperty property in ac4yClass.PropertyList)
+            {
+                if(property.Cardinality == Ac4yProperty.CardinalityEnum.COLLECTION)
+                {
+                    result = result + property.Name + ", ";
+                }
+            }
+
+            return result;
+
+        }
+
         public Dictionary<string, OpenApiSchema> SchemaFromObject()
         {
             Dictionary<string, OpenApiSchema> Lista = new Dictionary<string, OpenApiSchema>();
@@ -131,22 +148,55 @@ namespace CSODataGenerator
 
                 foreach (Ac4yProperty property in ac4yClass.PropertyList)
                 {
-                    PropertyLista.Add(property.Name, new OpenApiSchema()
+                    if (property.Cardinality == Ac4yProperty.CardinalityEnum.COLLECTION)
                     {
-                        Type = GetConvertedType(property.TypeName, TipusKonverziok),
-                        Format = GetConvertedType(property.TypeName, FormaKonverziok),
-                        Description = Ac4yClassHandler.GetAc4yDescription(property.PropertyInfo)
+                        PropertyLista.Add(property.Name, new OpenApiSchema()
+                        {
+                            Type = "array",
+                            Items = new OpenApiSchema()
+                            {
+                                Type = "object",
+                                Title = property.TypeName
+                            },
+                            Nullable = true,
+                            Description = Ac4yClassHandler.GetAc4yDescription(property.PropertyInfo)
 
-                    });
-                    if (!property.Name.Equals("Id"))
+                        });
+
+                    }
+                    else if(property.NavigationProperty == true)
                     {
-                        PropertyListaWithoutID.Add(property.Name, new OpenApiSchema()
+                        PropertyLista.Add(property.Name, new OpenApiSchema()
+                        {
+                            Type = "object",
+                            Description = Ac4yClassHandler.GetAc4yDescription(property.PropertyInfo),
+                            Title = property.Name,
+                            Nullable = true
+                        });
+
+                    }
+                    else
+                    {
+
+                        PropertyLista.Add(property.Name, new OpenApiSchema()
                         {
                             Type = GetConvertedType(property.TypeName, TipusKonverziok),
                             Format = GetConvertedType(property.TypeName, FormaKonverziok),
                             Description = Ac4yClassHandler.GetAc4yDescription(property.PropertyInfo)
 
                         });
+
+
+                        if (!property.Name.Equals("Id"))
+                        {
+                            PropertyListaWithoutID.Add(property.Name, new OpenApiSchema()
+                            {
+                                Type = GetConvertedType(property.TypeName, TipusKonverziok),
+                                Format = GetConvertedType(property.TypeName, FormaKonverziok),
+                                Description = Ac4yClassHandler.GetAc4yDescription(property.PropertyInfo)
+
+                            });
+                        }
                     }
 
                 };
@@ -304,14 +354,16 @@ namespace CSODataGenerator
                                 },
                                 [OperationType.Delete] = new OpenApiOperation
                                 {
-                                    Description = "Töröl 1, adott rekordot az id alapján",
+                                    Description = "Töröl 1, adott rekordot az id alapján és a rekordhoz tartozó összes kapcsolt rekordot " +
+                                                    "\nKapcsolt rekordok: " + GetConnectedPropertyNames(planObject),
                                     Parameters = new List<OpenApiParameter>
                                     {
                                         new OpenApiParameter
                                         {
                                             Name = "id",
                                             In = ParameterLocation.Path,
-                                            Description = "A rekord id-ével törli a konkrét rekordot",
+                                            Description = "A rekord id-ével törli a konkrét rekordot és a hozzá kapcsolódókat is. " +
+                                                            "\nKapcsolt rekordok: " + GetConnectedPropertyNames(planObject),
                                             Required = true,
                                             Schema = new OpenApiSchema
                                             {
