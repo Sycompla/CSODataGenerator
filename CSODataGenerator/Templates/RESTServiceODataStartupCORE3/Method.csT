@@ -54,6 +54,7 @@
             {
                 context.Response.Headers["Access-Control-Expose-Headers"] = "odata-version";
                 context.Response.Headers["Access-Control-Allow-Headers"] = "odata-version, X-CSRF-TOKEN";
+                context.Response.Headers["OData-Version"] = "4.0";
                 return next.Invoke();
             });
 

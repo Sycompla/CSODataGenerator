@@ -47,6 +47,9 @@ namespace CSODataGenerator
         private const string APPSETTINGS_PARAMETERPATH = "PARAMETERPATH";
         private const string APPSETTINGS_PARAMETERFILENAME = "PARAMETERFILENAME";
 
+        private const string APPSETTINGS_LINUXPATH = "LINUXPATH";
+        private const string APPSETTINGS_LINUXSERVICEFILEDESCRIPTION = "LINUXSERVICEFILEDESCRIPTION";
+
         CSODataGeneratorParameter Parameter { get; set; }
 
         public IConfiguration Config { get; set; }
@@ -181,6 +184,21 @@ namespace CSODataGenerator
                     Version = "1.20201111.1"
                     ,
                     Parameter = Parameter
+                    ,
+                    OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELOUTPUTPATH]
+                }
+                    .Generate();
+            }
+
+            if (argument.Equals("LinuxServiceFile"))
+            {
+                new LinuxServiceFileGenerator()
+                {
+                    DLLName = Config[APPSETTINGS_NAMESPACE]
+                    ,
+                    Description = Config[APPSETTINGS_LINUXSERVICEFILEDESCRIPTION]
+                    ,
+                    LinuxPath = Config[APPSETTINGS_LINUXPATH]
                     ,
                     OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELOUTPUTPATH]
                 }

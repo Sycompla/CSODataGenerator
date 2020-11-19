@@ -1,0 +1,6 @@
+
+            
+            modelBuilder.Entity<#entity#>()
+                .HasOne<#entityOne#>(e => e.#entityOne#)
+                .WithMany(i => i.#propertyMany#)
+                .HasForeignKey(e => e.#referenceProperty#);
