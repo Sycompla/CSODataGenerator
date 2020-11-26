@@ -230,6 +230,7 @@ namespace CSODataGenerator
 
                 log.Error(exception.Message);
                 log.Error(exception.StackTrace);
+                Console.WriteLine(exception.Message + "\n" + exception.StackTrace);
 
                 Console.ReadLine();
 
