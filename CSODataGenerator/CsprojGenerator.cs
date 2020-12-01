@@ -19,13 +19,13 @@ namespace CSODataGenerator
 
         private const string Suffix = "Cap";
 
-        private const string ProjectMask = "</project>";
+        private const string ProjectMask = "</Project>";
         private const string ItemGroup = "  <ItemGroup>\n" +
-                                            "    < None Update=\"Document\\index.html\">\n" +
+                                            "    <None Update=\"Document\\index.html\">\n" +
                                                 "      <CopyToOutputDirectory>Always</CopyToOutputDirectory>\n" +
                                             "    </None>\n" +
                                          "  </ItemGroup>\n\n" +
-                                        "</project>";
+                                        "</Project>";
 
         #endregion members
 

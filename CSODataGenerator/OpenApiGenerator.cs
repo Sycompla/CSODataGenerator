@@ -224,6 +224,7 @@ namespace CSODataGenerator
                             {
                                 [OperationType.Get] = new OpenApiOperation
                                 {
+                                    Description = "Egy, az adott id-hez tartozó, " + planObject.className + " típusú rekord lekérdezése.",
                                     Parameters = new List<OpenApiParameter>
                                     {
                                         new OpenApiParameter
