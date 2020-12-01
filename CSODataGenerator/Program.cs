@@ -50,6 +50,8 @@ namespace CSODataGenerator
         private const string APPSETTINGS_LINUXPATH = "LINUXPATH";
         private const string APPSETTINGS_LINUXSERVICEFILEDESCRIPTION = "LINUXSERVICEFILEDESCRIPTION";
 
+        private const string APPSETTINGS_ODATAURL = "ODATAURL";
+
         CSODataGeneratorParameter Parameter { get; set; }
 
         public IConfiguration Config { get; set; }
@@ -177,15 +179,17 @@ namespace CSODataGenerator
             }
             if(argument.Equals("OpenApiDocument"))
             {
+                Directory.CreateDirectory(Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELOUTPUTPATH] + "Document\\");
+
                 new OpenApiGenerator()
                 {
-                    ODataUrl = "http://localhost:8080/odata"
+                    ODataUrl = Config[APPSETTINGS_ODATAURL]
                     ,
                     Version = "1.20201111.1"
                     ,
                     Parameter = Parameter
                     ,
-                    OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELOUTPUTPATH]
+                    OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELOUTPUTPATH] + "Document\\"
                 }
                     .Generate();
             }
@@ -201,6 +205,17 @@ namespace CSODataGenerator
                     LinuxPath = Config[APPSETTINGS_LINUXPATH]
                     ,
                     OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELOUTPUTPATH]
+                }
+                    .Generate();
+            }
+
+            if(argument.Equals("Csproj"))
+            {
+                new CsprojGenerator()
+                {
+                    OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELOUTPUTPATH]
+                    ,
+                    Name = Config[APPSETTINGS_NAMESPACE]
                 }
                     .Generate();
             }

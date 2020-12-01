@@ -413,6 +413,7 @@ namespace CSODataGenerator
                         {
                             [OperationType.Get] = new OpenApiOperation
                             {
+                                Description = planObject.className + "típusú rekordok lekérdezése",
                                 Responses = new OpenApiResponses
                                 {
                                     ["200"] = new OpenApiResponse

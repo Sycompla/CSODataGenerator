@@ -38,6 +38,13 @@
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), @"Document")),
+                RequestPath = new Microsoft.AspNetCore.Http.PathString("/document")
+            });
+
             app.UseHttpsRedirection();
 
             app.UseRouting();

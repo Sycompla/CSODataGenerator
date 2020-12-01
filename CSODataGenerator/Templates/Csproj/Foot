@@ -1,0 +1,8 @@
+
+  <ItemGroup>
+    <None Update="Document\index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
