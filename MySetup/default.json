@@ -13,10 +13,6 @@
 
   "ODATACONTROLLERREFERENCES": "using VendorPlanObject; using CSVendorCap; using CSVendorObjectService; using static CSVendorObjectService.VendorObjectService;",
 
-  //"LIBRARYPATH": "D:\\Server\\Visual_studio\\CMDGeneration\\CSCMDTry2\\VendorPlanObject\\bin\\Debug\\netstandard2.0\\VendorPlanObject.dll",
-  //"PLANOBJECTNAMESPACE": "VendorPlanObject.",
-  //"LIBRARYPATH": "D:\\Server\\Visual_studio\\OData\\CSTobbEmeletesPlanObject\\bin\\Debug\\netcoreapp3.1\\CSTobbEmeletesPlanObject.dll",
-  //"PLANOBJECTNAMESPACE": "CSTobbEmeletesPlanObject.",
   "LIBRARYPATH": "D:\\Server\\Visual_studio\\CMDGeneration\\CSCMDTry3\\CSODataEntityWithTwoCombo\\bin\\Debug\\netcoreapp3.1\\CSODataEntityWithTwoCombo.dll",
   "PLANOBJECTNAMESPACE": "CSODataEntityWithTwoCombo",
 

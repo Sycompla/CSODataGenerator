@@ -1,8 +1,7 @@
 {
   "profiles": {
     "CSODataGenerator": {
-      "commandName": "Project",
-      "commandLineArgs": "Csproj"
+      "commandName": "Project"
     }
   }
 }

@@ -94,7 +94,7 @@ namespace CSODataGenerator
                 {
                     new CapGenerator()
                     {
-                        OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_CAPOUTPUTPATH]
+                        OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_NAMESPACE] + "Cap\\"
                         ,
                         Namespace = Config[APPSETTINGS_NAMESPACE]
                     }
@@ -106,7 +106,7 @@ namespace CSODataGenerator
             {
                 new ContextGenerator()
                 {
-                    OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_CAPOUTPUTPATH]
+                    OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_NAMESPACE] + "Cap\\"
                     ,
                     Namespace = Config[APPSETTINGS_NAMESPACE]
                     ,
@@ -124,7 +124,7 @@ namespace CSODataGenerator
                 {
                     new ObjectServiceGenerator()
                     {
-                        OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_SERVICEOUTPUTPATH]
+                        OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_NAMESPACE] + "ObjectService\\"
                     ,
                         Namespace = Config[APPSETTINGS_NAMESPACE]
                     }
@@ -138,7 +138,7 @@ namespace CSODataGenerator
                 {
                     new RESTServiceODataControllerGenerator()
                     {
-                        OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_RESTSERVICEODATAOUTPUTPATH]
+                        OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_NAMESPACE] + "ODataService\\Controller\\"
                     ,
                         Namespace = Config[APPSETTINGS_NAMESPACE]
                     }
@@ -151,7 +151,7 @@ namespace CSODataGenerator
             {
                 new RESTServiceProgramClassWithKestrelGenerator()
                 {
-                    OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELOUTPUTPATH]
+                    OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_NAMESPACE] + "ODataService\\"
                     ,
                     IPAddress = Config[APPSETTINGS_IPADDRESS]
                     ,
@@ -167,7 +167,7 @@ namespace CSODataGenerator
             {
                 new RESTServiceStartupClassWithODataGenerator()
                 {
-                    OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELOUTPUTPATH]
+                    OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_NAMESPACE] + "ODataService\\"
                     ,
                     NameSpace = Config[APPSETTINGS_NAMESPACE]
                     ,
@@ -179,7 +179,7 @@ namespace CSODataGenerator
             }
             if(argument.Equals("OpenApiDocument"))
             {
-                Directory.CreateDirectory(Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELOUTPUTPATH] + "Document\\");
+                Directory.CreateDirectory(Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_NAMESPACE] + "ODataService\\Document\\");
 
                 new OpenApiGenerator()
                 {
@@ -189,7 +189,7 @@ namespace CSODataGenerator
                     ,
                     Parameter = Parameter
                     ,
-                    OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELOUTPUTPATH] + "Document\\"
+                    OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_NAMESPACE] + "ODataService\\Document\\"
                 }
                     .Generate();
             }
@@ -204,7 +204,7 @@ namespace CSODataGenerator
                     ,
                     LinuxPath = Config[APPSETTINGS_LINUXPATH]
                     ,
-                    OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELOUTPUTPATH]
+                    OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_NAMESPACE] + "ODataService\\"
                 }
                     .Generate();
             }
