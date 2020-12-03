@@ -87,7 +87,14 @@ namespace CSODataGenerator
                                                     );
 
             }
+            if(argument.Equals("RunBat"))
+            {
+                string exePath = System.Reflection.Assembly.GetEntryAssembly().Location;
+                Console.WriteLine(exePath);
+                System.Diagnostics.Process.Start(exePath + "GeneratorStart.bat");
 
+
+            }
 
             if (argument.Equals("Cap")) {
                 foreach (PlanObjectReference planObject in Parameter.PlanObjectReferenceList)
@@ -138,7 +145,7 @@ namespace CSODataGenerator
                 {
                     new RESTServiceODataControllerGenerator()
                     {
-                        OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_NAMESPACE] + "ODataService\\Controller\\"
+                        OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_NAMESPACE] + "ODataService\\Controllers\\"
                     ,
                         Namespace = Config[APPSETTINGS_NAMESPACE]
                     }
@@ -213,7 +220,7 @@ namespace CSODataGenerator
             {
                 new CsprojGenerator()
                 {
-                    OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELOUTPUTPATH]
+                    OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_NAMESPACE] + "ODataService\\"
                     ,
                     Name = Config[APPSETTINGS_NAMESPACE]
                 }

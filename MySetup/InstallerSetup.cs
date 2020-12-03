@@ -29,7 +29,7 @@ namespace MySetup
 
             try
             {
-                AddConfigurationFileDetails();
+                GetFile();
             }
             catch (Exception e)
             {
@@ -44,7 +44,8 @@ namespace MySetup
 
             try
             {
-                GetFile();
+                MessageBox.Show("Rollback");
+                //GetFile();
             }
             catch (Exception e)
             {
@@ -61,62 +62,83 @@ namespace MySetup
 
         private void GetFile()
         {
-            string path = Context.Parameters["assemblyPath"].Replace("MySetup.dll", "");
-            string jsonIn = File.ReadAllText(path + "ODataServiceGenerator.bat");
-
-            MessageBox.Show(jsonIn);
-            File.ReadAllText("srvfg");
-        }
-
-        private void AddConfigurationFileDetails()
-        {
-            string json = "{\n'ROOTDIRECTORY':'#rootDirectory#','PORTNUMBER':'8888','IPADDRESS':'89.40.120.71','NAMESPACE':'#namespace#','CONNECTIONSTRING':'Server=89.40.120.71;Database=EntityWithCombo;Trusted_Connection=False;uid=SA;pwd=Sycompla9999*;','ODATACONTROLLERREFERENCES':'using VendorPlanObject; using CSVendorCap; using CSVendorObjectService; using static CSVendorObjectService.VendorObjectService;','LIBRARYPATH':'#libraryPath#','PLANOBJECTNAMESPACE':'#planObjectNamespace#','LINUXPATH':'/home/d7p4n4/webapp/','LINUXSERVICEFILEDESCRIPTION':'OData Service for 2 comboboxes','CLASSNAME':'Vendor','PARAMETERPATH':'Config\\','PARAMETERFILENAME':'Parameter.xml','ODATAURL':'https://localhost:5001/odata'\n}";
-            string keys = "";
-            string values = "";
-            string jsonIn = File.ReadAllText("ODataServiceGenerator.bat");
-            foreach (string myString in Context.Parameters.Keys)
-            {
-                keys = keys + myString + "\n";
-            }
-
-            foreach(string myString in Context.Parameters.Values)
-            {
-                values = values + myString + "\n";
-            }
-
-            MessageBox.Show(jsonIn);
+            MessageBox.Show(Context.Parameters["RUN"]);
             try
             {
                 string ROOTDIRECTORY = Context.Parameters["ROOTDIRECTORY"];
                 string LIBRARYPATH = Context.Parameters["LIBRARYPATH"];
                 string PLANOBJECTNAMESPACE = Context.Parameters["PLANOBJECTNAMESPACE"];
                 string NAMESPACE = Context.Parameters["NAMESPACE"];
-
-                // Get the path to the executable file that is being installed on the target computer  
-                string RootDirectoryMask = "#rootDirectory#";
-                string LibraryPathMask = "#libraryPath#";
-                string PlanObjectNamespaceMask = "#planObjectNamespace#";
-                string namespaceMask = "#namespace#";
+                string CLASSNAMELIST = Context.Parameters["CLASSNAMELIST"];
+                string DATABASENAME = Context.Parameters["DATABASENAME"];
+                string RUN = Context.Parameters["RUN"];
+                List<string> classNameList = CLASSNAMELIST.Split(',').ToList();
                 string path = Context.Parameters["assemblyPath"].Replace("MySetup.dll", "");
 
-                //Directory.CreateDirectory(path.Replace("Generator\\", "") + "Appsettings\\");
+                new AppsettingsGenerator()
+                {
+                    OutputPath = path
+                    ,
+                    RootDirectory = ROOTDIRECTORY
+                    ,
+                    InputPath = path
+                    ,
+                    Namespace = NAMESPACE
+                    ,
+                    LibraryPath = LIBRARYPATH
+                    ,
+                    PlanObjectNamespace = PLANOBJECTNAMESPACE
+                    ,
+                    DatabaseName = DATABASENAME
+                }
+                    .Generate();
+
+                new BatFileGenerator()
+                {
+                    OutputPath = path
+                    ,
+                    InputPath = path
+                    ,
+                    GeneratorDirectory = path
+                    ,
+                    RootDiectory = ROOTDIRECTORY
+                    ,
+                    Namespace = NAMESPACE
+                    ,
+                    PlanObjectNamespace = PLANOBJECTNAMESPACE
+                }
+                    .Generate();
+
+                new ParameterGenerator()
+                {
+                    OutputPath = path + "Config\\"
+                    ,
+                    InputPath = path
+                    ,
+                    ClassNames = classNameList
+                    ,
+                    Namespace = PLANOBJECTNAMESPACE
+                }
+                    .Generate();
+                
+                new RunBatFile()
+                {
+                    Path = path
+                    ,
+                    Run = RUN
+                }
+                    .RunBat();
+                
                 MessageBox.Show(path);
 
-                string appsettingsTextEdited = json
-                                                .Replace(RootDirectoryMask, ROOTDIRECTORY)
-                                                .Replace(LibraryPathMask, LIBRARYPATH)
-                                                .Replace(PlanObjectNamespaceMask, PLANOBJECTNAMESPACE)
-                                                .Replace(namespaceMask, NAMESPACE)
-                                                .Replace(",", ",\n")
-                                                .Replace("'", "\"");
-
-                File.WriteAllText(path + "appsettings.json", appsettingsTextEdited);
-
-            }
-            catch
+            } catch(Exception exception)
             {
-                throw;
+                MessageBox.Show("Error> " + exception.Message + "\n\n" + exception.StackTrace);
             }
+        }
+
+        private void AddConfigurationFileDetails()
+        {
         }
     }
 }
