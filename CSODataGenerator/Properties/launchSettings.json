@@ -1,7 +1,8 @@
 {
   "profiles": {
     "CSODataGenerator": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "Cap"
     }
   }
 }

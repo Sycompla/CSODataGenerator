@@ -66,165 +66,6 @@ namespace CSODataGenerator
 
         } // Program
 
-        public void Run(string argument)
-        {
-
-            _library = Assembly.LoadFile(
-                        Config[APPSETTINGS_LIBRARYPATH]
-                    );
-
-            Parameter =
-                (CSODataGeneratorParameter)
-                new Ac4yUtility().Xml2ObjectFromFile(
-                        Config[APPSETTINGS_PARAMETERPATH]
-                        + Config[APPSETTINGS_PARAMETERFILENAME]
-                        , typeof(CSODataGeneratorParameter)
-                    );
-
-            foreach (PlanObjectReference planObject in Parameter.PlanObjectReferenceList)
-            {
-                planObject.classType = _library.GetType(
-                                                    planObject.namespaceName
-                                                    + planObject.className
-                                                    );
-
-            }
-
-            if (argument.Equals("Cap"))
-            {
-                foreach (PlanObjectReference planObject in Parameter.PlanObjectReferenceList)
-                {
-                    new CapGenerator()
-                    {
-                        OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_NAMESPACE] + "Cap\\"
-                        ,
-                        Namespace = Config[APPSETTINGS_NAMESPACE]
-                    }
-                        .Generate(planObject.classType);
-                }
-            }
-
-            if (argument.Equals("Context"))
-            {
-                new ContextGenerator()
-                {
-                    OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_NAMESPACE] + "Cap\\"
-                    ,
-                    Namespace = Config[APPSETTINGS_NAMESPACE]
-                    ,
-                    ConnectionString = Config[APPSETTINGS_CONNECTIONSTRING]
-                    ,
-                    Parameter = Parameter
-                }
-                    .Generate(Parameter.PlanObjectReferenceList[0].classType);
-            }
-
-
-            if (argument.Equals("ObjectService"))
-            {
-                foreach (PlanObjectReference planObject in Parameter.PlanObjectReferenceList)
-                {
-                    new ObjectServiceGenerator()
-                    {
-                        OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_NAMESPACE] + "ObjectService\\"
-                    ,
-                        Namespace = Config[APPSETTINGS_NAMESPACE]
-                    }
-                    .Generate(planObject.classType);
-                }
-            }
-
-            if (argument.Equals("ODataController"))
-            {
-                foreach (PlanObjectReference planObject in Parameter.PlanObjectReferenceList)
-                {
-                    new RESTServiceODataControllerGenerator()
-                    {
-                        OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_NAMESPACE] + "ODataService\\Controllers\\"
-                    ,
-                        Namespace = Config[APPSETTINGS_NAMESPACE]
-                    }
-                    .Generate(planObject.classType);
-                }
-
-            }
-
-            if (argument.Equals("Kestrel"))
-            {
-                new RESTServiceProgramClassWithKestrelGenerator()
-                {
-                    OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_NAMESPACE] + "ODataService\\"
-                    ,
-                    IPAddress = Config[APPSETTINGS_IPADDRESS]
-                    ,
-                    NameSpace = Config[APPSETTINGS_NAMESPACE]
-                    ,
-                    PortNumber = Config[APPSETTINGS_PORTNUMBER]
-
-                }
-                    .Generate(Parameter.PlanObjectReferenceList[0].classType);
-
-            }
-            if (argument.Equals("Startup"))
-            {
-                new RESTServiceStartupClassWithODataGenerator()
-                {
-                    OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_NAMESPACE] + "ODataService\\"
-                    ,
-                    NameSpace = Config[APPSETTINGS_NAMESPACE]
-                    ,
-                    Parameter = Parameter
-
-                }
-                    .Generate();
-
-            }
-            if (argument.Equals("OpenApiDocument"))
-            {
-                Directory.CreateDirectory(Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_NAMESPACE] + "ODataService\\Document\\");
-
-                new OpenApiGenerator()
-                {
-                    ODataUrl = Config[APPSETTINGS_ODATAURL]
-                    ,
-                    Version = "1.20201111.1"
-                    ,
-                    Parameter = Parameter
-                    ,
-                    OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_NAMESPACE] + "ODataService\\Document\\"
-                }
-                    .Generate();
-            }
-
-            if (argument.Equals("LinuxServiceFile"))
-            {
-                new LinuxServiceFileGenerator()
-                {
-                    DLLName = Config[APPSETTINGS_NAMESPACE]
-                    ,
-                    Description = Config[APPSETTINGS_LINUXSERVICEFILEDESCRIPTION]
-                    ,
-                    LinuxPath = Config[APPSETTINGS_LINUXPATH]
-                    ,
-                    OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_NAMESPACE] + "ODataService\\"
-                }
-                    .Generate();
-            }
-
-            if (argument.Equals("Csproj"))
-            {
-                new CsprojGenerator()
-                {
-                    OutputPath = Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_NAMESPACE] + "ODataService\\"
-                    ,
-                    Name = Config[APPSETTINGS_NAMESPACE]
-                }
-                    .Generate();
-            }
-            
-
-
-        } // run
 
         static void Main(string[] args)
         {
@@ -240,9 +81,34 @@ namespace CSODataGenerator
                             .AddJsonFile("appsettings.json", true, true)
                             .Build();
 
-                new Program(config).Run(args[0]);
+                new RunWithDll(args[0])
+                {
+                    RootDirectory = config[APPSETTINGS_ROOTDIRECTORY]
+                    ,
+                    ODataURL = config[APPSETTINGS_ODATAURL]
+                    ,
+                    ConnectionString = config[APPSETTINGS_CONNECTIONSTRING]
+                    ,
+                    LinuxServiceFileDescription = config[APPSETTINGS_LINUXSERVICEFILEDESCRIPTION]
+                    ,
+                    IPAddress = config[APPSETTINGS_IPADDRESS]
+                    ,
+                    LibraryPath = config[APPSETTINGS_LIBRARYPATH]
+                    ,
+                    LinuxPath = config[APPSETTINGS_LINUXPATH]
+                    ,
+                    Namespace = config[APPSETTINGS_NAMESPACE]
+                    ,
+                    ParameterFileName = config[APPSETTINGS_PARAMETERFILENAME]
+                    ,
+                    ParameterPath = config[APPSETTINGS_PARAMETERPATH]
+                    ,
+                    PortNumber = config[APPSETTINGS_PORTNUMBER]
+                }
+                    .Run();
+
             }
-            
+
             catch (Exception exception)
             {
 
