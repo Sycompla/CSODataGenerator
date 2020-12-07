@@ -87,17 +87,17 @@ namespace CSODataGenerator
                 {
                     if (GetConvertedType(property.TypeName, FormaKonverziok).Equals("int32") || GetConvertedType(property.TypeName, FormaKonverziok).Equals("int64"))
                         resultExample.Add(property.Name, new OpenApiInteger(
-                            Int32.Parse(Ac4yClassHandler.GetAc4yExampleValue(property.PropertyInfo))
+                            Int32.Parse(property.ExampleValue)
                             ));
 
                     if (GetConvertedType(property.TypeName, FormaKonverziok).Equals("float"))
                         resultExample.Add(property.Name, new OpenApiFloat(
-                            float.Parse(Ac4yClassHandler.GetAc4yExampleValue(property.PropertyInfo))
+                            float.Parse(property.ExampleValue)
                             ));
 
                     if (GetConvertedType(property.TypeName, FormaKonverziok).Equals("double"))
                         resultExample.Add(property.Name, new OpenApiDouble(
-                            Double.Parse(Ac4yClassHandler.GetAc4yExampleValue(property.PropertyInfo))
+                            Double.Parse(property.ExampleValue)
                             ));
 
                     if (GetConvertedType(property.TypeName, FormaKonverziok).Equals("date"))
@@ -107,11 +107,11 @@ namespace CSODataGenerator
                         resultExample.Add(property.Name, new OpenApiDateTime(DateTime.Now));
 
                     if (GetConvertedType(property.TypeName, TipusKonverziok).Equals("string") && GetConvertedType(property.TypeName, FormaKonverziok).Equals(""))
-                        resultExample.Add(property.Name, new OpenApiString(Ac4yClassHandler.GetAc4yExampleValue(property.PropertyInfo)));
+                        resultExample.Add(property.Name, new OpenApiString(property.ExampleValue));
 
                     if (GetConvertedType(property.TypeName, TipusKonverziok).Equals("boolean") && GetConvertedType(property.TypeName, FormaKonverziok).Equals(""))
                         resultExample.Add(property.Name, new OpenApiBoolean(
-                            Boolean.Parse(Ac4yClassHandler.GetAc4yExampleValue(property.PropertyInfo))
+                            Boolean.Parse(property.ExampleValue)
                             ));
                 }
             };

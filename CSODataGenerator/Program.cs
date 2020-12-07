@@ -1,5 +1,6 @@
 ﻿
 using Ac4yUtilityContainer;
+using CSAc4yModule;
 using CSARMetaPlan.Class;
 using CSClassLibForJavaOData;
 using log4net;
@@ -12,7 +13,10 @@ using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using System.Windows;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace CSODataGenerator
 {
@@ -47,6 +51,7 @@ namespace CSODataGenerator
 
         private const string APPSETTINGS_PARAMETERPATH = "PARAMETERPATH";
         private const string APPSETTINGS_PARAMETERFILENAME = "PARAMETERFILENAME";
+        private const string APPSETTINGS_XMLPATH = "XMLPATH";
 
         private const string APPSETTINGS_LINUXPATH = "LINUXPATH";
         private const string APPSETTINGS_LINUXSERVICEFILEDESCRIPTION = "LINUXSERVICEFILEDESCRIPTION";
@@ -54,6 +59,7 @@ namespace CSODataGenerator
         private const string APPSETTINGS_ODATAURL = "ODATAURL";
 
         CSODataGeneratorParameter Parameter { get; set; }
+        public static Ac4yUtility ac4yUtility = new Ac4yUtility();
 
         public IConfiguration Config { get; set; }
 
@@ -80,6 +86,11 @@ namespace CSODataGenerator
                 config = new ConfigurationBuilder()
                             .AddJsonFile("appsettings.json", true, true)
                             .Build();
+
+                Ac4yModule ac4yClasses = null;
+                string path = config[APPSETTINGS_XMLPATH];
+                string xml = new StreamReader(path, Encoding.UTF8).ReadToEnd();
+                ac4yClasses = (Ac4yModule) ac4yUtility.Xml2Object(xml, typeof(Ac4yModule));
 
                 new RunWithDll(args[0])
                 {
