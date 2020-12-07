@@ -16,8 +16,7 @@ namespace MySetup
         {
             if(Run.Equals("1"))
             {
-
-                System.Diagnostics.Process.Start(Path + "GeneratorStart.bat");
+                System.Diagnostics.Process.Start(Path + "GeneratorStart.cmd");
             }
         }
     }

@@ -62,7 +62,7 @@ namespace MySetup
 
         private void GetFile()
         {
-            MessageBox.Show(Context.Parameters["RUN"]);
+            //MessageBox.Show(Context.Parameters["RUN"]);
             try
             {
                 string ROOTDIRECTORY = Context.Parameters["ROOTDIRECTORY"];
@@ -120,16 +120,16 @@ namespace MySetup
                     Namespace = PLANOBJECTNAMESPACE
                 }
                     .Generate();
-                
-                new RunBatFile()
-                {
-                    Path = path
-                    ,
-                    Run = RUN
-                }
-                    .RunBat();
-                
-                MessageBox.Show(path);
+
+                //new RunBatFile()
+                //{
+                //    Path = path
+                //    ,
+                //    Run = RUN
+                //}
+                //    .RunBat();
+
+                //MessageBox.Show(path);
 
             } catch(Exception exception)
             {

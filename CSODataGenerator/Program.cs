@@ -5,13 +5,14 @@ using CSClassLibForJavaOData;
 using log4net;
 using log4net.Config;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.FileExtensions;
 using Microsoft.Extensions.Configuration.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Windows;
 
 namespace CSODataGenerator
 {
@@ -67,6 +68,7 @@ namespace CSODataGenerator
 
         public void Run(string argument)
         {
+
             _library = Assembly.LoadFile(
                         Config[APPSETTINGS_LIBRARYPATH]
                     );
@@ -79,7 +81,7 @@ namespace CSODataGenerator
                         , typeof(CSODataGeneratorParameter)
                     );
 
-            foreach(PlanObjectReference planObject in Parameter.PlanObjectReferenceList)
+            foreach (PlanObjectReference planObject in Parameter.PlanObjectReferenceList)
             {
                 planObject.classType = _library.GetType(
                                                     planObject.namespaceName
@@ -87,16 +89,9 @@ namespace CSODataGenerator
                                                     );
 
             }
-            if(argument.Equals("RunBat"))
+
+            if (argument.Equals("Cap"))
             {
-                string exePath = System.Reflection.Assembly.GetEntryAssembly().Location;
-                Console.WriteLine(exePath);
-                System.Diagnostics.Process.Start(exePath + "GeneratorStart.bat");
-
-
-            }
-
-            if (argument.Equals("Cap")) {
                 foreach (PlanObjectReference planObject in Parameter.PlanObjectReferenceList)
                 {
                     new CapGenerator()
@@ -184,7 +179,7 @@ namespace CSODataGenerator
                     .Generate();
 
             }
-            if(argument.Equals("OpenApiDocument"))
+            if (argument.Equals("OpenApiDocument"))
             {
                 Directory.CreateDirectory(Config[APPSETTINGS_ROOTDIRECTORY] + Config[APPSETTINGS_NAMESPACE] + "ODataService\\Document\\");
 
@@ -216,7 +211,7 @@ namespace CSODataGenerator
                     .Generate();
             }
 
-            if(argument.Equals("Csproj"))
+            if (argument.Equals("Csproj"))
             {
                 new CsprojGenerator()
                 {
@@ -226,6 +221,7 @@ namespace CSODataGenerator
                 }
                     .Generate();
             }
+            
 
 
         } // run
@@ -245,8 +241,8 @@ namespace CSODataGenerator
                             .Build();
 
                 new Program(config).Run(args[0]);
-
             }
+            
             catch (Exception exception)
             {
 
