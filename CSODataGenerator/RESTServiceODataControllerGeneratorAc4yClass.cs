@@ -6,33 +6,34 @@ using System.Text;
 
 namespace CSODataGenerator
 {
-    class CapGenerator
+    class RESTServiceODataControllerGeneratorAc4yClass
     {
-
         #region members
 
         public string OutputPath { get; set; }
         public string Namespace { get; set; }
 
-        public Type Type { get; set; }
-
+        public Ac4yClass Type { get; set; }
+        
         private const string TemplateExtension = ".csT";
 
-        private const string Suffix = "Cap";
+        private const string Suffix = "Controller";
 
         private const string ClassCodeMask = "#classCode#";
         private const string SuffixMask = "#suffix#";
+        private const string planObjectReferenceMask = "#planObjectReference#";
+        private const string capReferenceMask = "#capReference#";
+        private const string objectServiceReferenceMask = "#objectServiceReference#";
+        private const string staticObjectServiceReferenceMask = "#staticObjectServiceReference#";
         private const string NamespaceMask = "#namespace#";
-        private const string PlanObjectReferenceMask = "#planObjectReference#";
 
-        private const string ClassCodeAsVariableMask = "#classCodeAsVariable#";
 
         #endregion members
 
         public string ReadIntoString(string fileName)
         {
 
-            string textFile = "Templates\\EFCAPTPC4CORE3\\" + fileName + TemplateExtension;
+            string textFile = "Templates\\EFRESTServiceODataControllerTPC4CORE3\\" + fileName + TemplateExtension;
 
             return File.ReadAllText(textFile);
 
@@ -57,10 +58,13 @@ namespace CSODataGenerator
         {
 
             return ReadIntoString("Head")
-                        .Replace(PlanObjectReferenceMask, Type.Namespace)
                         .Replace(ClassCodeMask, Type.Name)
                         .Replace(SuffixMask, Suffix)
-                        .Replace(NamespaceMask, Namespace + "Cap")
+                        .Replace(NamespaceMask, Namespace + "ODataService")
+                        .Replace(planObjectReferenceMask, Type.Namespace)
+                        .Replace(capReferenceMask, Namespace + "Cap")
+                        .Replace(objectServiceReferenceMask, Namespace + "ObjectService")
+                        .Replace(staticObjectServiceReferenceMask, Namespace + "ObjectService." + Type.Name + "ObjectService")
                         ;
 
         }
@@ -80,14 +84,10 @@ namespace CSODataGenerator
             return
                 ReadIntoString("Methods")
                         .Replace(ClassCodeMask, Type.Name)
-                        .Replace(
-                                ClassCodeAsVariableMask
-                                , GetNameWithLowerFirstLetter(Type.Name)
-                            )
                 ;
         }
 
-        public CapGenerator Generate()
+        public RESTServiceODataControllerGeneratorAc4yClass Generate()
         {
 
             string result = null;
@@ -104,7 +104,7 @@ namespace CSODataGenerator
 
         } // Generate
 
-        public CapGenerator Generate(Type type)
+        public RESTServiceODataControllerGeneratorAc4yClass Generate(Ac4yClass type)
         {
 
             Type = type;
@@ -112,7 +112,6 @@ namespace CSODataGenerator
             return Generate();
 
         } // Generate
-
 
         public void Dispose()
         {

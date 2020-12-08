@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CSODataGenerator
 {
-    class CapGenerator
+    class CapGeneratorAc4yClass
     {
 
         #region members
@@ -14,7 +14,7 @@ namespace CSODataGenerator
         public string OutputPath { get; set; }
         public string Namespace { get; set; }
 
-        public Type Type { get; set; }
+        public Ac4yClass Type { get; set; }
 
         private const string TemplateExtension = ".csT";
 
@@ -87,7 +87,7 @@ namespace CSODataGenerator
                 ;
         }
 
-        public CapGenerator Generate()
+        public CapGeneratorAc4yClass Generate()
         {
 
             string result = null;
@@ -104,7 +104,7 @@ namespace CSODataGenerator
 
         } // Generate
 
-        public CapGenerator Generate(Type type)
+        public CapGeneratorAc4yClass Generate(Ac4yClass type)
         {
 
             Type = type;

@@ -1,4 +1,5 @@
-﻿using Ac4yClassModule.Class;
+﻿
+using Ac4yClassModule.Class;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,33 +7,30 @@ using System.Text;
 
 namespace CSODataGenerator
 {
-    class CapGenerator
+    class PlanObjectGenerator
     {
 
         #region members
 
         public string OutputPath { get; set; }
-        public string Namespace { get; set; }
 
-        public Type Type { get; set; }
+        public Ac4yClass Type { get; set; }
 
-        private const string TemplateExtension = ".csT";
+        private const string TemplateExtension = ".txt";
 
         private const string Suffix = "Cap";
 
-        private const string ClassCodeMask = "#classCode#";
-        private const string SuffixMask = "#suffix#";
+        private const string ClassNameMask = "#className#";
+        private const string TypeMask = "#type#";
         private const string NamespaceMask = "#namespace#";
-        private const string PlanObjectReferenceMask = "#planObjectReference#";
-
-        private const string ClassCodeAsVariableMask = "#classCodeAsVariable#";
+        private const string NameMask = "#name#";
 
         #endregion members
 
         public string ReadIntoString(string fileName)
         {
 
-            string textFile = "Templates\\EFCAPTPC4CORE3\\" + fileName + TemplateExtension;
+            string textFile = "Templates\\PlanObject\\" + fileName + TemplateExtension;
 
             return File.ReadAllText(textFile);
 
@@ -40,7 +38,7 @@ namespace CSODataGenerator
 
         public void WriteOut(string text, string fileName, string outputPath)
         {
-            File.WriteAllText(outputPath + fileName + ".cs", text);
+            File.WriteAllText(outputPath + "\\" + fileName + ".cs", text);
 
         }
 
@@ -57,10 +55,8 @@ namespace CSODataGenerator
         {
 
             return ReadIntoString("Head")
-                        .Replace(PlanObjectReferenceMask, Type.Namespace)
-                        .Replace(ClassCodeMask, Type.Name)
-                        .Replace(SuffixMask, Suffix)
-                        .Replace(NamespaceMask, Namespace + "Cap")
+                        .Replace(NamespaceMask, Type.Namespace)
+                        .Replace(ClassNameMask, Type.Name)
                         ;
 
         }
@@ -69,25 +65,24 @@ namespace CSODataGenerator
         {
             return
                 ReadIntoString("Foot")
-                        .Replace(ClassCodeMask, Type.Name)
-                        .Replace(SuffixMask, Suffix)
                         ;
 
         }
 
         public string GetMethods()
         {
-            return
-                ReadIntoString("Methods")
-                        .Replace(ClassCodeMask, Type.Name)
-                        .Replace(
-                                ClassCodeAsVariableMask
-                                , GetNameWithLowerFirstLetter(Type.Name)
-                            )
-                ;
+            string propertiesText = ReadIntoString("Body");
+            string propertiesTextEdited = "";
+            foreach(Ac4yProperty property in Type.PropertyList)
+            {
+                propertiesTextEdited = propertiesTextEdited + propertiesText.Replace(TypeMask, property.Type)
+                                                                            .Replace(NameMask, property.Name);
+            }
+
+            return propertiesTextEdited;
         }
 
-        public CapGenerator Generate()
+        public PlanObjectGenerator Generate()
         {
 
             string result = null;
@@ -98,13 +93,13 @@ namespace CSODataGenerator
 
             result += GetFoot();
 
-            WriteOut(result, Type.Name + Suffix, OutputPath);
+            WriteOut(result, Type.Name, OutputPath);
 
             return this;
 
         } // Generate
 
-        public CapGenerator Generate(Type type)
+        public PlanObjectGenerator Generate(Ac4yClass type)
         {
 
             Type = type;

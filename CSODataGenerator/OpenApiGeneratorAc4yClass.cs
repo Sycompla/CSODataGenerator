@@ -1,5 +1,5 @@
 ﻿using Ac4yClassModule.Class;
-using Ac4yClassModule.Service;
+using CSAc4yModule;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Extensions;
@@ -11,10 +11,10 @@ using System.Text;
 
 namespace CSODataGenerator
 {
-    class OpenApiGenerator
+    class OpenApiGeneratorAc4yClass
     {
         public string OutputPath { get; set; }
-        public CSODataGeneratorParameter Parameter { get; set; }
+        public Ac4yModule Parameter { get; set; }
         public string Version { get; set; }
         public string ODataUrl { get; set; }
 
@@ -116,14 +116,13 @@ namespace CSODataGenerator
             return resultExample;
         }
 
-        public string GetConnectedPropertyNames(PlanObjectReference planObject)
+        public string GetConnectedPropertyNames(Ac4yClass ac4yClass)
         {
             string result = "";
-            Ac4yClass ac4yClass = new Ac4yClassHandler().GetAc4yClassFromType(planObject.classType);
 
-            foreach(Ac4yProperty property in ac4yClass.PropertyList)
+            foreach (Ac4yProperty property in ac4yClass.PropertyList)
             {
-                if(property.Cardinality == Ac4yProperty.CardinalityEnum.COLLECTION)
+                if (property.Cardinality == Ac4yProperty.CardinalityEnum.COLLECTION)
                 {
                     result = result + property.Name + ", ";
                 }
@@ -137,9 +136,8 @@ namespace CSODataGenerator
         {
             Dictionary<string, OpenApiSchema> Lista = new Dictionary<string, OpenApiSchema>();
 
-            foreach(PlanObjectReference planObject in Parameter.PlanObjectReferenceList)
+            foreach (Ac4yClass ac4yClass in Parameter.Ac4yClassList)
             {
-                Ac4yClass ac4yClass = new Ac4yClassHandler().GetAc4yClassFromType(planObject.classType);
 
                 Dictionary<string, OpenApiSchema> PropertyLista = new Dictionary<string, OpenApiSchema>();
                 Dictionary<string, OpenApiSchema> PropertyListaWithoutID = new Dictionary<string, OpenApiSchema>();
@@ -162,7 +160,7 @@ namespace CSODataGenerator
                         });
 
                     }
-                    else if(property.NavigationProperty == true)
+                    else if (property.NavigationProperty == true)
                     {
                         PropertyLista.Add(property.Name, new OpenApiSchema()
                         {
@@ -212,17 +210,17 @@ namespace CSODataGenerator
         {
             OpenApiPaths paths = new OpenApiPaths();
 
-            foreach (PlanObjectReference planObject in Parameter.PlanObjectReferenceList)
+            foreach (Ac4yClass ac4yClass in Parameter.Ac4yClassList)
             {
                 paths
                     .Add(
-                        "/" + planObject.className + "/{id}", new OpenApiPathItem
+                        "/" + ac4yClass.Name + "/{id}", new OpenApiPathItem
                         {
                             Operations = new Dictionary<OperationType, OpenApiOperation>
                             {
                                 [OperationType.Get] = new OpenApiOperation
                                 {
-                                    Description = "Egy, az adott id-hez tartozó, " + planObject.className + " típusú rekord lekérdezése.",
+                                    Description = "Egy, az adott id-hez tartozó, " + ac4yClass.Name + " típusú rekord lekérdezése.",
                                     Parameters = new List<OpenApiParameter>
                                     {
                                         new OpenApiParameter
@@ -252,7 +250,7 @@ namespace CSODataGenerator
                                                         Reference = new OpenApiReference
                                                         {
                                                             Type = ReferenceType.Schema,
-                                                            Id = planObject.className
+                                                            Id = ac4yClass.Name
                                                         }
                                                     }
                                                 }
@@ -307,14 +305,14 @@ namespace CSODataGenerator
                                         {
                                             ["application/json"] = new OpenApiMediaType
                                             {
-                                                Example = GenerateExample(new Ac4yClassHandler().GetAc4yClassFromType(planObject.classType)),
+                                                Example = GenerateExample(ac4yClass),
                                                 Schema = new OpenApiSchema
                                                 {
                                                     Title = "Vendor",
                                                     Reference = new OpenApiReference
                                                     {
                                                         Type = ReferenceType.Schema,
-                                                        Id = planObject.className + "WithoutID"
+                                                        Id = ac4yClass.Name + "WithoutID"
                                                     }
                                                 }
                                             }
@@ -354,7 +352,7 @@ namespace CSODataGenerator
                                 [OperationType.Delete] = new OpenApiOperation
                                 {
                                     Description = "Töröl 1, adott rekordot az id alapján és a rekordhoz tartozó összes kapcsolt rekordot " +
-                                                    "\nKapcsolt rekordok: " + GetConnectedPropertyNames(planObject),
+                                                    "\nKapcsolt rekordok: " + GetConnectedPropertyNames(ac4yClass),
                                     Parameters = new List<OpenApiParameter>
                                     {
                                         new OpenApiParameter
@@ -362,7 +360,7 @@ namespace CSODataGenerator
                                             Name = "id",
                                             In = ParameterLocation.Path,
                                             Description = "A rekord id-ével törli a konkrét rekordot és a hozzá kapcsolódókat is. " +
-                                                            "\nKapcsolt rekordok: " + GetConnectedPropertyNames(planObject),
+                                                            "\nKapcsolt rekordok: " + GetConnectedPropertyNames(ac4yClass),
                                             Required = true,
                                             Schema = new OpenApiSchema
                                             {
@@ -402,17 +400,17 @@ namespace CSODataGenerator
                                     }
                                 }
                             }
-                        }  
+                        }
                     );
 
                 paths.Add(
-                    "/" + planObject.className, new OpenApiPathItem
+                    "/" + ac4yClass.Name, new OpenApiPathItem
                     {
                         Operations = new Dictionary<OperationType, OpenApiOperation>
                         {
                             [OperationType.Get] = new OpenApiOperation
                             {
-                                Description = planObject.className + "típusú rekordok lekérdezése",
+                                Description = ac4yClass.Name + "típusú rekordok lekérdezése",
                                 Responses = new OpenApiResponses
                                 {
                                     ["200"] = new OpenApiResponse
@@ -430,7 +428,7 @@ namespace CSODataGenerator
                                                         Reference = new OpenApiReference
                                                         {
                                                             Type = ReferenceType.Schema,
-                                                            Id = planObject.className
+                                                            Id = ac4yClass.Name
                                                         }
                                                     }
                                                 }
@@ -472,14 +470,14 @@ namespace CSODataGenerator
                                     {
                                         ["application/json"] = new OpenApiMediaType
                                         {
-                                            Example = GenerateExample(new Ac4yClassHandler().GetAc4yClassFromType(planObject.classType)),
+                                            Example = GenerateExample(ac4yClass),
                                             Schema = new OpenApiSchema
                                             {
                                                 Title = "Vendor",
                                                 Reference = new OpenApiReference
                                                 {
                                                     Type = ReferenceType.Schema,
-                                                    Id = planObject.className + "WithoutID"
+                                                    Id = ac4yClass.Name + "WithoutID"
                                                 }
                                             }
                                         }
@@ -547,8 +545,9 @@ namespace CSODataGenerator
             return document;
         }
 
-        public OpenApiGenerator Generate()
+        public OpenApiGeneratorAc4yClass Generate()
         {
+
             OpenApiDocument document = GenerateDocument();
             string result = document.Serialize(OpenApiSpecVersion.OpenApi3_0, OpenApiFormat.Json);
 

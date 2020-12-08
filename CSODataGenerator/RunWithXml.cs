@@ -1,16 +1,20 @@
-﻿using System;
+﻿using Ac4yClassModule.Class;
+using CSAc4yModule;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace CSODataGenerator
 {
     class RunWithXml
-    {/*
+    {
         public string LibraryPath { get; set; }
         public string ParameterPath { get; set; }
         public string ParameterFileName { get; set; }
         public string RootDirectory { get; set; }
         public string Namespace { get; set; }
+        public string PLanObjectNamespace { get; set; }
         public string ConnectionString { get; set; }
         public string PortNumber { get; set; }
         public string IPAddress { get; set; }
@@ -19,58 +23,50 @@ namespace CSODataGenerator
         public string LinuxServiceFileDescription { get; set; }
 
         private string Argument { get; set; }
-        private Assembly _library { get; set; }
+        private Ac4yModule Ac4yModule { get; set; }
 
         CSODataGeneratorParameter Parameter { get; set; }
 
-        public RunWithXml(string args)
+        public RunWithXml(string args, Ac4yModule ac4yModule)
         {
             Argument = args;
+            Ac4yModule = ac4yModule;
         }
 
         public RunWithXml() { }
 
         public void Run()
         {
-
-            _library = Assembly.LoadFile(
-                        LibraryPath
-                    );
-
-            Parameter =
-                (CSODataGeneratorParameter)
-                new Ac4yUtility().Xml2ObjectFromFile(
-                        ParameterPath
-                        + ParameterFileName
-                        , typeof(CSODataGeneratorParameter)
-                    );
-
-            foreach (PlanObjectReference planObject in Parameter.PlanObjectReferenceList)
+            if (Argument.Equals("PlanObject"))
             {
-                planObject.classType = _library.GetType(
-                                                    planObject.namespaceName
-                                                    + planObject.className
-                                                    );
-
+                foreach (Ac4yClass planObject in Ac4yModule.Ac4yClassList)
+                {
+                    new PlanObjectGenerator()
+                    {
+                        OutputPath = RootDirectory + PLanObjectNamespace
+                    }
+                        .Generate(planObject);
+                }
             }
 
-            if (Argument.Equals("Cap"))
+                    if (Argument.Equals("Cap"))
             {
-                foreach (PlanObjectReference planObject in Parameter.PlanObjectReferenceList)
+                foreach (Ac4yClass planObject in Ac4yModule.Ac4yClassList)
                 {
-                    new CapGenerator()
+
+                    new CapGeneratorAc4yClass()
                     {
                         OutputPath = RootDirectory + Namespace + "Cap\\"
                         ,
                         Namespace = Namespace
                     }
-                        .Generate(planObject.classType);
+                        .Generate(planObject);
                 }
             }
 
             if (Argument.Equals("Context"))
             {
-                new ContextGenerator()
+                new ContextGeneratorAc4yClass()
                 {
                     OutputPath = RootDirectory + Namespace + "Cap\\"
                     ,
@@ -78,37 +74,37 @@ namespace CSODataGenerator
                     ,
                     ConnectionString = ConnectionString
                     ,
-                    Parameter = Parameter
+                    Parameter = Ac4yModule
                 }
-                    .Generate(Parameter.PlanObjectReferenceList[0].classType);
+                    .Generate(Ac4yModule.Ac4yClassList[0]);
             }
 
 
             if (Argument.Equals("ObjectService"))
             {
-                foreach (PlanObjectReference planObject in Parameter.PlanObjectReferenceList)
+                foreach (Ac4yClass ac4yClass in Ac4yModule.Ac4yClassList)
                 {
-                    new ObjectServiceGenerator()
+                    new ObjectServiceGeneratorAc4yClass()
                     {
                         OutputPath = RootDirectory + Namespace + "ObjectService\\"
                     ,
                         Namespace = Namespace
                     }
-                    .Generate(planObject.classType);
+                    .Generate(ac4yClass);
                 }
             }
 
             if (Argument.Equals("ODataController"))
             {
-                foreach (PlanObjectReference planObject in Parameter.PlanObjectReferenceList)
+                foreach (Ac4yClass ac4yClass in Ac4yModule.Ac4yClassList)
                 {
-                    new RESTServiceODataControllerGenerator()
+                    new RESTServiceODataControllerGeneratorAc4yClass()
                     {
                         OutputPath = RootDirectory + Namespace + "ODataService\\Controllers\\"
                     ,
                         Namespace = Namespace
                     }
-                    .Generate(planObject.classType);
+                    .Generate(ac4yClass);
                 }
 
             }
@@ -126,40 +122,41 @@ namespace CSODataGenerator
                     PortNumber = PortNumber
 
                 }
-                    .Generate(Parameter.PlanObjectReferenceList[0].classType);
+                    .Generate();
 
             }
             if (Argument.Equals("Startup"))
             {
-                new RESTServiceStartupClassWithODataGenerator()
+                new RESTServiceStartupClassWithODataGeneratorAc4yClass()
                 {
                     OutputPath = RootDirectory + Namespace + "ODataService\\"
                     ,
                     NameSpace = Namespace
                     ,
-                    Parameter = Parameter
+                    Parameter = Ac4yModule
 
                 }
                     .Generate();
 
             }
+
             if (Argument.Equals("OpenApiDocument"))
             {
                 Directory.CreateDirectory(RootDirectory + Namespace + "ODataService\\Document\\");
 
-                new OpenApiGenerator()
+                new OpenApiGeneratorAc4yClass()
                 {
                     ODataUrl = ODataURL
                     ,
                     Version = "1.20201111.1"
                     ,
-                    Parameter = Parameter
+                    Parameter = Ac4yModule
                     ,
                     OutputPath = RootDirectory + Namespace + "ODataService\\Document\\"
                 }
                     .Generate();
             }
-
+            /*
             if (Argument.Equals("LinuxServiceFile"))
             {
                 new LinuxServiceFileGenerator()
@@ -173,7 +170,7 @@ namespace CSODataGenerator
                     OutputPath = RootDirectory + Namespace + "ODataService\\"
                 }
                     .Generate();
-            }
+            }*/
 
             if (Argument.Equals("Csproj"))
             {
@@ -186,8 +183,8 @@ namespace CSODataGenerator
                     .Generate();
             }
 
-
+            
         
-        } // run*/
+        } // run
     }
 }

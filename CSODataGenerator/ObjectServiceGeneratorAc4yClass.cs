@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CSODataGenerator
 {
-    class CapGenerator
+    class ObjectServiceGeneratorAc4yClass
     {
 
         #region members
@@ -14,25 +14,26 @@ namespace CSODataGenerator
         public string OutputPath { get; set; }
         public string Namespace { get; set; }
 
-        public Type Type { get; set; }
+        public Ac4yClass Type { get; set; }
 
         private const string TemplateExtension = ".csT";
 
-        private const string Suffix = "Cap";
+        private const string Suffix = "ObjectService";
 
         private const string ClassCodeMask = "#classCode#";
         private const string SuffixMask = "#suffix#";
         private const string NamespaceMask = "#namespace#";
-        private const string PlanObjectReferenceMask = "#planObjectReference#";
 
         private const string ClassCodeAsVariableMask = "#classCodeAsVariable#";
+        private const string PlanObjectReferenceMask = "#planObjectReference#";
+        private const string CapReferenceMask = "#capReference#";
 
         #endregion members
 
         public string ReadIntoString(string fileName)
         {
 
-            string textFile = "Templates\\EFCAPTPC4CORE3\\" + fileName + TemplateExtension;
+            string textFile = "Templates\\EFServiceTPC4CORE3\\" + fileName + TemplateExtension;
 
             return File.ReadAllText(textFile);
 
@@ -58,9 +59,10 @@ namespace CSODataGenerator
 
             return ReadIntoString("Head")
                         .Replace(PlanObjectReferenceMask, Type.Namespace)
+                        .Replace(CapReferenceMask, Namespace + "Cap")
                         .Replace(ClassCodeMask, Type.Name)
                         .Replace(SuffixMask, Suffix)
-                        .Replace(NamespaceMask, Namespace + "Cap")
+                        .Replace(NamespaceMask, Namespace + Suffix)
                         ;
 
         }
@@ -75,8 +77,23 @@ namespace CSODataGenerator
 
         }
 
+        public string GetRequestResponseClasses()
+        {
+
+            return
+                ReadIntoString("RequestResponseClasses")
+                        .Replace(ClassCodeMask, Type.Name)
+                        .Replace(
+                                ClassCodeAsVariableMask
+                                , GetNameWithLowerFirstLetter(Type.Name)
+                            )
+                ;
+
+        } // RequestResponseClasses
+
         public string GetMethods()
         {
+
             return
                 ReadIntoString("Methods")
                         .Replace(ClassCodeMask, Type.Name)
@@ -85,9 +102,10 @@ namespace CSODataGenerator
                                 , GetNameWithLowerFirstLetter(Type.Name)
                             )
                 ;
-        }
 
-        public CapGenerator Generate()
+        } // GetMethods
+
+        public ObjectServiceGeneratorAc4yClass Generate()
         {
 
             string result = null;
@@ -95,6 +113,8 @@ namespace CSODataGenerator
             result += GetHead();
 
             result += GetMethods();
+
+            result += GetRequestResponseClasses();
 
             result += GetFoot();
 
@@ -104,7 +124,7 @@ namespace CSODataGenerator
 
         } // Generate
 
-        public CapGenerator Generate(Type type)
+        public ObjectServiceGeneratorAc4yClass Generate(Ac4yClass type)
         {
 
             Type = type;
@@ -113,12 +133,11 @@ namespace CSODataGenerator
 
         } // Generate
 
-
         public void Dispose()
         {
             //throw new NotImplementedException();
         }
 
-    }
+    } // EFServiceGenerator
 
-} // EFGenerala
+} // EFGeneralas

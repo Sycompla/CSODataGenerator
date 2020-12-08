@@ -1,0 +1,2 @@
+﻿
+public #type# #name# { get; set; }

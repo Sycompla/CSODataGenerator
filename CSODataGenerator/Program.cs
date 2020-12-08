@@ -87,11 +87,37 @@ namespace CSODataGenerator
                             .AddJsonFile("appsettings.json", true, true)
                             .Build();
 
-                Ac4yModule ac4yClasses = null;
-                string path = config[APPSETTINGS_XMLPATH];
-                string xml = new StreamReader(path, Encoding.UTF8).ReadToEnd();
-                ac4yClasses = (Ac4yModule) ac4yUtility.Xml2Object(xml, typeof(Ac4yModule));
+                
+                Ac4yModule ac4yClasses = (Ac4yModule) ac4yUtility.Xml2ObjectFromFile(config[APPSETTINGS_XMLPATH], typeof(Ac4yModule));
 
+                new RunWithXml(args[0], ac4yClasses)
+                {
+                    RootDirectory = config[APPSETTINGS_ROOTDIRECTORY]
+                    ,
+                    ODataURL = config[APPSETTINGS_ODATAURL]
+                    ,
+                    ConnectionString = config[APPSETTINGS_CONNECTIONSTRING]
+                    ,
+                    LinuxServiceFileDescription = config[APPSETTINGS_LINUXSERVICEFILEDESCRIPTION]
+                    ,
+                    IPAddress = config[APPSETTINGS_IPADDRESS]
+                    ,
+                    LibraryPath = config[APPSETTINGS_LIBRARYPATH]
+                    ,
+                    LinuxPath = config[APPSETTINGS_LINUXPATH]
+                    ,
+                    Namespace = config[APPSETTINGS_NAMESPACE]
+                    ,
+                    ParameterFileName = config[APPSETTINGS_PARAMETERFILENAME]
+                    ,
+                    ParameterPath = config[APPSETTINGS_PARAMETERPATH]
+                    ,
+                    PortNumber = config[APPSETTINGS_PORTNUMBER]
+                    ,
+                    PLanObjectNamespace = config[APPSETTINGS_PLANOBJECTNAMESPACE]
+                }
+                    .Run();
+                /*
                 new RunWithDll(args[0])
                 {
                     RootDirectory = config[APPSETTINGS_ROOTDIRECTORY]
@@ -117,7 +143,7 @@ namespace CSODataGenerator
                     PortNumber = config[APPSETTINGS_PORTNUMBER]
                 }
                     .Run();
-
+                */
             }
 
             catch (Exception exception)

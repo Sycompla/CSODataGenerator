@@ -7,6 +7,13 @@ set planObjectPath=%mainDir%#planObjectNamespace#
 set namespace=#namespace#
 
 cd %mainDir%
+dotnet new classlib -n #planObjectNamespace# -f netcoreapp3.1
+cd %generatorDir%
+CSODataGenerator.exe "PlanObject"
+cd %mainDir%\%planObjectNamespace%
+dotnet build
+
+cd %mainDir%
 dotnet new classlib -n %namespace%Cap -f netcoreapp3.1
 cd %namespace%Cap
 dotnet add package Microsoft.EntityFrameworkCore
