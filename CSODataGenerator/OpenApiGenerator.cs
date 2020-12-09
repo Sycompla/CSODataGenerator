@@ -18,6 +18,8 @@ namespace CSODataGenerator
         public string Version { get; set; }
         public string ODataUrl { get; set; }
 
+        private Ac4yClassHandler Ac4yClassHandler = new Ac4yClassHandler();
+
         public Dictionary<string, string> FormaKonverziok = new Dictionary<string, string>()
         {
             { "Int32", "int32" },
@@ -85,17 +87,17 @@ namespace CSODataGenerator
                 {
                     if (GetConvertedType(property.TypeName, FormaKonverziok).Equals("int32") || GetConvertedType(property.TypeName, FormaKonverziok).Equals("int64"))
                         resultExample.Add(property.Name, new OpenApiInteger(
-                            Int32.Parse(property.ExampleValue)
+                            Int32.Parse(Ac4yClassHandler.GetAc4yExampleValue(property.PropertyInfo))
                             ));
 
                     if (GetConvertedType(property.TypeName, FormaKonverziok).Equals("float"))
                         resultExample.Add(property.Name, new OpenApiFloat(
-                            float.Parse(property.ExampleValue)
+                            float.Parse(Ac4yClassHandler.GetAc4yExampleValue(property.PropertyInfo))
                             ));
 
                     if (GetConvertedType(property.TypeName, FormaKonverziok).Equals("double"))
                         resultExample.Add(property.Name, new OpenApiDouble(
-                            Double.Parse(property.ExampleValue)
+                            Double.Parse(Ac4yClassHandler.GetAc4yExampleValue(property.PropertyInfo))
                             ));
 
                     if (GetConvertedType(property.TypeName, FormaKonverziok).Equals("date"))
@@ -105,11 +107,11 @@ namespace CSODataGenerator
                         resultExample.Add(property.Name, new OpenApiDateTime(DateTime.Now));
 
                     if (GetConvertedType(property.TypeName, TipusKonverziok).Equals("string") && GetConvertedType(property.TypeName, FormaKonverziok).Equals(""))
-                        resultExample.Add(property.Name, new OpenApiString(property.ExampleValue));
+                        resultExample.Add(property.Name, new OpenApiString(Ac4yClassHandler.GetAc4yExampleValue(property.PropertyInfo)));
 
                     if (GetConvertedType(property.TypeName, TipusKonverziok).Equals("boolean") && GetConvertedType(property.TypeName, FormaKonverziok).Equals(""))
                         resultExample.Add(property.Name, new OpenApiBoolean(
-                            Boolean.Parse(property.ExampleValue)
+                            Boolean.Parse(Ac4yClassHandler.GetAc4yExampleValue(property.PropertyInfo))
                             ));
                 }
             };
@@ -121,9 +123,9 @@ namespace CSODataGenerator
             string result = "";
             Ac4yClass ac4yClass = new Ac4yClassHandler().GetAc4yClassFromType(planObject.classType);
 
-            foreach(Ac4yProperty property in ac4yClass.PropertyList)
+            foreach (Ac4yProperty property in ac4yClass.PropertyList)
             {
-                if(property.Cardinality == Ac4yProperty.CardinalityEnum.COLLECTION)
+                if (property.Cardinality == Ac4yProperty.CardinalityEnum.COLLECTION)
                 {
                     result = result + property.Name + ", ";
                 }
@@ -137,7 +139,7 @@ namespace CSODataGenerator
         {
             Dictionary<string, OpenApiSchema> Lista = new Dictionary<string, OpenApiSchema>();
 
-            foreach(PlanObjectReference planObject in Parameter.PlanObjectReferenceList)
+            foreach (PlanObjectReference planObject in Parameter.PlanObjectReferenceList)
             {
                 Ac4yClass ac4yClass = new Ac4yClassHandler().GetAc4yClassFromType(planObject.classType);
 
@@ -157,17 +159,17 @@ namespace CSODataGenerator
                                 Title = property.TypeName
                             },
                             Nullable = true,
-                            Description = property.Description
+                            Description = Ac4yClassHandler.GetAc4yDescription(property.PropertyInfo)
 
                         });
 
                     }
-                    else if(property.NavigationProperty == true)
+                    else if (property.NavigationProperty == true)
                     {
                         PropertyLista.Add(property.Name, new OpenApiSchema()
                         {
                             Type = "object",
-                            Description = property.Description,
+                            Description = Ac4yClassHandler.GetAc4yDescription(property.PropertyInfo),
                             Title = property.Name,
                             Nullable = true
                         });
@@ -180,7 +182,7 @@ namespace CSODataGenerator
                         {
                             Type = GetConvertedType(property.TypeName, TipusKonverziok),
                             Format = GetConvertedType(property.TypeName, FormaKonverziok),
-                            Description = property.Description
+                            Description = Ac4yClassHandler.GetAc4yDescription(property.PropertyInfo)
 
                         });
 
@@ -191,7 +193,7 @@ namespace CSODataGenerator
                             {
                                 Type = GetConvertedType(property.TypeName, TipusKonverziok),
                                 Format = GetConvertedType(property.TypeName, FormaKonverziok),
-                                Description = property.Description
+                                Description = Ac4yClassHandler.GetAc4yDescription(property.PropertyInfo)
 
                             });
                         }
@@ -402,7 +404,7 @@ namespace CSODataGenerator
                                     }
                                 }
                             }
-                        }  
+                        }
                     );
 
                 paths.Add(

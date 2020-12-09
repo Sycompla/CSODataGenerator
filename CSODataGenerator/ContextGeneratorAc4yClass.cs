@@ -108,7 +108,7 @@ namespace CSODataGenerator
             {
                 string connectionsText = ReadIntoString("Connections")
                                             .Replace(EntityMask, ac4yClass.Name)
-                                            .Replace(PropertyManyMask, ac4yClass.Name + "s")
+                                            .Replace(PropertyManyMask, ac4yClass.Name.Replace("Ac4yMeta", "") + "List")
                                             ;
 
                 foreach (Ac4yProperty property in ac4yClass.PropertyList)

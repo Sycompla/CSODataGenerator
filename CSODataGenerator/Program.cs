@@ -88,8 +88,8 @@ namespace CSODataGenerator
                             .Build();
 
                 
-                Ac4yModule ac4yClasses = (Ac4yModule) ac4yUtility.Xml2ObjectFromFile(config[APPSETTINGS_XMLPATH], typeof(Ac4yModule));
-
+                //Ac4yModule ac4yClasses = (Ac4yModule) ac4yUtility.Xml2ObjectFromFile(config[APPSETTINGS_XMLPATH], typeof(Ac4yModule));
+                /*
                 new RunWithXml(args[0], ac4yClasses)
                 {
                     RootDirectory = config[APPSETTINGS_ROOTDIRECTORY]
@@ -117,7 +117,7 @@ namespace CSODataGenerator
                     PLanObjectNamespace = config[APPSETTINGS_PLANOBJECTNAMESPACE]
                 }
                     .Run();
-                /*
+                */
                 new RunWithDll(args[0])
                 {
                     RootDirectory = config[APPSETTINGS_ROOTDIRECTORY]
@@ -143,7 +143,7 @@ namespace CSODataGenerator
                     PortNumber = config[APPSETTINGS_PORTNUMBER]
                 }
                     .Run();
-                */
+                
             }
 
             catch (Exception exception)
