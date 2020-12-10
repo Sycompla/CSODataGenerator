@@ -15,6 +15,7 @@
   "PARAMETERPATH": "Config\\",
   "PARAMETERFILENAME": "Parameter.xml",
   "XMLPATH": "D:\\Serialization.xml",
+  "PLANOBJECTFOLDERNAME": "#planObjectFolderName#",
 
   "ODATAURL": "https://localhost:5001/odata"
 

@@ -1,5 +1,4 @@
 ﻿using Ac4yClassModule.Class;
-using CSAc4yModule;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Extensions;
@@ -66,7 +65,14 @@ namespace CSODataGenerator
             string result = null;
             try
             {
-                result = dictionary[type];
+                if (dictionary.TryGetValue(type, out result))
+                {
+                    result = dictionary[type];
+                }
+                else
+                {
+                    result = "object";
+                }
             }
             catch (Exception exception)
             {
@@ -122,7 +128,7 @@ namespace CSODataGenerator
 
             foreach (Ac4yProperty property in ac4yClass.PropertyList)
             {
-                if (property.Cardinality == Ac4yProperty.CardinalityEnum.COLLECTION)
+                if (property.Cardinality.Equals("COLLECTION"))
                 {
                     result = result + property.Name + ", ";
                 }
@@ -136,7 +142,7 @@ namespace CSODataGenerator
         {
             Dictionary<string, OpenApiSchema> Lista = new Dictionary<string, OpenApiSchema>();
 
-            foreach (Ac4yClass ac4yClass in Parameter.Ac4yClassList)
+            foreach (Ac4yClass ac4yClass in Parameter.ClassList)
             {
 
                 Dictionary<string, OpenApiSchema> PropertyLista = new Dictionary<string, OpenApiSchema>();
@@ -144,7 +150,7 @@ namespace CSODataGenerator
 
                 foreach (Ac4yProperty property in ac4yClass.PropertyList)
                 {
-                    if (property.Cardinality == Ac4yProperty.CardinalityEnum.COLLECTION)
+                    if (property.Cardinality.Equals("COLLECTION"))
                     {
                         PropertyLista.Add(property.Name, new OpenApiSchema()
                         {
@@ -210,7 +216,7 @@ namespace CSODataGenerator
         {
             OpenApiPaths paths = new OpenApiPaths();
 
-            foreach (Ac4yClass ac4yClass in Parameter.Ac4yClassList)
+            foreach (Ac4yClass ac4yClass in Parameter.ClassList)
             {
                 paths
                     .Add(

@@ -1,5 +1,4 @@
 ﻿using Ac4yClassModule.Class;
-using CSAc4yModule;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -57,7 +56,7 @@ namespace CSODataGenerator
 
             return ReadIntoString("Head")
                         .Replace(nameSpace, NameSpace + "ODataService")
-                        .Replace(PlanObjectReferenceMask, Parameter.Ac4yClassList[0].Namespace)
+                        .Replace(PlanObjectReferenceMask, Parameter.ClassList[0].Namespace)
                         ;
 
         } //GetHead
@@ -66,7 +65,7 @@ namespace CSODataGenerator
         {
             string entitySetsText = "";
 
-            foreach (Ac4yClass ac4yClass in Parameter.Ac4yClassList)
+            foreach (Ac4yClass ac4yClass in Parameter.ClassList)
             {
                 entitySetsText = entitySetsText + EntitySetsText.Replace(entity, ac4yClass.Name) + "\n";
             }

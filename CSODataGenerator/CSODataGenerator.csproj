@@ -18,14 +18,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="CSAc4yClassFW">
-      <HintPath>C:\library\LPCsharp\CSAc4yClassFW.dll</HintPath>
+    <Reference Include="CSAc4yClassCore">
+      <HintPath>C:\library\LPCsharp\CSAc4yClassCore.dll</HintPath>
     </Reference>
     <Reference Include="CSAc4yFW">
       <HintPath>C:\library\LPCsharp\CSAc4yFW.dll</HintPath>
-    </Reference>
-    <Reference Include="CSAc4yModule">
-      <HintPath>C:\library\LPCsharp\CSAc4yModule.dll</HintPath>
     </Reference>
     <Reference Include="CSAc4yUtilityFW">
       <HintPath>C:\library\LPCsharp\CSAc4yUtilityFW.dll</HintPath>

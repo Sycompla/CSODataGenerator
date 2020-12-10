@@ -1,5 +1,4 @@
 ﻿using Ac4yClassModule.Class;
-using CSAc4yModule;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -90,7 +89,7 @@ namespace CSODataGenerator
             List<Ac4yClass> connectionClasses = new List<Ac4yClass>();
             string editedConnectionsText = "";
 
-            foreach (Ac4yClass ac4yClass in Parameter.Ac4yClassList)
+            foreach (Ac4yClass ac4yClass in Parameter.ClassList)
             {
                 
 
@@ -108,7 +107,7 @@ namespace CSODataGenerator
             {
                 string connectionsText = ReadIntoString("Connections")
                                             .Replace(EntityMask, ac4yClass.Name)
-                                            .Replace(PropertyManyMask, ac4yClass.Name.Replace("Ac4yMeta", "") + "List")
+                                            .Replace(PropertyManyMask, ac4yClass.Name.Replace("Ac4y", "") + "List")
                                             ;
 
                 foreach (Ac4yProperty property in ac4yClass.PropertyList)
@@ -124,12 +123,12 @@ namespace CSODataGenerator
                 editedConnectionsText = editedConnectionsText + connectionsText;
             }
 
-            foreach (Ac4yClass ac4yClass in Parameter.Ac4yClassList)
+            foreach (Ac4yClass ac4yClass in Parameter.ClassList)
             {
                 entitiesText = entitiesText + EntitiesText.Replace(ClassCodeMask, ac4yClass.Name) + "\n";
             }
 
-            foreach (Ac4yClass ac4yClass in Parameter.Ac4yClassList)
+            foreach (Ac4yClass ac4yClass in Parameter.ClassList)
             {
                 dbSetsText = dbSetsText + DbSetsText.Replace(ClassCodeMask, ac4yClass.Name) + "\n";
             }

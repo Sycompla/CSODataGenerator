@@ -125,7 +125,7 @@ namespace CSODataGenerator
 
             foreach (Ac4yProperty property in ac4yClass.PropertyList)
             {
-                if (property.Cardinality == Ac4yProperty.CardinalityEnum.COLLECTION)
+                if (property.Cardinality.Equals("COLLECTION"))
                 {
                     result = result + property.Name + ", ";
                 }
@@ -148,7 +148,7 @@ namespace CSODataGenerator
 
                 foreach (Ac4yProperty property in ac4yClass.PropertyList)
                 {
-                    if (property.Cardinality == Ac4yProperty.CardinalityEnum.COLLECTION)
+                    if (property.Cardinality.Equals("COLLECTION"))
                     {
                         PropertyLista.Add(property.Name, new OpenApiSchema()
                         {

@@ -19,6 +19,7 @@ namespace MySetup
         public string LibraryPath { get; set; }
         public string PlanObjectNamespace { get; set; }
         public string DatabaseName { get; set; }
+        public string PlanObjectFolderName { get; set; }
 
         private const string TemplateExtension = ".txt";
 
@@ -27,6 +28,7 @@ namespace MySetup
         string PlanObjectNamespaceMask = "#planObjectNamespace#";
         string namespaceMask = "#namespace#";
         string databaseNameMask = "#databaseName#";
+        string planObjectFolderNameMask = "#planObjectFolderName#";
 
         #endregion members
 
@@ -63,6 +65,7 @@ namespace MySetup
                         .Replace(namespaceMask, Namespace)
                         .Replace(LibraryPathMask, LibraryPath)
                         .Replace(databaseNameMask, DatabaseName)
+                        .Replace(planObjectFolderNameMask, PlanObjectFolderName)
                         ;
 
         }

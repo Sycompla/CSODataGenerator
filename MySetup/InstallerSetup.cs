@@ -91,6 +91,8 @@ namespace MySetup
                     PlanObjectNamespace = PLANOBJECTNAMESPACE
                     ,
                     DatabaseName = DATABASENAME
+                    ,
+                    PlanObjectFolderName = PLANOBJECTFOLDERNAME
                 }
                     .Generate();
 

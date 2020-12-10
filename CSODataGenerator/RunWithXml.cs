@@ -1,5 +1,4 @@
 ﻿using Ac4yClassModule.Class;
-using CSAc4yModule;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,6 +20,7 @@ namespace CSODataGenerator
         public string ODataURL { get; set; }
         public string LinuxPath { get; set; }
         public string LinuxServiceFileDescription { get; set; }
+        public string PlanObjectFolderName { get; set; }
 
         private string Argument { get; set; }
         private Ac4yModule Ac4yModule { get; set; }
@@ -39,11 +39,11 @@ namespace CSODataGenerator
         {
             if (Argument.Equals("PlanObject"))
             {
-                foreach (Ac4yClass planObject in Ac4yModule.Ac4yClassList)
+                foreach (Ac4yClass planObject in Ac4yModule.ClassList)
                 {
                     new PlanObjectGenerator()
                     {
-                        OutputPath = RootDirectory + PLanObjectNamespace
+                        OutputPath = RootDirectory + PlanObjectFolderName
                     }
                         .Generate(planObject);
                 }
@@ -51,7 +51,7 @@ namespace CSODataGenerator
 
                     if (Argument.Equals("Cap"))
             {
-                foreach (Ac4yClass planObject in Ac4yModule.Ac4yClassList)
+                foreach (Ac4yClass planObject in Ac4yModule.ClassList)
                 {
 
                     new CapGeneratorAc4yClass()
@@ -76,13 +76,13 @@ namespace CSODataGenerator
                     ,
                     Parameter = Ac4yModule
                 }
-                    .Generate(Ac4yModule.Ac4yClassList[0]);
+                    .Generate(Ac4yModule.ClassList[0]);
             }
 
 
             if (Argument.Equals("ObjectService"))
             {
-                foreach (Ac4yClass ac4yClass in Ac4yModule.Ac4yClassList)
+                foreach (Ac4yClass ac4yClass in Ac4yModule.ClassList)
                 {
                     new ObjectServiceGeneratorAc4yClass()
                     {
@@ -96,7 +96,7 @@ namespace CSODataGenerator
 
             if (Argument.Equals("ODataController"))
             {
-                foreach (Ac4yClass ac4yClass in Ac4yModule.Ac4yClassList)
+                foreach (Ac4yClass ac4yClass in Ac4yModule.ClassList)
                 {
                     new RESTServiceODataControllerGeneratorAc4yClass()
                     {

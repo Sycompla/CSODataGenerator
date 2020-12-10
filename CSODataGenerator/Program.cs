@@ -1,6 +1,6 @@
 ﻿
+using Ac4yClassModule.Class;
 using Ac4yUtilityContainer;
-using CSAc4yModule;
 using CSARMetaPlan.Class;
 using CSClassLibForJavaOData;
 using log4net;
@@ -47,6 +47,7 @@ namespace CSODataGenerator
 
         private const string APPSETTINGS_LIBRARYPATH = "LIBRARYPATH";
         private const string APPSETTINGS_PLANOBJECTNAMESPACE = "PLANOBJECTNAMESPACE";
+        private const string APPSETTINGS_PLANOBJECTFOLDERNAME = "PLANOBJECTFOLDERNAME";
         private const string APPSETTINGS_CLASSNAME = "CLASSNAME";
 
         private const string APPSETTINGS_PARAMETERPATH = "PARAMETERPATH";
@@ -88,8 +89,8 @@ namespace CSODataGenerator
                             .Build();
 
                 
-                //Ac4yModule ac4yClasses = (Ac4yModule) ac4yUtility.Xml2ObjectFromFile(config[APPSETTINGS_XMLPATH], typeof(Ac4yModule));
-                /*
+                Ac4yModule ac4yClasses = (Ac4yModule) ac4yUtility.Xml2ObjectFromFile(config[APPSETTINGS_XMLPATH], typeof(Ac4yModule));
+                
                 new RunWithXml(args[0], ac4yClasses)
                 {
                     RootDirectory = config[APPSETTINGS_ROOTDIRECTORY]
@@ -115,9 +116,11 @@ namespace CSODataGenerator
                     PortNumber = config[APPSETTINGS_PORTNUMBER]
                     ,
                     PLanObjectNamespace = config[APPSETTINGS_PLANOBJECTNAMESPACE]
+                    ,
+                    PlanObjectFolderName = config[APPSETTINGS_PLANOBJECTFOLDERNAME]
                 }
                     .Run();
-                */
+                /*
                 new RunWithDll(args[0])
                 {
                     RootDirectory = config[APPSETTINGS_ROOTDIRECTORY]
@@ -143,7 +146,7 @@ namespace CSODataGenerator
                     PortNumber = config[APPSETTINGS_PORTNUMBER]
                 }
                     .Run();
-                
+                */
             }
 
             catch (Exception exception)
