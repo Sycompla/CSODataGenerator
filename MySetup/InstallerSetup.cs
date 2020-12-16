@@ -73,6 +73,7 @@ namespace MySetup
                 string DATABASENAME = Context.Parameters["DATABASENAME"];
                 string RUN = Context.Parameters["RUN"];
                 string PLANOBJECTFOLDERNAME = Context.Parameters["PLANOBJECTFOLDERNAME"];
+                string XMLPATH = Context.Parameters["XMLPATH"];
                 List<string> classNameList = CLASSNAMELIST.Split(',').ToList();
                 string path = Context.Parameters["assemblyPath"].Replace("MySetup.dll", "");
 
@@ -93,6 +94,8 @@ namespace MySetup
                     DatabaseName = DATABASENAME
                     ,
                     PlanObjectFolderName = PLANOBJECTFOLDERNAME
+                    ,
+                    XmlPath = XMLPATH
                 }
                     .Generate();
 

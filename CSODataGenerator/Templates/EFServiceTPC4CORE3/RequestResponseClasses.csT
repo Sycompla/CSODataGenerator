@@ -48,7 +48,10 @@
             public #classCode# #classCode# { get; set; }
         }
 
-        public class UpdateByIdResponse : Ac4yServiceResponse {}
+        public class UpdateByIdResponse : Ac4yServiceResponse 
+	{
+		public #classCode# #classCode# { get; set; }
+	}
 
         public class UpdateByGuidRequest : Ac4yServiceRequest
         {
@@ -56,14 +59,20 @@
             public #classCode# #classCode# { get; set; }
         }
 
-        public class UpdateByGuidResponse : Ac4yServiceResponse {}
+        public class UpdateByGuidResponse : Ac4yServiceResponse 
+	{
+		public #classCode# #classCode# { get; set; }
+	}
 
         public class InsertRequest : Ac4yServiceRequest
         {
             public #classCode# #classCode# { get; set; }
         }
 
-        public class InsertResponse : Ac4yServiceResponse {}
+        public class InsertResponse : Ac4yServiceResponse 
+	{
+		public #classCode# #classCode# { get; set; }
+	}
 
         public class SetByGuidRequest : Ac4yServiceRequest
         {

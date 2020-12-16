@@ -24,6 +24,8 @@ namespace CSODataGenerator
         private const string SuffixMask = "#suffix#";
         private const string NamespaceMask = "#namespace#";
         private const string PlanObjectReferenceMask = "#planObjectReference#";
+        private const string NavigationIdValueMask = "#NavigationIdValue#";
+        private const string NavigationIdMask = "#NavigationId#";
 
         private const string ClassCodeAsVariableMask = "#classCodeAsVariable#";
 
@@ -77,7 +79,7 @@ namespace CSODataGenerator
 
         public string GetMethods()
         {
-            return
+            string result =
                 ReadIntoString("Methods")
                         .Replace(ClassCodeMask, Type.Name)
                         .Replace(
@@ -85,6 +87,22 @@ namespace CSODataGenerator
                                 , GetNameWithLowerFirstLetter(Type.Name)
                             )
                 ;
+
+            foreach(Ac4yProperty property in Type.PropertyList)
+            {
+                if(property.NavigationProperty == true)
+                {
+                    result = result.Replace(NavigationIdMask, "int NavigationId = actual." + property.Name + "Id;")
+                          .Replace(NavigationIdValueMask, "actual." + property.Name + "Id = NavigationId;");
+                    return result;
+                }
+                else if(Type.PropertyList[Type.PropertyList.Count - 1] == property)
+                {
+                    result = result.Replace(NavigationIdMask, "").Replace(NavigationIdValueMask, "");
+                }
+            }
+
+            return result;
         }
 
         public CapGeneratorAc4yClass Generate()

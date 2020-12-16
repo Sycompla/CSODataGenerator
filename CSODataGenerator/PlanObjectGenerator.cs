@@ -75,11 +75,27 @@ namespace CSODataGenerator
             string propertiesTextEdited = "";
             foreach(Ac4yProperty property in Type.PropertyList)
             {
-                propertiesTextEdited = propertiesTextEdited + propertiesText.Replace(TypeMask, property.Type)
-                                                                            .Replace(NameMask, property.Name);
+                if (isCollection(property))
+                {
+                    propertiesTextEdited = propertiesTextEdited + propertiesText.Replace(TypeMask, "List<" + property.Type + ">")
+                                                                                .Replace(NameMask, property.Name);
+
+                }
+                else
+                {
+                    propertiesTextEdited = propertiesTextEdited + propertiesText.Replace(TypeMask, property.Type)
+                                                                                .Replace(NameMask, property.Name);
+
+                }
             }
 
             return propertiesTextEdited;
+        }
+
+        public bool isCollection(Ac4yProperty property)
+        {
+            return
+                property.Cardinality.Equals("COLLECTION");
         }
 
         public PlanObjectGenerator Generate()

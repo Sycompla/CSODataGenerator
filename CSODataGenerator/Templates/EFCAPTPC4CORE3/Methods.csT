@@ -48,18 +48,22 @@
 
       } // IsExistByGuid
 */
-      public void UpdateById(int id, #classCode# #classCodeAsVariable#)
+      public #classCode# UpdateById(int id, #classCode# #classCodeAsVariable#)
       {
 
             using (var context = new Context())
             {
 
                 #classCode# actual = context.#classCode#s.Find(id);
+                #NavigationId#
                 Object2Object(#classCodeAsVariable#, actual);
                 actual.Id = id;
+                #NavigationIdValue#
                 context.SaveChanges();
 
             }
+	    
+	    return #classCodeAsVariable#;
 
       } // UpdateById
 /*
