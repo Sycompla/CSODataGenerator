@@ -1,0 +1,12 @@
+using #namespace#UpsertService.Services;
+using #namespace#UpsertService.Responses;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using #planObjectReference#;
+
+namespace #namespace#UpsertService.Controllers
+{

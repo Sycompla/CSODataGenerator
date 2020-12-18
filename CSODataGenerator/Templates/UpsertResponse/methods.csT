@@ -1,0 +1,9 @@
+
+    public class #className#Response
+    {
+
+        [JsonProperty("@odata.context")]
+        public Uri OdataContext { get; set; }
+
+        [JsonProperty("value")]
+        public List<#className#> #className#s { get; set; }

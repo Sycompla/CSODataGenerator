@@ -1,0 +1,52 @@
+
+    [Route("[controller]")]
+    public class #className#UpsertController : Controller
+    {
+
+            private #className#Service #className#Client = new #className#Service()
+            {
+                Server = "#odataUrl#"
+            };
+
+        public #className# IsExsists(string name)
+        {
+
+            var #className#Result = #className#Client.GET
+                (
+                    "/#className#?$filter=Name+eq+'" + name + "'"
+                    , ""
+                );
+            #className#Response #className#s = JsonConvert.DeserializeObject<#className#Response>(#className#Result);
+
+            if(#className#s != null)
+            {
+                return #className#s.#className#s[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
+        [HttpPost]
+        public IActionResult Upsert([FromBody] #className# newObject)
+        {
+            #className# #className# = IsExsists(newObject.Name);
+            #jsonIgnoredList#
+            bool exists = #className# != null;
+            string newString = JsonConvert.SerializeObject(newObject, Formatting.Indented, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+
+            if (!exists)
+            {
+                var insertResponse = #className#Client.POST("/#className#", newString);
+                return Ok(insertResponse);
+            }
+            else
+            {
+
+                var updateResponse = #className#Client.PATCH("/#className#", newString, #className#.Id);
+                return Ok(updateResponse);
+            }
+        }

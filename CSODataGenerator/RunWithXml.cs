@@ -37,6 +37,63 @@ namespace CSODataGenerator
 
         public void Run()
         {
+            if (Argument.Equals("UpsertController"))
+            {
+                foreach (Ac4yClass planObject in Ac4yModule.ClassList)
+                {
+                    new UpsertControllerGeneratorAc4yClass()
+                    {
+                        OutputPath = RootDirectory + Namespace + "UpsertService\\Controllers\\"
+                        ,
+                        Namespace = Namespace
+                        ,
+                        OdataUrl = ODataURL
+                    }
+                        .Generate(planObject);
+                }
+            }
+
+            if (Argument.Equals("UpsertService"))
+            {
+                Directory.CreateDirectory(RootDirectory + Namespace + "UpsertService\\Services\\");
+                foreach (Ac4yClass planObject in Ac4yModule.ClassList)
+                {
+                    new UpsertServiceServiceGeneratorAc4yClass()
+                    {
+                        OutputPath = RootDirectory + Namespace + "UpsertService\\Services\\"
+                        ,
+                        Namespace = Namespace
+                    }
+                        .Generate(planObject);
+                }
+            }
+
+            if (Argument.Equals("UpsertResponse"))
+            {
+                Directory.CreateDirectory(RootDirectory + Namespace + "UpsertService\\Responses\\");
+                foreach (Ac4yClass planObject in Ac4yModule.ClassList)
+                {
+                    new UpsertServiceResponseGeneratorAc4yClass()
+                    {
+                        OutputPath = RootDirectory + Namespace + "UpsertService\\Responses\\"
+                        ,
+                        Namespace = Namespace
+                    }
+                        .Generate(planObject);
+                }
+            }
+
+            if(Argument.Equals("Ac4yRestServiceClient"))
+            {
+                new Ac4yRestServiceClientGeneratorAc4yClass()
+                {
+                    OutputPath = RootDirectory + Namespace + "UpsertService\\"
+                        ,
+                    Namespace = Namespace
+                }
+                        .Generate();
+            }
+
             if (Argument.Equals("PlanObject"))
             {
                 foreach (Ac4yClass planObject in Ac4yModule.ClassList)
