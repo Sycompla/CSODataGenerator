@@ -26,6 +26,7 @@ namespace CSODataGenerator
         private const string PlanObjectReferenceMask = "#planObjectReference#";
         private const string PropertyNameMask = "#propertyName#";
         private const string jsonIgnoredListMask = "#jsonIgnoredList#";
+        private const string OdataUrlMask = "#odataUrl#";
 
         private const string jsonIgnoredListText = "newObject.#propertyName# = null;";
 
@@ -79,6 +80,7 @@ namespace CSODataGenerator
             string result =
                 ReadIntoString("Methods")
                         .Replace(ClassNameMask, Type.Name)
+                        .Replace(OdataUrlMask, OdataUrl)
                 ;
 
             string lists = "";
