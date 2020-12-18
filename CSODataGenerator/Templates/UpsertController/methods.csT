@@ -18,7 +18,7 @@
                 );
             #className#Response #className#s = JsonConvert.DeserializeObject<#className#Response>(#className#Result);
 
-            if(#className#s != null)
+            if(#className#s != null && #className#s.#className#s.Count > 0)
             {
                 return #className#s.#className#s[0];
             }
