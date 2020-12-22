@@ -50,11 +50,12 @@
 */
       public #classCode# UpdateById(int id, #classCode# #classCodeAsVariable#)
       {
+          #classCode# actual = null;
 
             using (var context = new Context())
             {
 
-                #classCode# actual = context.#classCode#s.Find(id);
+                actual = context.#classCode#s.Find(id);
                 #NavigationId#
                 Object2Object(#classCodeAsVariable#, actual);
                 actual.Id = id;
@@ -63,7 +64,7 @@
 
             }
 	    
-	    return #classCodeAsVariable#;
+	    return actual;
 
       } // UpdateById
 /*

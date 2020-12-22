@@ -79,7 +79,7 @@ CSODataGenerator.exe "UpsertResponse"
 CSODataGenerator.exe "Ac4yRestServiceClient"
 cd %mainDir%\%namespace%UpsertService
 dotnet build
-start cmd /K dotnet run --urls=http://localhost:6000/
+start cmd /K dotnet run --urls "http://localhost:6000/;https://localhost:6001/"
 
 cd %mainDir%\%namespace%ODataService\
 dotnet build
