@@ -76,6 +76,7 @@ cd %generatorDir%
 CSODataGenerator.exe "UpsertController"
 CSODataGenerator.exe "UpsertService"
 CSODataGenerator.exe "UpsertResponse"
+CSODataGenerator.exe "UpsertServiceStartup"
 CSODataGenerator.exe "Ac4yRestServiceClient"
 cd %mainDir%\%namespace%UpsertService
 dotnet build

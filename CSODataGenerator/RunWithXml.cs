@@ -83,6 +83,17 @@ namespace CSODataGenerator
                 }
             }
 
+            if(Argument.Equals("UpsertServiceStartup"))
+            {
+                new UpsertServiceStartupGeneratorAc4yClass()
+                {
+                    OutputPath = RootDirectory + Namespace + "UpsertService\\"
+                        ,
+                    Namespace = Namespace
+                }
+                        .Generate();
+            }
+
             if(Argument.Equals("Ac4yRestServiceClient"))
             {
                 new Ac4yRestServiceClientGeneratorAc4yClass()
