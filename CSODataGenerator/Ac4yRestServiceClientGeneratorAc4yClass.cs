@@ -24,7 +24,7 @@ namespace CSODataGenerator
         public string ReadIntoString(string fileName)
         {
 
-            string textFile = "Templates\\Ac4yRestServiceClient\\" + fileName + TemplateExtension;
+            string textFile = "Templates/Ac4yRestServiceClient/" + fileName + TemplateExtension;
 
             return File.ReadAllText(textFile);
 

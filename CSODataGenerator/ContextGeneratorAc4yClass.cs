@@ -43,7 +43,7 @@ namespace CSODataGenerator
         public string ReadIntoString(string fileName)
         {
 
-            string textFile = "Templates\\EFContextTPC4CORE3\\" + fileName + TemplateExtension;
+            string textFile = "Templates/EFContextTPC4CORE3/" + fileName + TemplateExtension;
 
             return File.ReadAllText(textFile);
 

@@ -48,7 +48,7 @@ namespace CSODataGenerator
                         + ParameterFileName
                         , typeof(CSODataGeneratorParameter)
                     );
-
+            _library.GetTypes();
             foreach (PlanObjectReference planObject in Parameter.PlanObjectReferenceList)
             {
                 planObject.classType = _library.GetType(
@@ -64,7 +64,7 @@ namespace CSODataGenerator
                 {
                     new CapGenerator()
                     {
-                        OutputPath = RootDirectory + Namespace + "Cap\\"
+                        OutputPath = RootDirectory + Namespace + "Cap/"
                         ,
                         Namespace = Namespace
                     }
@@ -76,7 +76,7 @@ namespace CSODataGenerator
             {
                 new ContextGenerator()
                 {
-                    OutputPath = RootDirectory + Namespace + "Cap\\"
+                    OutputPath = RootDirectory + Namespace + "Cap/"
                     ,
                     Namespace = Namespace
                     ,
@@ -94,7 +94,7 @@ namespace CSODataGenerator
                 {
                     new ObjectServiceGenerator()
                     {
-                        OutputPath = RootDirectory + Namespace + "ObjectService\\"
+                        OutputPath = RootDirectory + Namespace + "ObjectService/"
                     ,
                         Namespace = Namespace
                     }
@@ -108,7 +108,7 @@ namespace CSODataGenerator
                 {
                     new RESTServiceODataControllerGenerator()
                     {
-                        OutputPath = RootDirectory + Namespace + "ODataService\\Controllers\\"
+                        OutputPath = RootDirectory + Namespace + "ODataService/Controllers/"
                     ,
                         Namespace = Namespace
                     }
@@ -121,7 +121,7 @@ namespace CSODataGenerator
             {
                 new RESTServiceProgramClassWithKestrelGenerator()
                 {
-                    OutputPath = RootDirectory + Namespace + "ODataService\\"
+                    OutputPath = RootDirectory + Namespace + "ODataService/"
                     ,
                     IPAddress = IPAddress
                     ,
@@ -137,7 +137,7 @@ namespace CSODataGenerator
             {
                 new RESTServiceStartupClassWithODataGenerator()
                 {
-                    OutputPath = RootDirectory + Namespace + "ODataService\\"
+                    OutputPath = RootDirectory + Namespace + "ODataService/"
                     ,
                     NameSpace = Namespace
                     ,
@@ -149,7 +149,7 @@ namespace CSODataGenerator
             }
             if (Argument.Equals("OpenApiDocument"))
             {
-                Directory.CreateDirectory(RootDirectory + Namespace + "ODataService\\Document\\");
+                Directory.CreateDirectory(RootDirectory + Namespace + "ODataService/Document/");
 
                 new OpenApiGenerator()
                 {
@@ -159,7 +159,7 @@ namespace CSODataGenerator
                     ,
                     Parameter = Parameter
                     ,
-                    OutputPath = RootDirectory + Namespace + "ODataService\\Document\\"
+                    OutputPath = RootDirectory + Namespace + "ODataService/Document/"
                 }
                     .Generate();
             }
@@ -174,7 +174,7 @@ namespace CSODataGenerator
                     ,
                     LinuxPath = LinuxPath
                     ,
-                    OutputPath = RootDirectory + Namespace + "ODataService\\"
+                    OutputPath = RootDirectory + Namespace + "ODataService/"
                 }
                     .Generate();
             }
@@ -183,7 +183,7 @@ namespace CSODataGenerator
             {
                 new CsprojGenerator()
                 {
-                    OutputPath = RootDirectory + Namespace + "ODataService\\"
+                    OutputPath = RootDirectory + Namespace + "ODataService/"
                     ,
                     Name = Namespace
                 }

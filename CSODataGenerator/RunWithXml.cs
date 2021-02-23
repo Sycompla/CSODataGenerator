@@ -43,7 +43,7 @@ namespace CSODataGenerator
                 {
                     new UpsertControllerGeneratorAc4yClass()
                     {
-                        OutputPath = RootDirectory + Namespace + "UpsertService\\Controllers\\"
+                        OutputPath = RootDirectory + Namespace + "UpsertService/Controllers/"
                         ,
                         Namespace = Namespace
                         ,
@@ -55,12 +55,12 @@ namespace CSODataGenerator
 
             if (Argument.Equals("UpsertService"))
             {
-                Directory.CreateDirectory(RootDirectory + Namespace + "UpsertService\\Services\\");
+                Directory.CreateDirectory(RootDirectory + Namespace + "UpsertService/Services/");
                 foreach (Ac4yClass planObject in Ac4yModule.ClassList)
                 {
                     new UpsertServiceServiceGeneratorAc4yClass()
                     {
-                        OutputPath = RootDirectory + Namespace + "UpsertService\\Services\\"
+                        OutputPath = RootDirectory + Namespace + "UpsertService/Services/"
                         ,
                         Namespace = Namespace
                     }
@@ -70,12 +70,12 @@ namespace CSODataGenerator
 
             if (Argument.Equals("UpsertResponse"))
             {
-                Directory.CreateDirectory(RootDirectory + Namespace + "UpsertService\\Responses\\");
+                Directory.CreateDirectory(RootDirectory + Namespace + "UpsertService/Responses/");
                 foreach (Ac4yClass planObject in Ac4yModule.ClassList)
                 {
                     new UpsertServiceResponseGeneratorAc4yClass()
                     {
-                        OutputPath = RootDirectory + Namespace + "UpsertService\\Responses\\"
+                        OutputPath = RootDirectory + Namespace + "UpsertService/Responses/"
                         ,
                         Namespace = Namespace
                     }
@@ -87,7 +87,7 @@ namespace CSODataGenerator
             {
                 new UpsertServiceStartupGeneratorAc4yClass()
                 {
-                    OutputPath = RootDirectory + Namespace + "UpsertService\\"
+                    OutputPath = RootDirectory + Namespace + "UpsertService/"
                         ,
                     Namespace = Namespace
                 }
@@ -98,7 +98,7 @@ namespace CSODataGenerator
             {
                 new Ac4yRestServiceClientGeneratorAc4yClass()
                 {
-                    OutputPath = RootDirectory + Namespace + "UpsertService\\"
+                    OutputPath = RootDirectory + Namespace + "UpsertService/"
                         ,
                     Namespace = Namespace
                 }
@@ -124,7 +124,7 @@ namespace CSODataGenerator
 
                     new CapGeneratorAc4yClass()
                     {
-                        OutputPath = RootDirectory + Namespace + "Cap\\"
+                        OutputPath = RootDirectory + Namespace + "Cap/"
                         ,
                         Namespace = Namespace
                     }
@@ -136,7 +136,7 @@ namespace CSODataGenerator
             {
                 new ContextGeneratorAc4yClass()
                 {
-                    OutputPath = RootDirectory + Namespace + "Cap\\"
+                    OutputPath = RootDirectory + Namespace + "Cap/"
                     ,
                     Namespace = Namespace
                     ,
@@ -154,7 +154,7 @@ namespace CSODataGenerator
                 {
                     new ObjectServiceGeneratorAc4yClass()
                     {
-                        OutputPath = RootDirectory + Namespace + "ObjectService\\"
+                        OutputPath = RootDirectory + Namespace + "ObjectService/"
                     ,
                         Namespace = Namespace
                     }
@@ -168,7 +168,7 @@ namespace CSODataGenerator
                 {
                     new RESTServiceODataControllerGeneratorAc4yClass()
                     {
-                        OutputPath = RootDirectory + Namespace + "ODataService\\Controllers\\"
+                        OutputPath = RootDirectory + Namespace + "ODataService/Controllers/"
                     ,
                         Namespace = Namespace
                     }
@@ -181,7 +181,7 @@ namespace CSODataGenerator
             {
                 new RESTServiceProgramClassWithKestrelGenerator()
                 {
-                    OutputPath = RootDirectory + Namespace + "ODataService\\"
+                    OutputPath = RootDirectory + Namespace + "ODataService/"
                     ,
                     IPAddress = IPAddress
                     ,
@@ -197,7 +197,7 @@ namespace CSODataGenerator
             {
                 new RESTServiceStartupClassWithODataGeneratorAc4yClass()
                 {
-                    OutputPath = RootDirectory + Namespace + "ODataService\\"
+                    OutputPath = RootDirectory + Namespace + "ODataService/"
                     ,
                     NameSpace = Namespace
                     ,
@@ -210,7 +210,7 @@ namespace CSODataGenerator
 
             if (Argument.Equals("OpenApiDocument"))
             {
-                Directory.CreateDirectory(RootDirectory + Namespace + "ODataService\\Document\\");
+                Directory.CreateDirectory(RootDirectory + Namespace + "ODataService/Document/");
 
                 new OpenApiGeneratorAc4yClass()
                 {
@@ -220,7 +220,7 @@ namespace CSODataGenerator
                     ,
                     Parameter = Ac4yModule
                     ,
-                    OutputPath = RootDirectory + Namespace + "ODataService\\Document\\"
+                    OutputPath = RootDirectory + Namespace + "ODataService/Document/"
                 }
                     .Generate();
             }
@@ -235,7 +235,7 @@ namespace CSODataGenerator
                     ,
                     LinuxPath = LinuxPath
                     ,
-                    OutputPath = RootDirectory + Namespace + "ODataService\\"
+                    OutputPath = RootDirectory + Namespace + "ODataService/"
                 }
                     .Generate();
             }*/
@@ -244,7 +244,7 @@ namespace CSODataGenerator
             {
                 new CsprojGenerator()
                 {
-                    OutputPath = RootDirectory + Namespace + "ODataService\\"
+                    OutputPath = RootDirectory + Namespace + "ODataService/"
                     ,
                     Name = Namespace
                 }

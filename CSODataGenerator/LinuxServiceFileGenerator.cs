@@ -29,7 +29,7 @@ namespace CSODataGenerator
         public string ReadIntoString(string fileName)
         {
 
-            string textFile = "Templates\\LinuxServiceFile\\" + fileName + TemplateExtension;
+            string textFile = "Templates/LinuxServiceFile/" + fileName + TemplateExtension;
 
             return File.ReadAllText(textFile);
 

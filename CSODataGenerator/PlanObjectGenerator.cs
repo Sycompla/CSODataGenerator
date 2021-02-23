@@ -30,7 +30,7 @@ namespace CSODataGenerator
         public string ReadIntoString(string fileName)
         {
 
-            string textFile = "Templates\\PlanObject\\" + fileName + TemplateExtension;
+            string textFile = "Templates/PlanObject/" + fileName + TemplateExtension;
 
             return File.ReadAllText(textFile);
 
@@ -38,7 +38,7 @@ namespace CSODataGenerator
 
         public void WriteOut(string text, string fileName, string outputPath)
         {
-            File.WriteAllText(outputPath + "\\" + fileName + ".cs", text);
+            File.WriteAllText(outputPath + "/" + fileName + ".cs", text);
 
         }
 

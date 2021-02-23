@@ -3,7 +3,7 @@
 
   <PlanObjectReferenceList>
 
-
+<!--
     <PlanObjectReference>
       <namespaceName>Ac4yClassModule.Class.</namespaceName>
       <className>Ac4yClass</className>
@@ -32,6 +32,22 @@
     <PlanObjectReference>
       <namespaceName>Ac4yClassModule.Class.</namespaceName>
       <className>WidgetType</className>
+    </PlanObjectReference>
+-->
+
+    <PlanObjectReference>
+      <namespaceName>CSUsers.</namespaceName>
+      <className>User</className>
+    </PlanObjectReference>
+
+    <PlanObjectReference>
+      <namespaceName>CSUsers.</namespaceName>
+      <className>UserToken</className>
+    </PlanObjectReference>
+
+    <PlanObjectReference>
+      <namespaceName>CSUsers.</namespaceName>
+      <className>AuthenticationRequest</className>
     </PlanObjectReference>
 
 

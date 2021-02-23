@@ -28,7 +28,7 @@ namespace CSODataGenerator
         public string ReadIntoString(string fileName)
         {
 
-            string textFile = "Templates\\UpsertService\\" + fileName + TemplateExtension;
+            string textFile = "Templates/UpsertService/" + fileName + TemplateExtension;
 
             return File.ReadAllText(textFile);
 
