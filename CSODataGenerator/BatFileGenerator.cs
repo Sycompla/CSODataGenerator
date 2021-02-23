@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MySetup
+namespace CSODataGenerator
 {
     public class BatFileGenerator
     {
@@ -32,7 +32,7 @@ namespace MySetup
         public string ReadIntoString(string fileName)
         {
 
-            string textFile = InputPath + "Templates/Bat/" + fileName + TemplateExtension;
+            string textFile = InputPath + "Templates\\Bat\\" + fileName + TemplateExtension;
 
             return File.ReadAllText(textFile);
 

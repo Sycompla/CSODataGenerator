@@ -37,6 +37,14 @@ namespace CSODataGenerator
 
         public void Run()
         {
+            if(Argument.Equals("bat"))
+            {
+                new BatFileGenerator()
+                {
+
+                }.Generate();
+            }
+
             if (Argument.Equals("UpsertController"))
             {
                 foreach (Ac4yClass planObject in Ac4yModule.ClassList)

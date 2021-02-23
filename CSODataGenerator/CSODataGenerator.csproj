@@ -18,27 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="CSAc4yClassCore">
-      <HintPath>C:\library\LPCsharp\CSAc4yClassCore.dll</HintPath>
-    </Reference>
-    <Reference Include="CSAc4yFW">
-      <HintPath>C:\library\LPCsharp\CSAc4yFW.dll</HintPath>
-    </Reference>
-    <Reference Include="CSAc4yUtilityFW">
-      <HintPath>C:\library\LPCsharp\CSAc4yUtilityFW.dll</HintPath>
-    </Reference>
-    <Reference Include="CSARMetaPlanFW">
-      <HintPath>C:\library\LPCsharp\CSARMetaPlanFW.dll</HintPath>
-    </Reference>
-    <Reference Include="CSClassLibForJavaOData">
-      <HintPath>..\..\CSClassLibForJavaOData\CSClassLibForJavaOData\bin\Debug\netcoreapp3.0\CSClassLibForJavaOData.dll</HintPath>
-    </Reference>
-    <Reference Include="PresentationFramework">
-      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\PresentationFramework.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -54,6 +33,21 @@
     <Content Include="Config\**">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CSAc4yClassCore">
+      <HintPath>CSAc4yClassCore.dll</HintPath>
+    </Reference>
+    <Reference Include="CSAc4yFW">
+      <HintPath>CSAc4yFW.dll</HintPath>
+    </Reference>
+    <Reference Include="CSAc4yUtilityFW">
+      <HintPath>CSAc4yUtilityFW.dll</HintPath>
+    </Reference>
+    <Reference Include="CSARMetaPlanFW">
+      <HintPath>CSARMetaPlanFW.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 
