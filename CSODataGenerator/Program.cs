@@ -28,36 +28,6 @@ namespace CSODataGenerator
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private Assembly _library { get; set; }
         
-        private const string APPSETTINGS_CAPOUTPUTPATH = "CAPOUTPUTPATH";
-        private const string APPSETTINGS_SERVICEOUTPUTPATH = "SERVICEOUTPUTPATH";
-        private const string APPSETTINGS_RESTSERVICEODATAOUTPUTPATH = "RESTSERVICEODATAOUTPUTPATH";
-        private const string APPSETTINGS_RESTSERVICEPROGRAMWITHKESTRELOUTPUTPATH = "RESTSERVICEPROGRAMWITHKESTRELOUTPUTPATH";
-
-        private const string APPSETTINGS_TEMPLATEPATH = "TEMPLATEPATH";
-        private const string APPSETTINGS_ROOTDIRECTORY = "ROOTDIRECTORY";
-        
-        private const string APPSETTINGS_PORTNUMBER = "PORTNUMBER";
-        private const string APPSETTINGS_IPADDRESS = "IPADDRESS";
-        private const string APPSETTINGS_NAMESPACE = "NAMESPACE";
-        private const string APPSETTINGS_CONNECTIONSTRING = "CONNECTIONSTRING";
-
-        private const string APPSETTINGS_CAPREFERENCES = "CAPREFERENCES";
-        private const string APPSETTINGS_OBJECTSERVICEREFERENCES = "OBJECTSERVICEREFERENCES";
-        private const string APPSETTINGS_ODATACONTROLLERREFERENCES = "ODATACONTROLLERREFERENCES";
-
-        private const string APPSETTINGS_LIBRARYPATH = "LIBRARYPATH";
-        private const string APPSETTINGS_PLANOBJECTNAMESPACE = "PLANOBJECTNAMESPACE";
-        private const string APPSETTINGS_PLANOBJECTFOLDERNAME = "PLANOBJECTFOLDERNAME";
-        private const string APPSETTINGS_CLASSNAME = "CLASSNAME";
-
-        private const string APPSETTINGS_PARAMETERPATH = "PARAMETERPATH";
-        private const string APPSETTINGS_PARAMETERFILENAME = "PARAMETERFILENAME";
-        private const string APPSETTINGS_XMLPATH = "XMLPATH";
-
-        private const string APPSETTINGS_LINUXPATH = "LINUXPATH";
-        private const string APPSETTINGS_LINUXSERVICEFILEDESCRIPTION = "LINUXSERVICEFILEDESCRIPTION";
-
-        private const string APPSETTINGS_ODATAURL = "ODATAURL";
 
         CSODataGeneratorParameter Parameter { get; set; }
         public static Ac4yUtility ac4yUtility = new Ac4yUtility();
@@ -77,8 +47,33 @@ namespace CSODataGenerator
         static void Main(string[] args)
         {
 
+            string APPSETTINGS_ROOTDIRECTORY = args[1];
+
+            string APPSETTINGS_PORTNUMBER = args[2];
+            string APPSETTINGS_IPADDRESS = args[3];
+            string APPSETTINGS_NAMESPACE = args[4];
+            string APPSETTINGS_CONNECTIONSTRING = args[5];
+
+            string APPSETTINGS_PLANOBJECTFOLDERNAME = args[6];
+            string APPSETTINGS_XMLPATH = args[7];
+            string APPSETTINGS_ODATAURL = args[8];
+
+            string APPSETTINGS_LINUXPATH = "";
+            string APPSETTINGS_LINUXSERVICEFILEDESCRIPTION = "";
+            if (args.Length > 10)
+            {
+                APPSETTINGS_LINUXPATH = args[10];
+                APPSETTINGS_LINUXSERVICEFILEDESCRIPTION = args[11];
+            }
+
+
             try
             {
+                foreach(string arg in args)
+                {
+                    Console.WriteLine(arg);
+                    Console.WriteLine(APPSETTINGS_ODATAURL);
+                }
                 var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
                 XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
 
@@ -93,31 +88,23 @@ namespace CSODataGenerator
                 
                 new RunWithXml(args[0], ac4yClasses)
                 {
-                    RootDirectory = config[APPSETTINGS_ROOTDIRECTORY]
+                    RootDirectory = APPSETTINGS_ROOTDIRECTORY
                     ,
-                    ODataURL = config[APPSETTINGS_ODATAURL]
+                    ODataURL = APPSETTINGS_ODATAURL
                     ,
-                    ConnectionString = config[APPSETTINGS_CONNECTIONSTRING]
+                    ConnectionString = APPSETTINGS_CONNECTIONSTRING
                     ,
-                    LinuxServiceFileDescription = config[APPSETTINGS_LINUXSERVICEFILEDESCRIPTION]
+                    LinuxServiceFileDescription = APPSETTINGS_LINUXSERVICEFILEDESCRIPTION
                     ,
-                    IPAddress = config[APPSETTINGS_IPADDRESS]
+                    IPAddress = APPSETTINGS_IPADDRESS
                     ,
-                    LibraryPath = config[APPSETTINGS_LIBRARYPATH]
+                    LinuxPath = APPSETTINGS_LINUXPATH
                     ,
-                    LinuxPath = config[APPSETTINGS_LINUXPATH]
+                    Namespace = APPSETTINGS_NAMESPACE
                     ,
-                    Namespace = config[APPSETTINGS_NAMESPACE]
+                    PortNumber = APPSETTINGS_PORTNUMBER
                     ,
-                    ParameterFileName = config[APPSETTINGS_PARAMETERFILENAME]
-                    ,
-                    ParameterPath = config[APPSETTINGS_PARAMETERPATH]
-                    ,
-                    PortNumber = config[APPSETTINGS_PORTNUMBER]
-                    ,
-                    PLanObjectNamespace = config[APPSETTINGS_PLANOBJECTNAMESPACE]
-                    ,
-                    PlanObjectFolderName = config[APPSETTINGS_PLANOBJECTFOLDERNAME]
+                    PlanObjectFolderName = APPSETTINGS_PLANOBJECTFOLDERNAME
                 }
                     .Run();
                 /*
@@ -151,6 +138,11 @@ namespace CSODataGenerator
 
             catch (Exception exception)
             {
+
+                foreach (string arg in args)
+                {
+                    Console.WriteLine(arg);
+                }
 
                 log.Error(exception.Message);
                 log.Error(exception.StackTrace);

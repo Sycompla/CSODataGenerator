@@ -8,12 +8,8 @@ namespace CSODataGenerator
 {
     class RunWithXml
     {
-        public string LibraryPath { get; set; }
-        public string ParameterPath { get; set; }
-        public string ParameterFileName { get; set; }
         public string RootDirectory { get; set; }
         public string Namespace { get; set; }
-        public string PLanObjectNamespace { get; set; }
         public string ConnectionString { get; set; }
         public string PortNumber { get; set; }
         public string IPAddress { get; set; }
@@ -24,8 +20,6 @@ namespace CSODataGenerator
 
         private string Argument { get; set; }
         private Ac4yModule Ac4yModule { get; set; }
-
-        CSODataGeneratorParameter Parameter { get; set; }
 
         public RunWithXml(string args, Ac4yModule ac4yModule)
         {
