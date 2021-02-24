@@ -1,4 +1,5 @@
 ﻿using Ac4yClassModule.Class;
+using Ac4yUtilityContainer;
 using CSRunWithXmlRequest;
 using System;
 using System.Collections.Generic;
@@ -14,14 +15,45 @@ namespace CSODataGenerator
         private string Argument { get; set; }
         private Ac4yModule Ac4yModule { get; set; }
 
-        public RunWithXml(string args, Ac4yModule ac4yModule, RunWthXmlRequest request)
+        public RunWithXml(RunWthXmlRequest request)
         {
-            Argument = args;
-            Ac4yModule = ac4yModule;
             RunWthXmlRequest = request;
+            Argument = RunWthXmlRequest.Argument;
+            Ac4yModule = RunWthXmlRequest.Ac4yModule;
         }
 
         public RunWithXml() { }
+
+        public string GeneratePlanObject()
+        {
+
+            Ac4yUtility utility = new Ac4yUtility();
+            Ac4yClass ac4yClass = (Ac4yClass)utility.Xml2Object(RunWthXmlRequest.ac4yClassXml, typeof(Ac4yClass));
+
+            string result = new PlanObjectGenerator()
+            {
+                OutputPath = RunWthXmlRequest.RootDirectory + RunWthXmlRequest.PlanObjectFolderName
+            }
+                .Generate(ac4yClass);
+
+            return EncodeTo64(result);
+        }
+
+        public string EncodeTo64(string toEncode)
+
+        {
+
+            byte[] toEncodeAsBytes
+
+                  = System.Text.ASCIIEncoding.ASCII.GetBytes(toEncode);
+
+            string returnValue
+
+                  = System.Convert.ToBase64String(toEncodeAsBytes);
+
+            return returnValue;
+
+        }
 
         public void Run()
         {
@@ -103,17 +135,26 @@ namespace CSODataGenerator
 
             if (Argument.Equals("PlanObject"))
             {
-                foreach (Ac4yClass planObject in Ac4yModule.ClassList)
-                {
-                    new PlanObjectGenerator()
-                    {
-                        OutputPath = RunWthXmlRequest.RootDirectory + RunWthXmlRequest.PlanObjectFolderName
-                    }
-                        .Generate(planObject);
-                }
-            }
+                Ac4yUtility utility = new Ac4yUtility();
+                Ac4yClass ac4yClass = (Ac4yClass)utility.Xml2Object(RunWthXmlRequest.ac4yClassXml, typeof(Ac4yClass));
 
-                    if (Argument.Equals("Cap"))
+                new PlanObjectGenerator()
+                {
+                    OutputPath = RunWthXmlRequest.RootDirectory + RunWthXmlRequest.PlanObjectFolderName
+                }
+                    .Generate(ac4yClass);
+            /*
+            foreach (Ac4yClass planObject in Ac4yModule.ClassList)
+            {
+                new PlanObjectGenerator()
+                {
+                    OutputPath = RunWthXmlRequest.RootDirectory + RunWthXmlRequest.PlanObjectFolderName
+                }
+                    .Generate(planObject);
+            }*/
+        }
+
+            if (Argument.Equals("Cap"))
             {
                 foreach (Ac4yClass planObject in Ac4yModule.ClassList)
                 {

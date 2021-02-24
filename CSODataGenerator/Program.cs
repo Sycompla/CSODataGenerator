@@ -70,8 +70,30 @@ namespace CSODataGenerator
 
             try
             {
+
+                foreach(string arg in args)
+                {
+                    Console.WriteLine(arg);
+                    Console.WriteLine(APPSETTINGS_ODATAURL);
+                }
+                var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
+                XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
+
+                IConfiguration config = null;
+
+                config = new ConfigurationBuilder()
+                            .AddJsonFile("appsettings.json", true, true)
+                            .Build();
+
+                
+                Ac4yModule ac4yClasses = (Ac4yModule) ac4yUtility.Xml2ObjectFromFile(config[APPSETTINGS_XMLPATH], typeof(Ac4yModule));
+
                 RunWthXmlRequest RunWithXmlRequest = new RunWthXmlRequest()
                 {
+                    Ac4yModule = ac4yClasses
+                    ,
+                    Argument = args[0]
+                    ,
                     RootDirectory = APPSETTINGS_ROOTDIRECTORY
                     ,
                     ODataURL = APPSETTINGS_ODATAURL
@@ -91,24 +113,7 @@ namespace CSODataGenerator
                     PlanObjectFolderName = APPSETTINGS_PLANOBJECTFOLDERNAME
                 };
 
-                foreach(string arg in args)
-                {
-                    Console.WriteLine(arg);
-                    Console.WriteLine(APPSETTINGS_ODATAURL);
-                }
-                var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
-                XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
-
-                IConfiguration config = null;
-
-                config = new ConfigurationBuilder()
-                            .AddJsonFile("appsettings.json", true, true)
-                            .Build();
-
-                
-                Ac4yModule ac4yClasses = (Ac4yModule) ac4yUtility.Xml2ObjectFromFile(config[APPSETTINGS_XMLPATH], typeof(Ac4yModule));
-                
-                new RunWithXml(args[0], ac4yClasses, RunWithXmlRequest) { }.Run();
+                new RunWithXml(RunWithXmlRequest) { }.Run();
                 /*
                 new RunWithDll(args[0])
                 {

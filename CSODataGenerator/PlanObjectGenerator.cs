@@ -98,7 +98,7 @@ namespace CSODataGenerator
                 property.Cardinality.Equals("COLLECTION");
         }
 
-        public PlanObjectGenerator Generate()
+        public string Generate()
         {
 
             string result = null;
@@ -109,13 +109,13 @@ namespace CSODataGenerator
 
             result += GetFoot();
 
-            WriteOut(result, Type.Name, OutputPath);
+            //WriteOut(result, Type.Name, OutputPath);
 
-            return this;
+            return result;
 
         } // Generate
 
-        public PlanObjectGenerator Generate(Ac4yClass type)
+        public string Generate(Ac4yClass type)
         {
 
             Type = type;
