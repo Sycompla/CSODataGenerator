@@ -7,7 +7,7 @@ using System.Text;
 
 namespace CSODataGenerator
 {
-    class PlanObjectGenerator
+    public class PlanObjectGenerator
     {
 
         #region members

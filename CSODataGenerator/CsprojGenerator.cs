@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CSODataGenerator
 {
-    class CsprojGenerator
+    public class CsprojGenerator
     {
 
         #region members

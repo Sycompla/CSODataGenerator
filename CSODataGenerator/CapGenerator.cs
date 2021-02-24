@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CSODataGenerator
 {
-    class CapGenerator
+    public class CapGenerator
     {
 
         #region members

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CSODataGenerator
 {
-    class ObjectServiceGeneratorAc4yClass
+    public class ObjectServiceGeneratorAc4yClass
     {
 
         #region members

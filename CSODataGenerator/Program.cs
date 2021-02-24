@@ -2,6 +2,7 @@
 using Ac4yClassModule.Class;
 using Ac4yUtilityContainer;
 using CSARMetaPlan.Class;
+using CSRunWithXmlRequest;
 //using CSClassLibForJavaOData;
 using log4net;
 using log4net.Config;
@@ -69,24 +70,7 @@ namespace CSODataGenerator
 
             try
             {
-                foreach(string arg in args)
-                {
-                    Console.WriteLine(arg);
-                    Console.WriteLine(APPSETTINGS_ODATAURL);
-                }
-                var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
-                XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
-
-                IConfiguration config = null;
-
-                config = new ConfigurationBuilder()
-                            .AddJsonFile("appsettings.json", true, true)
-                            .Build();
-
-                
-                Ac4yModule ac4yClasses = (Ac4yModule) ac4yUtility.Xml2ObjectFromFile(config[APPSETTINGS_XMLPATH], typeof(Ac4yModule));
-                
-                new RunWithXml(args[0], ac4yClasses)
+                RunWthXmlRequest RunWithXmlRequest = new RunWthXmlRequest()
                 {
                     RootDirectory = APPSETTINGS_ROOTDIRECTORY
                     ,
@@ -105,8 +89,26 @@ namespace CSODataGenerator
                     PortNumber = APPSETTINGS_PORTNUMBER
                     ,
                     PlanObjectFolderName = APPSETTINGS_PLANOBJECTFOLDERNAME
+                };
+
+                foreach(string arg in args)
+                {
+                    Console.WriteLine(arg);
+                    Console.WriteLine(APPSETTINGS_ODATAURL);
                 }
-                    .Run();
+                var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
+                XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
+
+                IConfiguration config = null;
+
+                config = new ConfigurationBuilder()
+                            .AddJsonFile("appsettings.json", true, true)
+                            .Build();
+
+                
+                Ac4yModule ac4yClasses = (Ac4yModule) ac4yUtility.Xml2ObjectFromFile(config[APPSETTINGS_XMLPATH], typeof(Ac4yModule));
+                
+                new RunWithXml(args[0], ac4yClasses, RunWithXmlRequest) { }.Run();
                 /*
                 new RunWithDll(args[0])
                 {

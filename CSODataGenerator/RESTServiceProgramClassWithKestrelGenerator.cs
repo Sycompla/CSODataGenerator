@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CSODataGenerator
 {
-    class RESTServiceProgramClassWithKestrelGenerator
+    public class RESTServiceProgramClassWithKestrelGenerator
     { 
 
 

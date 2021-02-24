@@ -10,7 +10,7 @@ using System.Text;
 
 namespace CSODataGenerator
 {
-    class OpenApiGeneratorAc4yClass
+    public class OpenApiGeneratorAc4yClass
     {
         public string OutputPath { get; set; }
         public Ac4yModule Parameter { get; set; }

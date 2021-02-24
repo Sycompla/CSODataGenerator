@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CSODataGenerator
 {
-    class LinuxServiceFileGenerator
+    public class LinuxServiceFileGenerator
     {
 
 

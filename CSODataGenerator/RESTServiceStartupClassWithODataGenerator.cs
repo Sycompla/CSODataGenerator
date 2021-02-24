@@ -5,6 +5,25 @@ using System.IO;
 
 namespace CSODataGenerator
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
+    namespace CSRunWithXmlRequest
+    {
+        public class RunWthXmlRequest
+        {
+            public string RootDirectory { get; set; }
+            public string ODataURL { get; set; }
+            public string ConnectionString { get; set; }
+            public string LinuxServiceFileDescription { get; set; }
+            public string IPAddress { get; set; }
+            public string LinuxPath { get; set; }
+            public string Namespace { get; set; }
+            public string PortNumber { get; set; }
+            public string PlanObjectFolderName { get; set; }
+        }
+    }
     class RESTServiceStartupClassWithODataGenerator
     {
         #region members

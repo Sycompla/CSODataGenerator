@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CSODataGenerator
 {
-    class RESTServiceStartupClassWithODataGeneratorAc4yClass
+    public class RESTServiceStartupClassWithODataGeneratorAc4yClass
     {
         #region members
 

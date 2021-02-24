@@ -52,6 +52,9 @@
     <Reference Include="CSARMetaPlanFW">
       <HintPath>CSARMetaPlanFW.dll</HintPath>
     </Reference>
+    <Reference Include="CSRunWithXmlRequest">
+      <HintPath>..\..\CSRunWithXmlRequest\bin\Debug\netcoreapp3.0\CSRunWithXmlRequest.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 
