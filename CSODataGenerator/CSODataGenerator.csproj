@@ -36,6 +36,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Templates\Script\Schell.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="CSAc4yClassCore">
       <HintPath>CSAc4yClassCore.dll</HintPath>
     </Reference>

@@ -48,7 +48,7 @@ namespace CSODataGenerator
         public string GetHead()
         {
 
-            return ReadIntoString("Head")
+            return ReadIntoString("head")
                         .Replace(NamespaceMask, Namespace)
                         ;
 
@@ -57,7 +57,7 @@ namespace CSODataGenerator
         public string GetFoot()
         {
             return
-                ReadIntoString("Foot")
+                ReadIntoString("foot")
                         ;
 
         }
@@ -65,7 +65,7 @@ namespace CSODataGenerator
         public string GetMethods()
         {
             string result =
-                ReadIntoString("Methods")
+                ReadIntoString("methods")
                 ;
 
             return result;
