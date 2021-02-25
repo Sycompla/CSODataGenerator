@@ -1,0 +1,1 @@
+﻿./test.bat D:\Server\VisualStudio\ODataGenerator\CSODataGenerator\CSODataGenerator\bin\Debug\netcoreapp3.0 D:\Server\VisualStudio\ODataGenerator\CSTest\ FBClasses FBClasses 5111 217.144.51.217 FBClasses D:\\ac4y.xml http://217.144.51.217:5111/odata/ 217.144.51.217 userDB SA Sycompla9999* Windows
