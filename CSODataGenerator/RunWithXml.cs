@@ -61,7 +61,7 @@ namespace CSODataGenerator
             {
                 new AppsettingsGenerator()
                 {
-                    OutputPath = RunWithXmlRequest.RootDirectory + RunWithXmlRequest.Namespace + "ODataService/"
+                    OutputPath = RunWithXmlRequest.RootDirectory //+ RunWithXmlRequest.Namespace + "ODataService/"
                     ,
                     IpAddress = RunWithXmlRequest.IPAddress
                     ,

@@ -80,8 +80,6 @@ namespace CSODataGenerator
                     ,
                     Namespace = Namespace
                     ,
-                    ConnectionString = ConnectionString
-                    ,
                     Parameter = Parameter
                 }
                     .Generate(Parameter.PlanObjectReferenceList[0].classType);

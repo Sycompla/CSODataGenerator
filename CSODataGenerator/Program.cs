@@ -47,22 +47,25 @@ namespace CSODataGenerator
 
         static void Main(string[] args)
         {
+            foreach (string arg in args)
+            {
+                Console.WriteLine(arg);
+            }
 
             string APPSETTINGS_ROOTDIRECTORY = args[1];
 
             string APPSETTINGS_PORTNUMBER = args[2];
             string APPSETTINGS_IPADDRESS = args[3];
             string APPSETTINGS_NAMESPACE = args[4];
-            string APPSETTINGS_CONNECTIONSTRING = args[5];
 
-            string APPSETTINGS_PLANOBJECTFOLDERNAME = args[6];
-            string APPSETTINGS_XMLPATH = args[7];
-            string APPSETTINGS_ODATAURL = args[8];
-            string APPSETTINGS_DBIP = args[9];
-            string APPSETTINGS_DBNAME = args[10];
-            string APPSETTINGS_DBUSERNAME = args[11];
-            string APPSETTINGS_DBPASSWORD = args[12];
-            string APPSETTINGS_SYSTEM = args[13];
+            string APPSETTINGS_PLANOBJECTFOLDERNAME = args[5];
+            string APPSETTINGS_XMLPATH = args[6];
+            string APPSETTINGS_ODATAURL = args[7];
+            string APPSETTINGS_DBIP = args[8];
+            string APPSETTINGS_DBNAME = args[9];
+            string APPSETTINGS_DBUSERNAME = args[10];
+            string APPSETTINGS_DBPASSWORD = args[11];
+            string APPSETTINGS_SYSTEM = args[12];
 
             string APPSETTINGS_LINUXPATH = "";
             string APPSETTINGS_LINUXSERVICEFILEDESCRIPTION = "";
@@ -75,12 +78,6 @@ namespace CSODataGenerator
 
             try
             {
-
-                foreach(string arg in args)
-                {
-                    Console.WriteLine(arg);
-                    Console.WriteLine(APPSETTINGS_ODATAURL);
-                }
                 var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
                 XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
 
@@ -90,8 +87,9 @@ namespace CSODataGenerator
                             .AddJsonFile("appsettings.json", true, true)
                             .Build();
 
-                
-                Ac4yModule ac4yClasses = (Ac4yModule) ac4yUtility.Xml2ObjectFromFile(config[APPSETTINGS_XMLPATH], typeof(Ac4yModule));
+
+                Console.WriteLine("Path >>" + APPSETTINGS_XMLPATH);
+                Ac4yModule ac4yClasses = (Ac4yModule) ac4yUtility.Xml2ObjectFromFile(APPSETTINGS_XMLPATH, typeof(Ac4yModule));
 
                 RunWithXmlRequest RunWithXmlRequest = new RunWithXmlRequest()
                 {
@@ -158,11 +156,6 @@ namespace CSODataGenerator
 
             catch (Exception exception)
             {
-
-                foreach (string arg in args)
-                {
-                    Console.WriteLine(arg);
-                }
 
                 log.Error(exception.Message);
                 log.Error(exception.StackTrace);

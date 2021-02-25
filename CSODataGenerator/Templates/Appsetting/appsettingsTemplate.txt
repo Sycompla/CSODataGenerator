@@ -7,7 +7,7 @@
     }
   },
   "AllowedHosts": "*",
-  "IPADDRESS": "#ipAddress",
+  "IPADDRESS": "#ipAddress#",
   "SYSTEM": "#system#",
   "PORTNUMBER": "#portNumber#",
   "DATABASESERVER": "#databaseIp#",
