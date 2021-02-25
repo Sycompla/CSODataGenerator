@@ -36,6 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Templates\appsettingsTemplate.txt" />
     <None Remove="Templates\Script\Schell.txt" />
   </ItemGroup>
 

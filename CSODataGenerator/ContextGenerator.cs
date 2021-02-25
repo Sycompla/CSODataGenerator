@@ -15,7 +15,6 @@ namespace CSODataGenerator
         public string OutputPath { get; set; }
         public string Namespace { get; set; }
         public string References { get; set; }
-        public string ConnectionString { get; set; }
         public CSODataGeneratorParameter Parameter { get; set; }
 
         public Type Type { get; set; }
@@ -25,7 +24,6 @@ namespace CSODataGenerator
         private const string ClassCodeMask = "#classCode#";
         private const string NamespaceMask = "#namespace#";
         private const string PlanObjectReferenceMask = "#planObjectReference#";
-        private const string ConnectionStirngMask = "#connectionString#";
         private const string DbSetsMask = "#dbSets#";
         private const string EntitiesMask = "#entities#";
         private const string EntityMask = "#entity#";
@@ -138,7 +136,6 @@ namespace CSODataGenerator
                 ReadIntoString("Methods")
                         .Replace(EntitiesMask, entitiesText)
                         .Replace(DbSetsMask, dbSetsText)
-                        .Replace(ConnectionStirngMask, ConnectionString)
                         .Replace(ConnectionsMask, editedConnectionsText)
                 ;
         }

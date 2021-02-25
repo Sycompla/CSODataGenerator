@@ -58,13 +58,18 @@ namespace CSODataGenerator
             string APPSETTINGS_PLANOBJECTFOLDERNAME = args[6];
             string APPSETTINGS_XMLPATH = args[7];
             string APPSETTINGS_ODATAURL = args[8];
+            string APPSETTINGS_DBIP = args[9];
+            string APPSETTINGS_DBNAME = args[10];
+            string APPSETTINGS_DBUSERNAME = args[11];
+            string APPSETTINGS_DBPASSWORD = args[12];
+            string APPSETTINGS_SYSTEM = args[13];
 
             string APPSETTINGS_LINUXPATH = "";
             string APPSETTINGS_LINUXSERVICEFILEDESCRIPTION = "";
-            if (args.Length > 10)
+            if (args.Length > 15)
             {
-                APPSETTINGS_LINUXPATH = args[10];
-                APPSETTINGS_LINUXSERVICEFILEDESCRIPTION = args[11];
+                APPSETTINGS_LINUXPATH = args[14];
+                APPSETTINGS_LINUXSERVICEFILEDESCRIPTION = args[15];
             }
 
 
@@ -88,7 +93,7 @@ namespace CSODataGenerator
                 
                 Ac4yModule ac4yClasses = (Ac4yModule) ac4yUtility.Xml2ObjectFromFile(config[APPSETTINGS_XMLPATH], typeof(Ac4yModule));
 
-                RunWthXmlRequest RunWithXmlRequest = new RunWthXmlRequest()
+                RunWithXmlRequest RunWithXmlRequest = new RunWithXmlRequest()
                 {
                     Ac4yModule = ac4yClasses
                     ,
@@ -97,8 +102,6 @@ namespace CSODataGenerator
                     RootDirectory = APPSETTINGS_ROOTDIRECTORY
                     ,
                     ODataURL = APPSETTINGS_ODATAURL
-                    ,
-                    ConnectionString = APPSETTINGS_CONNECTIONSTRING
                     ,
                     LinuxServiceFileDescription = APPSETTINGS_LINUXSERVICEFILEDESCRIPTION
                     ,
@@ -111,6 +114,16 @@ namespace CSODataGenerator
                     PortNumber = APPSETTINGS_PORTNUMBER
                     ,
                     PlanObjectFolderName = APPSETTINGS_PLANOBJECTFOLDERNAME
+                    ,
+                    DBIP = APPSETTINGS_DBIP
+                    ,
+                    DBName = APPSETTINGS_DBNAME
+                    ,
+                    DBPassword = APPSETTINGS_DBPASSWORD
+                    ,
+                    DBUsername = APPSETTINGS_DBUSERNAME
+                    ,
+                    System = APPSETTINGS_SYSTEM
                 };
 
                 new RunWithXml(RunWithXmlRequest) { }.Run();

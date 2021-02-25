@@ -10,16 +10,16 @@ namespace CSODataGenerator
 {
     public class RunWithXml
     {
-        private RunWthXmlRequest RunWthXmlRequest { get; set; }
+        private RunWithXmlRequest RunWithXmlRequest { get; set; }
 
         private string Argument { get; set; }
         private Ac4yModule Ac4yModule { get; set; }
 
-        public RunWithXml(RunWthXmlRequest request)
+        public RunWithXml(RunWithXmlRequest request)
         {
-            RunWthXmlRequest = request;
-            Argument = RunWthXmlRequest.Argument;
-            Ac4yModule = RunWthXmlRequest.Ac4yModule;
+            RunWithXmlRequest = request;
+            Argument = RunWithXmlRequest.Argument;
+            Ac4yModule = RunWithXmlRequest.Ac4yModule;
         }
 
         public RunWithXml() { }
@@ -28,11 +28,11 @@ namespace CSODataGenerator
         {
 
             Ac4yUtility utility = new Ac4yUtility();
-            Ac4yClass ac4yClass = (Ac4yClass)utility.Xml2Object(RunWthXmlRequest.ac4yClassXml, typeof(Ac4yClass));
+            Ac4yClass ac4yClass = (Ac4yClass)utility.Xml2Object(RunWithXmlRequest.ac4yClassXml, typeof(Ac4yClass));
 
             string result = new PlanObjectGenerator()
             {
-                OutputPath = RunWthXmlRequest.RootDirectory + RunWthXmlRequest.PlanObjectFolderName
+                OutputPath = RunWithXmlRequest.RootDirectory + RunWithXmlRequest.PlanObjectFolderName
             }
                 .Generate(ac4yClass);
 
@@ -57,6 +57,28 @@ namespace CSODataGenerator
 
         public void Run()
         {
+            if(Argument.Equals("Appsettings"))
+            {
+                new AppsettingsGenerator()
+                {
+                    OutputPath = RunWithXmlRequest.RootDirectory + RunWithXmlRequest.Namespace + "ODataService/"
+                    ,
+                    IpAddress = RunWithXmlRequest.IPAddress
+                    ,
+                    PortNumber = RunWithXmlRequest.PortNumber
+                    ,
+                    DBIP = RunWithXmlRequest.DBIP
+                    ,
+                    DBName = RunWithXmlRequest.DBName
+                    ,
+                    DBPassword = RunWithXmlRequest.DBPassword
+                    ,
+                    DBUserName = RunWithXmlRequest.DBUsername
+                    ,
+                    System = RunWithXmlRequest.System
+                }.Generate();
+            }
+
             if(Argument.Equals("bat"))
             {
                 new BatFileGenerator()
@@ -71,11 +93,11 @@ namespace CSODataGenerator
                 {
                     new UpsertControllerGeneratorAc4yClass()
                     {
-                        OutputPath = RunWthXmlRequest.RootDirectory + RunWthXmlRequest.Namespace + "UpsertService/Controllers/"
+                        OutputPath = RunWithXmlRequest.RootDirectory + RunWithXmlRequest.Namespace + "UpsertService/Controllers/"
                         ,
-                        Namespace = RunWthXmlRequest.Namespace
+                        Namespace = RunWithXmlRequest.Namespace
                         ,
-                        OdataUrl = RunWthXmlRequest.ODataURL
+                        OdataUrl = RunWithXmlRequest.ODataURL
                     }
                         .Generate(planObject);
                 }
@@ -83,14 +105,14 @@ namespace CSODataGenerator
 
             if (Argument.Equals("UpsertService"))
             {
-                Directory.CreateDirectory(RunWthXmlRequest.RootDirectory + RunWthXmlRequest.Namespace + "UpsertService/Services/");
+                Directory.CreateDirectory(RunWithXmlRequest.RootDirectory + RunWithXmlRequest.Namespace + "UpsertService/Services/");
                 foreach (Ac4yClass planObject in Ac4yModule.ClassList)
                 {
                     new UpsertServiceServiceGeneratorAc4yClass()
                     {
-                        OutputPath = RunWthXmlRequest.RootDirectory + RunWthXmlRequest.Namespace + "UpsertService/Services/"
+                        OutputPath = RunWithXmlRequest.RootDirectory + RunWithXmlRequest.Namespace + "UpsertService/Services/"
                         ,
-                        Namespace = RunWthXmlRequest.Namespace
+                        Namespace = RunWithXmlRequest.Namespace
                     }
                         .Generate(planObject);
                 }
@@ -98,14 +120,14 @@ namespace CSODataGenerator
 
             if (Argument.Equals("UpsertResponse"))
             {
-                Directory.CreateDirectory(RunWthXmlRequest.RootDirectory + RunWthXmlRequest.Namespace + "UpsertService/Responses/");
+                Directory.CreateDirectory(RunWithXmlRequest.RootDirectory + RunWithXmlRequest.Namespace + "UpsertService/Responses/");
                 foreach (Ac4yClass planObject in Ac4yModule.ClassList)
                 {
                     new UpsertServiceResponseGeneratorAc4yClass()
                     {
-                        OutputPath = RunWthXmlRequest.RootDirectory + RunWthXmlRequest.Namespace + "UpsertService/Responses/"
+                        OutputPath = RunWithXmlRequest.RootDirectory + RunWithXmlRequest.Namespace + "UpsertService/Responses/"
                         ,
-                        Namespace = RunWthXmlRequest.Namespace
+                        Namespace = RunWithXmlRequest.Namespace
                     }
                         .Generate(planObject);
                 }
@@ -115,9 +137,9 @@ namespace CSODataGenerator
             {
                 new UpsertServiceStartupGeneratorAc4yClass()
                 {
-                    OutputPath = RunWthXmlRequest.RootDirectory + RunWthXmlRequest.Namespace + "UpsertService/"
+                    OutputPath = RunWithXmlRequest.RootDirectory + RunWithXmlRequest.Namespace + "UpsertService/"
                         ,
-                    Namespace = RunWthXmlRequest.Namespace
+                    Namespace = RunWithXmlRequest.Namespace
                 }
                         .Generate();
             }
@@ -126,9 +148,9 @@ namespace CSODataGenerator
             {
                 new Ac4yRestServiceClientGeneratorAc4yClass()
                 {
-                    OutputPath = RunWthXmlRequest.RootDirectory + RunWthXmlRequest.Namespace + "UpsertService/"
+                    OutputPath = RunWithXmlRequest.RootDirectory + RunWithXmlRequest.Namespace + "UpsertService/"
                         ,
-                    Namespace = RunWthXmlRequest.Namespace
+                    Namespace = RunWithXmlRequest.Namespace
                 }
                         .Generate();
             }
@@ -136,11 +158,11 @@ namespace CSODataGenerator
             if (Argument.Equals("PlanObject"))
             {
                 Ac4yUtility utility = new Ac4yUtility();
-                Ac4yClass ac4yClass = (Ac4yClass)utility.Xml2Object(RunWthXmlRequest.ac4yClassXml, typeof(Ac4yClass));
+                Ac4yClass ac4yClass = (Ac4yClass)utility.Xml2Object(RunWithXmlRequest.ac4yClassXml, typeof(Ac4yClass));
 
                 new PlanObjectGenerator()
                 {
-                    OutputPath = RunWthXmlRequest.RootDirectory + RunWthXmlRequest.PlanObjectFolderName
+                    OutputPath = RunWithXmlRequest.RootDirectory + RunWithXmlRequest.PlanObjectFolderName
                 }
                     .Generate(ac4yClass);
             /*
@@ -148,7 +170,7 @@ namespace CSODataGenerator
             {
                 new PlanObjectGenerator()
                 {
-                    OutputPath = RunWthXmlRequest.RootDirectory + RunWthXmlRequest.PlanObjectFolderName
+                    OutputPath = RunWithXmlRequest.RootDirectory + RunWithXmlRequest.PlanObjectFolderName
                 }
                     .Generate(planObject);
             }*/
@@ -161,9 +183,9 @@ namespace CSODataGenerator
 
                     new CapGeneratorAc4yClass()
                     {
-                        OutputPath = RunWthXmlRequest.RootDirectory + RunWthXmlRequest.Namespace + "Cap/"
+                        OutputPath = RunWithXmlRequest.RootDirectory + RunWithXmlRequest.Namespace + "Cap/"
                         ,
-                        Namespace = RunWthXmlRequest.Namespace
+                        Namespace = RunWithXmlRequest.Namespace
                     }
                         .Generate(planObject);
                 }
@@ -173,11 +195,9 @@ namespace CSODataGenerator
             {
                 new ContextGeneratorAc4yClass()
                 {
-                    OutputPath = RunWthXmlRequest.RootDirectory + RunWthXmlRequest.Namespace + "Cap/"
+                    OutputPath = RunWithXmlRequest.RootDirectory + RunWithXmlRequest.Namespace + "Cap/"
                     ,
-                    Namespace = RunWthXmlRequest.Namespace
-                    ,
-                    ConnectionString = RunWthXmlRequest.ConnectionString
+                    Namespace = RunWithXmlRequest.Namespace
                     ,
                     Parameter = Ac4yModule
                 }
@@ -191,9 +211,9 @@ namespace CSODataGenerator
                 {
                     new ObjectServiceGeneratorAc4yClass()
                     {
-                        OutputPath = RunWthXmlRequest.RootDirectory + RunWthXmlRequest.Namespace + "ObjectService/"
+                        OutputPath = RunWithXmlRequest.RootDirectory + RunWithXmlRequest.Namespace + "ObjectService/"
                     ,
-                        Namespace = RunWthXmlRequest.Namespace
+                        Namespace = RunWithXmlRequest.Namespace
                     }
                     .Generate(ac4yClass);
                 }
@@ -205,9 +225,9 @@ namespace CSODataGenerator
                 {
                     new RESTServiceODataControllerGeneratorAc4yClass()
                     {
-                        OutputPath = RunWthXmlRequest.RootDirectory + RunWthXmlRequest.Namespace + "ODataService/Controllers/"
+                        OutputPath = RunWithXmlRequest.RootDirectory + RunWithXmlRequest.Namespace + "ODataService/Controllers/"
                     ,
-                        Namespace = RunWthXmlRequest.Namespace
+                        Namespace = RunWithXmlRequest.Namespace
                     }
                     .Generate(ac4yClass);
                 }
@@ -218,13 +238,13 @@ namespace CSODataGenerator
             {
                 new RESTServiceProgramClassWithKestrelGenerator()
                 {
-                    OutputPath = RunWthXmlRequest.RootDirectory + RunWthXmlRequest.Namespace + "ODataService/"
+                    OutputPath = RunWithXmlRequest.RootDirectory + RunWithXmlRequest.Namespace + "ODataService/"
                     ,
-                    IPAddress = RunWthXmlRequest.IPAddress
+                    IPAddress = RunWithXmlRequest.IPAddress
                     ,
-                    NameSpace = RunWthXmlRequest.Namespace
+                    NameSpace = RunWithXmlRequest.Namespace
                     ,
-                    PortNumber = RunWthXmlRequest.PortNumber
+                    PortNumber = RunWithXmlRequest.PortNumber
 
                 }
                     .Generate();
@@ -234,9 +254,9 @@ namespace CSODataGenerator
             {
                 new RESTServiceStartupClassWithODataGeneratorAc4yClass()
                 {
-                    OutputPath = RunWthXmlRequest.RootDirectory + RunWthXmlRequest.Namespace + "ODataService/"
+                    OutputPath = RunWithXmlRequest.RootDirectory + RunWithXmlRequest.Namespace + "ODataService/"
                     ,
-                    NameSpace = RunWthXmlRequest.Namespace
+                    NameSpace = RunWithXmlRequest.Namespace
                     ,
                     Parameter = Ac4yModule
 
@@ -247,17 +267,17 @@ namespace CSODataGenerator
 
             if (Argument.Equals("OpenApiDocument"))
             {
-                Directory.CreateDirectory(RunWthXmlRequest.RootDirectory + RunWthXmlRequest.Namespace + "ODataService/Document/");
+                Directory.CreateDirectory(RunWithXmlRequest.RootDirectory + RunWithXmlRequest.Namespace + "ODataService/Document/");
 
                 new OpenApiGeneratorAc4yClass()
                 {
-                    ODataUrl = RunWthXmlRequest.ODataURL
+                    ODataUrl = RunWithXmlRequest.ODataURL
                     ,
                     Version = "1.20201111.1"
                     ,
                     Parameter = Ac4yModule
                     ,
-                    OutputPath = RunWthXmlRequest.RootDirectory + RunWthXmlRequest.Namespace + "ODataService/Document/"
+                    OutputPath = RunWithXmlRequest.RootDirectory + RunWithXmlRequest.Namespace + "ODataService/Document/"
                 }
                     .Generate();
             }
@@ -266,13 +286,13 @@ namespace CSODataGenerator
             {
                 new LinuxServiceFileGenerator()
                 {
-                    DLLName = RunWthXmlRequest.Namespace
+                    DLLName = RunWithXmlRequest.Namespace
                     ,
                     Description = LinuxServiceFileDescription
                     ,
                     LinuxPath = LinuxPath
                     ,
-                    OutputPath = RunWthXmlRequest.RootDirectory + RunWthXmlRequest.Namespace + "ODataService/"
+                    OutputPath = RunWithXmlRequest.RootDirectory + RunWithXmlRequest.Namespace + "ODataService/"
                 }
                     .Generate();
             }*/
@@ -281,9 +301,9 @@ namespace CSODataGenerator
             {
                 new CsprojGenerator()
                 {
-                    OutputPath = RunWthXmlRequest.RootDirectory + RunWthXmlRequest.Namespace + "ODataService/"
+                    OutputPath = RunWithXmlRequest.RootDirectory + RunWithXmlRequest.Namespace + "ODataService/"
                     ,
-                    Name = RunWthXmlRequest.Namespace
+                    Name = RunWithXmlRequest.Namespace
                 }
                     .Generate();
             }

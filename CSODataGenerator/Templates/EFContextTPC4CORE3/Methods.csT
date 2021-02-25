@@ -5,7 +5,20 @@
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"#connectionString#");
+            IConfiguration config = null;
+
+            config = new ConfigurationBuilder()
+                        .AddJsonFile("appsettings.json", true, true)
+                        .Build();
+
+            optionsBuilder.UseSqlServer(ConnectionStringBuilder(
+                                                    config["DATABASESERVER"]
+                                                    ,
+                                                    config["DATABASENAME"]
+                                                    ,
+                                                    config["DATABASEUSERNAME"]
+                                                    ,
+                                                    config["DATABASEPASSWORD"]));
 
         }
 
@@ -16,4 +29,11 @@
             #connections#
 
             #entities#
+        }
+
+        public string ConnectionStringBuilder(string ip, string databaseName, string username, string password)
+        {
+            return "Server=" + ip + ";Database=" + databaseName +
+                ";Trusted_Connection=false;uid=" + username +
+                ";pwd=" + password + ";";
         }

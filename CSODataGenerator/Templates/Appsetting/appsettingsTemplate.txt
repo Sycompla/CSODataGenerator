@@ -1,0 +1,18 @@
+﻿{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "AllowedHosts": "*",
+  "IPADDRESS": "#ipAddress",
+  "SYSTEM": "#system#",
+  "PORTNUMBER": "#portNumber#",
+  "DATABASESERVER": "#databaseIp#",
+  "DATABASENAME": "#databaseName#",
+  "DATABASEUSERNAME": "#username#",
+  "DATABASEPASSWORD": "#databasePassword#"
+
+}
