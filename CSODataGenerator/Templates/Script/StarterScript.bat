@@ -1,0 +1,1 @@
+call Bat.bat D:\Server\VisualStudio\ODataGenerator\CSODataGenerator\CSODataGenerator\bin\Debug\netcoreapp3.0 D:\Server\VisualStudio\ODataGenerator\CSTest\ FBClasses FBClasses D:\request.xml D:\ac4y.xml 1.20210226.1

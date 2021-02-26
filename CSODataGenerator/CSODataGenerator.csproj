@@ -38,7 +38,9 @@
   <ItemGroup>
     <None Remove="Templates\appsettingsTemplate.txt" />
     <None Remove="Templates\Nuget\Nuspec.txt" />
+    <None Remove="Templates\Script\Bat.bat" />
     <None Remove="Templates\Script\Schell.txt" />
+    <None Remove="Templates\Script\StarterScript.bat" />
     <None Remove="Templates\StarterScript.txt" />
   </ItemGroup>
 
