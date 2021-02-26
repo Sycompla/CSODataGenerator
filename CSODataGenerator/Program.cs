@@ -52,29 +52,11 @@ namespace CSODataGenerator
                 Console.WriteLine(arg);
             }
 
-            string APPSETTINGS_ROOTDIRECTORY = args[1];
+            string APPSETTINGS_REQUESTPATH = args[1];
+            string APPSETTINGS_XMLPATH = args[2];
 
-            string APPSETTINGS_PORTNUMBER = args[2];
-            string APPSETTINGS_IPADDRESS = args[3];
-            string APPSETTINGS_NAMESPACE = args[4];
-
-            string APPSETTINGS_PLANOBJECTFOLDERNAME = args[5];
-            string APPSETTINGS_XMLPATH = args[6];
-            string APPSETTINGS_ODATAURL = args[7];
-            string APPSETTINGS_DBIP = args[8];
-            string APPSETTINGS_DBNAME = args[9];
-            string APPSETTINGS_DBUSERNAME = args[10];
-            string APPSETTINGS_DBPASSWORD = args[11];
-            string APPSETTINGS_SYSTEM = args[12];
-
-            string APPSETTINGS_LINUXPATH = "";
-            string APPSETTINGS_LINUXSERVICEFILEDESCRIPTION = "";
-            if (args.Length > 15)
-            {
-                APPSETTINGS_LINUXPATH = args[14];
-                APPSETTINGS_LINUXSERVICEFILEDESCRIPTION = args[15];
-            }
-
+            string requestXml = File.ReadAllText(APPSETTINGS_REQUESTPATH);
+            RunWithXmlRequest RunWithXmlRequest = (RunWithXmlRequest) new Ac4yUtility().Xml2Object(requestXml, typeof(RunWithXmlRequest));
 
             try
             {
@@ -91,38 +73,8 @@ namespace CSODataGenerator
                 Console.WriteLine("Path >>" + APPSETTINGS_XMLPATH);
                 Ac4yModule ac4yClasses = (Ac4yModule) ac4yUtility.Xml2ObjectFromFile(APPSETTINGS_XMLPATH, typeof(Ac4yModule));
 
-                RunWithXmlRequest RunWithXmlRequest = new RunWithXmlRequest()
-                {
-                    Ac4yModule = ac4yClasses
-                    ,
-                    Argument = args[0]
-                    ,
-                    RootDirectory = APPSETTINGS_ROOTDIRECTORY
-                    ,
-                    ODataURL = APPSETTINGS_ODATAURL
-                    ,
-                    LinuxServiceFileDescription = APPSETTINGS_LINUXSERVICEFILEDESCRIPTION
-                    ,
-                    IPAddress = APPSETTINGS_IPADDRESS
-                    ,
-                    LinuxPath = APPSETTINGS_LINUXPATH
-                    ,
-                    Namespace = APPSETTINGS_NAMESPACE
-                    ,
-                    PortNumber = APPSETTINGS_PORTNUMBER
-                    ,
-                    PlanObjectFolderName = APPSETTINGS_PLANOBJECTFOLDERNAME
-                    ,
-                    DBIP = APPSETTINGS_DBIP
-                    ,
-                    DBName = APPSETTINGS_DBNAME
-                    ,
-                    DBPassword = APPSETTINGS_DBPASSWORD
-                    ,
-                    DBUsername = APPSETTINGS_DBUSERNAME
-                    ,
-                    System = APPSETTINGS_SYSTEM
-                };
+                RunWithXmlRequest.Ac4yModule = ac4yClasses;
+                RunWithXmlRequest.Argument = args[0];
 
                 new RunWithXml(RunWithXmlRequest) { }.Run();
                 /*

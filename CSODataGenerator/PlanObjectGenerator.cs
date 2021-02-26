@@ -109,7 +109,7 @@ namespace CSODataGenerator
 
             result += GetFoot();
 
-            //WriteOut(result, Type.Name, OutputPath);
+            WriteOut(result, Type.Name, OutputPath);
 
             return result;
 

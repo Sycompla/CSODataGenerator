@@ -7,7 +7,7 @@ set planObjectPath=%mainDir%%3
 set namespace=%4
 
 cd %mainDir%
-dotnet new classlib -n #planObjectNamespace# -f netcoreapp3.1
+dotnet new classlib -n %3 -f netcoreapp3.1
 cd %generatorDir%
 dotnet CSODataGenerator.dll "PlanObject" %mainDir% %5 %6 %namespace% %7 %8 %9 %10 %11 %12 %13 %14
 cd %mainDir%\%planObjectNamespace%
@@ -19,6 +19,9 @@ cd %namespace%Cap
 dotnet add package Microsoft.EntityFrameworkCore
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 dotnet add package Microsoft.EntityFrameworkCore.Tools
+dotnet add package Microsoft.Extensions.Configuration
+dotnet add package Microsoft.Extensions.Configuration.Json
+dotnet add package Microsoft.Extensions.Configuration.FileExtensions
 dotnet add package ReferencesToNuGet -v 1.2020.1015.3
 dotnet add reference %planObjectPath%
 cd %generatorDir%
@@ -33,6 +36,9 @@ cd %namespace%ObjectService
 dotnet add package Microsoft.EntityFrameworkCore
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 dotnet add package Microsoft.EntityFrameworkCore.Tools
+dotnet add package Microsoft.Extensions.Configuration
+dotnet add package Microsoft.Extensions.Configuration.Json
+dotnet add package Microsoft.Extensions.Configuration.FileExtensions
 dotnet add package ReferencesToNuGet -v 1.2020.1015.3
 dotnet add reference %mainDir%\%namespace%Cap
 dotnet add reference %planObjectPath%
@@ -50,6 +56,9 @@ dotnet add package Microsoft.EntityFrameworkCore.Tools
 dotnet add package Microsoft.AspNetCore.OData
 dotnet add package Microsoft.AspNet.StaticFiles
 dotnet add package Microsoft.Data.OData
+dotnet add package Microsoft.Extensions.Configuration
+dotnet add package Microsoft.Extensions.Configuration.Json
+dotnet add package Microsoft.Extensions.Configuration.FileExtensions
 dotnet add package ReferencesToNuGet -v 1.2020.1015.3
 dotnet add reference %mainDir%\%namespace%Cap
 dotnet add reference %planObjectPath%

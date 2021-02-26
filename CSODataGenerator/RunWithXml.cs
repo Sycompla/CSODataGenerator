@@ -57,11 +57,25 @@ namespace CSODataGenerator
 
         public void Run()
         {
+            if(Argument.Equals("Nuget"))
+            {
+                new NuspecGenerator()
+                {
+                    OutputPath = RunWithXmlRequest.RootDirectory + RunWithXmlRequest.Namespace + "ODataService/"
+                    ,
+                    Name = RunWithXmlRequest.Namespace
+                    ,
+                    Version = RunWithXmlRequest.Version
+                    ,
+                    Author = RunWithXmlRequest.Author
+                }.Generate();
+            }
+
             if(Argument.Equals("Appsettings"))
             {
                 new AppsettingsGenerator()
                 {
-                    OutputPath = RunWithXmlRequest.RootDirectory //+ RunWithXmlRequest.Namespace + "ODataService/"
+                    OutputPath = RunWithXmlRequest.RootDirectory + RunWithXmlRequest.Namespace + "ODataService/"
                     ,
                     IpAddress = RunWithXmlRequest.IPAddress
                     ,
@@ -157,24 +171,15 @@ namespace CSODataGenerator
 
             if (Argument.Equals("PlanObject"))
             {
-                Ac4yUtility utility = new Ac4yUtility();
-                Ac4yClass ac4yClass = (Ac4yClass)utility.Xml2Object(RunWithXmlRequest.ac4yClassXml, typeof(Ac4yClass));
-
-                new PlanObjectGenerator()
+                foreach (Ac4yClass planObject in Ac4yModule.ClassList)
                 {
-                    OutputPath = RunWithXmlRequest.RootDirectory + RunWithXmlRequest.PlanObjectFolderName
+                    new PlanObjectGenerator()
+                    {
+                        OutputPath = RunWithXmlRequest.RootDirectory + RunWithXmlRequest.PlanObjectFolderName
+                    }
+                        .Generate(planObject);
                 }
-                    .Generate(ac4yClass);
-            /*
-            foreach (Ac4yClass planObject in Ac4yModule.ClassList)
-            {
-                new PlanObjectGenerator()
-                {
-                    OutputPath = RunWithXmlRequest.RootDirectory + RunWithXmlRequest.PlanObjectFolderName
-                }
-                    .Generate(planObject);
-            }*/
-        }
+            }
 
             if (Argument.Equals("Cap"))
             {
